@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/spec/refs/heads/main/schema/schema.json",
+  "_note": "MCP server configuration for AI-assisted Flutter development. The MCP ecosystem is evolving — treat these integrations as experimental. Server package names and APIs may change. Verify current package names before use.",
+  "servers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${workspaceFolder}"
+      ],
+      "description": "Gives AI read access to the project's actual file structure. Useful for understanding what's really there vs. what ARCHITECTURE.md says.",
+      "_setup": "No auth needed. Replace ${workspaceFolder} with an absolute path if needed."
+    },
+
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_TOKEN}"
+      },
+      "description": "Lets AI read issues, PRs, and repo metadata from GitHub. Useful for understanding requirements and tracking what's in flight.",
+      "_setup": "Create a GitHub personal access token with repo read permissions. Set GITHUB_TOKEN in your environment — do not hardcode it here."
+    },
+
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase",
+        "--project-ref",
+        "YOUR_SUPABASE_PROJECT_REF"
+      ],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "${env:SUPABASE_ACCESS_TOKEN}"
+      },
+      "description": "Lets AI inspect your Supabase schema, query tables, and check RLS policies. Replace with Firebase if you're using Firestore.",
+      "_setup": "Replace YOUR_SUPABASE_PROJECT_REF with your actual project ref. Set SUPABASE_ACCESS_TOKEN in environment.",
+      "_note": "Supabase MCP is experimental. Verify current package name at https://github.com/supabase/mcp-server-supabase before using."
+    }
+  },
+
+  "_integrations_not_yet_available": {
+    "dart_analyzer": "No production-ready MCP server for Dart analysis tooling yet. Would be useful for type-aware code generation.",
+    "pub_dev": "No MCP server for pub.dev package search. Manually check https://pub.dev for current package versions.",
+    "firebase": "Firebase does not have a stable MCP server. Track: https://github.com/modelcontextprotocol/servers"
+  },
+
+  "_security_notes": [
+    "Never hardcode credentials or API keys in this file",
+    "Use ${env:VAR_NAME} references for all secrets",
+    "The filesystem server exposes your project directory — review what it can access",
+    "For team projects, keep this file as an example template; each developer configures their own credentials",
+    "Consider keeping mcp.json in .gitignore if your project has sensitive local files"
+  ]
+}

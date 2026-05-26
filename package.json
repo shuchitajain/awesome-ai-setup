@@ -1,0 +1,39 @@
+{
+  "name": "awesome-ai-setup",
+  "version": "0.1.0",
+  "description": "Set up AI-native development context for your repository",
+  "keywords": [
+    "ai",
+    "claude",
+    "cursor",
+    "copilot",
+    "context-engineering",
+    "developer-tools"
+  ],
+  "license": "MIT",
+  "author": "Shuchita Jain",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shuchitajain/awesome-ai-setup.git"
+  },
+  "homepage": "https://github.com/shuchitajain/awesome-ai-setup#readme",
+  "bugs": {
+    "url": "https://github.com/shuchitajain/awesome-ai-setup/issues"
+  },
+  "bin": {
+    "awesome-ai-setup": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "agents/",
+    "presets/"
+  ],
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "prompts": "^2.4.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
