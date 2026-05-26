@@ -6,7 +6,7 @@ Model Context Protocol (MCP) lets AI tools connect to external data sources and 
 
 ## What MCP Is
 
-MCP is an open protocol (developed by Anthropic) that standardizes how AI assistants connect to external data and tools. An MCP server exposes capabilities — read files, query databases, search codebases — and an AI client can use those capabilities during a conversation.
+MCP is an open protocol (developed by Anthropic) that standardizes how AI assistants connect to external data and tools. An MCP server exposes capabilities - read files, query databases, search codebases - and an AI client can use those capabilities during a conversation.
 
 The practical effect: AI can query your actual database schema instead of relying on your description of it. It can list the real files in a directory instead of working from documented structure. It can read a GitHub issue directly instead of you copy-pasting it.
 
@@ -14,7 +14,7 @@ Think of MCP servers as plugins that extend what AI can access, not just what it
 
 ---
 
-## Current State (as of mid-2025)
+## Current State
 
 MCP is in active development. The protocol itself is stable, but the ecosystem around it is not.
 
@@ -25,7 +25,7 @@ MCP is in active development. The protocol itself is stable, but the ecosystem a
 - Documentation search
 
 **What's variable:**
-- Server quality varies significantly — some are production-ready, many are prototypes
+- Server quality varies significantly - some are production-ready, many are prototypes
 - Authentication and permissions handling is inconsistent across servers
 - Performance with large file sets can be slow
 - Some servers have incomplete implementations of the protocol
@@ -77,7 +77,7 @@ MCP is in active development. The protocol itself is stable, but the ecosystem a
 
 ## Configuration
 
-MCP servers are configured in tool-specific files. The config structure is the same across tools — only the file path and root key differ.
+MCP servers are configured in tool-specific files. The config structure is the same across tools - only the file path and root key differ.
 
 | Tool | Config path | Root key |
 |------|-------------|----------|
@@ -149,7 +149,7 @@ MCP servers run as local processes with access to whatever resources you grant t
 - Check what permissions the server requests
 - Verify the server is from a trusted source
 - Be careful with filesystem servers in projects containing secrets
-- Don't commit `mcp.json` files with embedded credentials — use environment variable references
+- Don't commit `mcp.json` files with embedded credentials - use environment variable references
 
 For team projects, keep `mcp.json` as an example configuration that each developer adapts to their local setup rather than a shared config with actual credentials.
 
@@ -171,12 +171,12 @@ For team projects, keep `mcp.json` as an example configuration that each develop
 
 | Situation | Use MCP? |
 |-----------|----------|
-| AI keeps generating code for wrong schema | Yes — database MCP |
-| AI doesn't know about recently added files | Yes — filesystem MCP |
-| AI needs to reference GitHub issues | Yes — GitHub MCP |
-| AI doesn't understand your architecture | No — write ARCHITECTURE.md instead |
-| AI suggests wrong patterns | No — write MEMORY.md instead |
-| You want AI to be aware of your conventions | No — use instruction files |
+| AI keeps generating code for wrong schema | Yes - database MCP |
+| AI doesn't know about recently added files | Yes - filesystem MCP |
+| AI needs to reference GitHub issues | Yes - GitHub MCP |
+| AI doesn't understand your architecture | No - write ARCHITECTURE.md instead |
+| AI suggests wrong patterns | No - write MEMORY.md instead |
+| You want AI to be aware of your conventions | No - use instruction files |
 
 ---
 

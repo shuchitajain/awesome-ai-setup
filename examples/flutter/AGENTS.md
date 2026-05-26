@@ -13,9 +13,9 @@ Agents in this context are structured prompts that give an AI assistant a specif
 
 ## Why Define Agents
 
-Without defined agents, AI assistance tends toward being a general-purpose code generator. That's fine for isolated tasks, but for repeatable workflows — "add a new feature", "review a PR for architecture violations", "investigate this crash" — a scoped agent with explicit boundaries produces more consistent results.
+Without defined agents, AI assistance tends toward being a general-purpose code generator. That's fine for isolated tasks, but for repeatable workflows - "add a new feature", "review a PR for architecture violations", "investigate this crash" - a scoped agent with explicit boundaries produces more consistent results.
 
-Agents also make the AI's scope explicit. "Implement this feature" without scope can mean anything. "Act as the domain layer architect — generate entities, repository interfaces, and use cases only — stop before the data layer" is specific enough to be useful and verifiable.
+Agents also make the AI's scope explicit. "Implement this feature" without scope can mean anything. "Act as the domain layer architect - generate entities, repository interfaces, and use cases only - stop before the data layer" is specific enough to be useful and verifiable.
 
 ---
 
@@ -42,12 +42,12 @@ Context files to read:
 Deliver:
 1. Entity class(es) with Freezed
 2. Repository interface (abstract class)
-3. Use case class(es) — one per operation
+3. Use case class(es) - one per operation
 
 Rules:
-- Domain layer is pure Dart — no Flutter, no Firebase, no dio imports
+- Domain layer is pure Dart - no Flutter, no Firebase, no dio imports
 - Follow naming conventions in ARCHITECTURE.md
-- Stop after domain layer — do not generate data or presentation code
+- Stop after domain layer - do not generate data or presentation code
 - If a business rule is unclear, state the assumption explicitly
 ```
 
@@ -71,7 +71,7 @@ Your job: implement the data layer for the [feature_name] feature.
 Context files to read:
 - ARCHITECTURE.md (layer structure, naming conventions)
 - MEMORY.md (anti-patterns, migration history)
-- lib/features/[feature]/domain/ (read all files — implement these interfaces)
+- lib/features/[feature]/domain/ (read all files - implement these interfaces)
 
 API documentation / schema: [paste relevant docs or schema]
 
@@ -119,9 +119,9 @@ Deliver:
 Rules:
 - Use riverpod_annotation (@riverpod) for all providers
 - AsyncNotifier for async state, Notifier for sync state
-- State classes use Freezed — no manual copyWith
+- State classes use Freezed - no manual copyWith
 - ref.watch in build(), ref.read in callbacks
-- Expose methods that call use cases — no direct repository access from notifiers
+- Expose methods that call use cases - no direct repository access from notifiers
 - Do not generate any UI code
 ```
 
@@ -149,17 +149,17 @@ Context files to read:
 
 Deliver:
 1. Screen class (HookConsumerWidget)
-2. Widget decomposition — identify sub-widgets and implement them
+2. Widget decomposition - identify sub-widgets and implement them
 3. Skeleton/loading state
 4. Error state with retry
 
 Rules:
 - HookConsumerWidget as default base class (StatelessWidget only for pure display)
-- No hardcoded colors or spacing — use AppColors and AppSpacing
+- No hardcoded colors or spacing - use AppColors and AppSpacing
 - All strings through AppLocalizations
 - Navigation via GoRouter (context.go / context.push)
 - ref.watch in build, ref.read in callbacks
-- Do not touch providers or domain — consume existing interfaces only
+- Do not touch providers or domain - consume existing interfaces only
 ```
 
 ---
@@ -194,7 +194,7 @@ Rules:
 - Use ProviderContainer for provider tests
 - Use ProviderScope with overrides for widget tests
 - Test behavior, not implementation
-- Do not modify lib/ files — tests only
+- Do not modify lib/ files - tests only
 ```
 
 ---
@@ -228,7 +228,7 @@ Deliver:
 - Brief explanation of why each is a violation
 - Suggested fix for each
 
-Do NOT rewrite the code — review and report only.
+Do NOT rewrite the code - review and report only.
 ```
 
 ---

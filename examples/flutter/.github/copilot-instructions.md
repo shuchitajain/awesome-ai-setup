@@ -20,9 +20,9 @@ These instructions apply to this Flutter project for all AI coding assistance.
 ## Architecture
 
 Feature-first Clean Architecture with three layers per feature:
-- `data/` — repository implementations, data sources, JSON models
-- `domain/` — entities, repository interfaces, use cases (pure Dart, no Flutter)
-- `presentation/` — screens, widgets, Riverpod providers
+- `data/` - repository implementations, data sources, JSON models
+- `domain/` - entities, repository interfaces, use cases (pure Dart, no Flutter)
+- `presentation/` - screens, widgets, Riverpod providers
 
 All new features go under `lib/features/[feature_name]/`. See `ARCHITECTURE.md` for the full structure.
 
@@ -32,18 +32,18 @@ All new features go under `lib/features/[feature_name]/`. See `ARCHITECTURE.md` 
 
 ### Widgets
 
-- Default base class is `HookConsumerWidget` — use it unless the widget is a pure display component with no state or providers
+- Default base class is `HookConsumerWidget` - use it unless the widget is a pure display component with no state or providers
 - Use `StatelessWidget` only for widgets that receive all data as parameters and have no side effects
 - Do not use `StatefulWidget`. Do not use `ConsumerWidget`. Do not use `HookWidget`
 - Widget file names: `snake_case.dart`. Widget class names: `PascalCase`
-- All user-facing strings go through `AppLocalizations` — no hardcoded strings in UI
+- All user-facing strings go through `AppLocalizations` - no hardcoded strings in UI
 
 ### State management
 
-- All state management is Riverpod — do not use `setState`, `ValueNotifier`, `ChangeNotifier`, `InheritedWidget`, or the `provider` package
-- Async state uses `AsyncNotifier` — sync state uses `Notifier`
-- State classes use `@freezed` — no manual `==` / `hashCode` / `copyWith`
-- `ref.watch` in build, `ref.read` in callbacks — never `ref.read` inside `build()`
+- All state management is Riverpod - do not use `setState`, `ValueNotifier`, `ChangeNotifier`, `InheritedWidget`, or the `provider` package
+- Async state uses `AsyncNotifier` - sync state uses `Notifier`
+- State classes use `@freezed` - no manual `==` / `hashCode` / `copyWith`
+- `ref.watch` in build, `ref.read` in callbacks - never `ref.read` inside `build()`
 
 ### Navigation
 
@@ -70,16 +70,16 @@ Do not suggest or import:
 
 ### Layer boundaries
 
-- Domain layer has zero Flutter imports — pure Dart only
+- Domain layer has zero Flutter imports - pure Dart only
 - Presentation layer imports from domain only (never from data)
 - Data layer implements domain interfaces
-- Features do not import from other features directly — use shared providers if needed
+- Features do not import from other features directly - use shared providers if needed
 
 ---
 
 ## Code Style
 
-- `const` everywhere possible — constructors, widgets, values
+- `const` everywhere possible - constructors, widgets, values
 - Named parameters for anything with 2+ parameters
 - Prefer `final` over `var`
 - No unused imports
@@ -106,9 +106,9 @@ Do not skip layers. Do not generate UI before domain is defined.
 
 ## Testing
 
-- Widget tests use `ProviderScope` with overrides — no real network calls
+- Widget tests use `ProviderScope` with overrides - no real network calls
 - Mock at the repository layer, not the data source layer
-- Use case tests are pure unit tests — no Flutter test runner required
+- Use case tests are pure unit tests - no Flutter test runner required
 - Test file naming: `[source_file_name]_test.dart` in matching `test/` hierarchy
 
 See `.github/instructions/testing.instructions.md` for full testing conventions.
@@ -119,6 +119,6 @@ See `.github/instructions/testing.instructions.md` for full testing conventions.
 
 For step-by-step procedures, follow the relevant workflow file in `./workflows/`:
 
-- `workflows/feature-development.md` — implementing a new feature end-to-end
-- `workflows/bug-fixing.md` — investigating and fixing bugs
-- `workflows/refactoring.md` — safe refactoring with blast-radius control
+- `workflows/feature-development.md` - implementing a new feature end-to-end
+- `workflows/bug-fixing.md` - investigating and fixing bugs
+- `workflows/refactoring.md` - safe refactoring with blast-radius control

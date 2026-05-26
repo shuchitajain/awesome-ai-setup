@@ -14,16 +14,16 @@ These files define structured AI agent roles and repeatable development workflow
 
 ---
 
-## Step 1 — Read the Repository Context
+## Step 1 - Read the Repository Context
 
 This agent should be run after architecture and context files exist. Read them first.
 
 **Required reading:**
-1. `ARCHITECTURE.md` — understand the layers, data flow, and conventions
-2. `MEMORY.md` — understand decisions made and patterns to avoid
-3. `CONTEXT.md` if present — understand the domain
+1. `ARCHITECTURE.md` - understand the layers, data flow, and conventions
+2. `MEMORY.md` - understand decisions made and patterns to avoid
+3. `CONTEXT.md` if present - understand the domain
 4. The primary source directory structure
-5. An existing feature (pick one that seems complete) — read its files across all layers to understand the actual development pattern
+5. An existing feature (pick one that seems complete) - read its files across all layers to understand the actual development pattern
 
 **Understand:**
 - How many distinct layers exist? (e.g., domain / data / presentation)
@@ -37,16 +37,16 @@ This agent should be run after architecture and context files exist. Read them f
 ## Reference Example (Optional)
 
 Check for a reference example in this order:
-1. `.ai/reference/*/AGENTS.md` and `.ai/reference/*/workflows/` — if the user copied one during setup
-2. `node_modules/awesome-ai-setup/examples/*/AGENTS.md` and `.../workflows/` — if the package is installed locally
+1. `.ai/reference/*/AGENTS.md` and `.ai/reference/*/workflows/` - if the user copied one during setup
+2. `node_modules/awesome-ai-setup/examples/*/AGENTS.md` and `.../workflows/` - if the package is installed locally
 
 If neither path exists, skip this section entirely and proceed to Step 2.
 
-Use them as a **structural guide only** — what sections to include, how agents are defined, and how workflow steps are formatted. Do not copy their content; they describe a different project. All content must come from reading this codebase in Step 1.
+Use them as a **structural guide only** - what sections to include, how agents are defined, and how workflow steps are formatted. Do not copy their content; they describe a different project. All content must come from reading this codebase in Step 1.
 
 ---
 
-## Step 2 — Identify the Repeatable Workflows
+## Step 2 - Identify the Repeatable Workflows
 
 Based on the architecture you've read, identify 2–4 primary workflows that happen repeatedly in this project:
 
@@ -65,7 +65,7 @@ For each workflow, answer:
 
 ---
 
-## Step 3 — Identify the Agent Roles
+## Step 3 - Identify the Agent Roles
 
 Based on the layer structure and workflows, identify the distinct agent roles.
 
@@ -84,7 +84,7 @@ Based on the layer structure and workflows, identify the distinct agent roles.
 
 ---
 
-## Step 4 — Generate AGENTS.md
+## Step 4 - Generate AGENTS.md
 
 Create this file at the **project root** as `AGENTS.md`.
 
@@ -112,8 +112,8 @@ For each agent:
 **Scope:** [What files/layers/directories this agent works on]
 
 **Prerequisite context to read:**
-- [File 1] — [why]
-- [File 2] — [why]
+- [File 1] - [why]
+- [File 2] - [why]
 
 **Invoke with:**
 ```
@@ -124,13 +124,13 @@ For each agent:
  Should list explicit constraints.]
 ```
 
-**Output:** [What this agent produces — specific files or sections]
-**Does NOT:** [What this agent explicitly does not do — prevents scope creep]
+**Output:** [What this agent produces - specific files or sections]
+**Does NOT:** [What this agent explicitly does not do - prevents scope creep]
 ```
 
 ---
 
-## Step 5 — Generate Workflow Files
+## Step 5 - Generate Workflow Files
 
 For each primary workflow identified in Step 2, generate a workflow file.
 
@@ -163,25 +163,25 @@ For each primary workflow identified in Step 2, generate a workflow file.
 [3–5 pitfalls specific to this architecture]
 ```
 
-**Important:** Workflow steps should be specific to this project's architecture. Reference actual folder names, actual patterns, actual layer names. Generic advice ("write tests") is not useful — specific advice ("write a `ProviderContainer` test for the notifier before writing widget tests") is.
+**Important:** Workflow steps should be specific to this project's architecture. Reference actual folder names, actual patterns, actual layer names. Generic advice ("write tests") is not useful - specific advice ("write a `ProviderContainer` test for the notifier before writing widget tests") is.
 
 ---
 
-## Step 6 — Update Instruction Files
+## Step 6 - Update Instruction Files
 
 After generating `workflows/`, add a reference to it in whichever instruction files exist in this project:
 
-- **`CLAUDE.md`** — add: `"For step-by-step development procedures, follow the workflows in ./workflows/."`
-- **`.cursorrules`** — add: `"Execute multi-step tasks by following the relevant workflow in ./workflows/."`
-- **`.github/copilot-instructions.md`** — add a `## Development Workflows` section pointing to `./workflows/` and listing the available workflows by name.
+- **`CLAUDE.md`** - add: `"For step-by-step development procedures, follow the workflows in ./workflows/."`
+- **`.cursorrules`** - add: `"Execute multi-step tasks by following the relevant workflow in ./workflows/."`
+- **`.github/copilot-instructions.md`** - add a `## Development Workflows` section pointing to `./workflows/` and listing the available workflows by name.
 
-This is the unified approach: `workflows/` is the single source of truth, and each tool's instruction file references it. Do not copy workflow content into instruction files — just reference the path.
+This is the unified approach: `workflows/` is the single source of truth, and each tool's instruction file references it. Do not copy workflow content into instruction files - just reference the path.
 
 Only update instruction files that already exist. Do not create them.
 
 ---
 
-## Step 7 — Generate Tool Automation Files
+## Step 7 - Generate Tool Automation Files
 
 This step makes agents directly invokable without manually reading `AGENTS.md` or copy-pasting prompts.
 
@@ -194,7 +194,7 @@ Generate the appropriate files for each detected tool only.
 
 ---
 
-### For Cursor — `.cursor/rules/*.mdc`
+### For Cursor - `.cursor/rules/*.mdc`
 
 For each agent defined in Step 3, create `.cursor/rules/[agent-slug].mdc`.
 
@@ -211,11 +211,11 @@ globs: [comma-separated glob patterns matching the files this agent's Scope cove
 When editing files matching the paths above, follow the workflow in `workflows/[relevant-workflow].md`.
 ```
 
-Map each agent's **Scope** from Step 3 to glob patterns (e.g., scope `lib/providers/` → glob `lib/providers/**`). If an agent has no file-path scope (e.g., an Architecture Reviewer), omit `globs` — the rule will be available on-demand in Cursor Composer but won't auto-apply.
+Map each agent's **Scope** from Step 3 to glob patterns (e.g., scope `lib/providers/` → glob `lib/providers/**`). If an agent has no file-path scope (e.g., an Architecture Reviewer), omit `globs` - the rule will be available on-demand in Cursor Composer but won't auto-apply.
 
 ---
 
-### For Claude Code — CLAUDE.md shortcuts block
+### For Claude Code - CLAUDE.md shortcuts block
 
 Append to the existing `CLAUDE.md` (do not overwrite anything):
 
@@ -225,14 +225,14 @@ Append to the existing `CLAUDE.md` (do not overwrite anything):
 | Shortcut | Agent | Workflow |
 |----------|-------|----------|
 | `[shortcut] <target>` | [Agent Name] | `workflows/[workflow].md` |
-| [one row per agent — derive shortcut from agent name, lowercase hyphenated] |
+| [one row per agent - derive shortcut from agent name, lowercase hyphenated] |
 
 To invoke: start your message with the shortcut. Example: `scaffold user-profile` runs the Feature Scaffolder workflow for the user-profile feature.
 ```
 
 ---
 
-### For GitHub Copilot — `.github/agents/*.md`
+### For GitHub Copilot - `.github/agents/*.md`
 
 For each agent defined in Step 3, create `.github/agents/[agent-slug].md`.
 
@@ -240,8 +240,8 @@ Format:
 ```markdown
 ---
 name: [agent-slug]
-description: [one sentence — specific enough to identify this agent in a picker list]
-tools: [read_file, create_file, run_in_terminal — include only what this agent actually needs]
+description: [one sentence - specific enough to identify this agent in a picker list]
+tools: [read_file, create_file, run_in_terminal - include only what this agent actually needs]
 ---
 
 [Paste the agent's full "Invoke with" prompt from AGENTS.md as the system prompt body]
@@ -251,7 +251,7 @@ tools: [read_file, create_file, run_in_terminal — include only what this agent
 [Embed the full content of the corresponding workflow file from workflows/]
 ```
 
-Each file must be self-contained — the developer selects the agent from the Copilot Chat agent picker and types a brief task; the embedded workflow provides full context without requiring any additional file reads. If an agent maps to more than one workflow file, embed all of them under separate `# Workflow: [name]` headings.
+Each file must be self-contained - the developer selects the agent from the Copilot Chat agent picker and types a brief task; the embedded workflow provides full context without requiring any additional file reads. If an agent maps to more than one workflow file, embed all of them under separate `# Workflow: [name]` headings.
 
 ---
 
@@ -263,7 +263,7 @@ Each file must be self-contained — the developer selects the agent from the Co
 
 **Workflows should be specific, not generic.** "Write tests" is not a workflow step. "Create a `ProviderContainer` with a mock repository override, call the notifier method, assert the state transition" is a workflow step.
 
-**Acknowledge real risks.** Each workflow's "Common Mistakes" section should document mistakes that actually happen in this architecture — not generic software engineering pitfalls.
+**Acknowledge real risks.** Each workflow's "Common Mistakes" section should document mistakes that actually happen in this architecture - not generic software engineering pitfalls.
 
 **Keep AGENTS.md focused.** 4–6 agents is the right range for most projects. More than that dilutes focus. Each agent should have a clear, distinct scope.
 
@@ -273,20 +273,20 @@ Each file must be self-contained — the developer selects the agent from the Co
 
 Output three sections:
 
-**Section 1 — AGENTS.md content:**
+**Section 1 - AGENTS.md content:**
 Begin with:
 ```markdown
 # Agent Definitions
 ```
 
-**Section 2 — Workflow files:**
+**Section 2 - Workflow files:**
 For each workflow, output the full file content with a header:
 ```
 ## File: workflows/[name].md
 [content]
 ```
 
-**Section 3 — Tool automation files:**
+**Section 3 - Tool automation files:**
 For each detected tool, output each generated file with a header:
 ```
 ## File: .cursor/rules/[agent-slug].mdc

@@ -42,10 +42,10 @@ test/
 ## Test Naming
 
 ```dart
-// File naming — matches source file with _test suffix
+// File naming - matches source file with _test suffix
 // task_list_provider.dart → task_list_provider_test.dart
 
-// Group structure — describe the subject
+// Group structure - describe the subject
 group('TaskListProvider', () {
   // Subgroup for specific behaviors
   group('build', () {
@@ -70,14 +70,14 @@ Test names should read as complete sentences: "returns empty state when user has
 **Mock at the repository layer.** Do not mock data sources in widget tests or provider tests. Repository mocks are the correct abstraction level for testing business logic and UI.
 
 ```dart
-// Correct — mock the repository interface
+// Correct - mock the repository interface
 class MockTaskRepository extends Mock implements TaskRepository {}
 
-// Wrong — mocking too deep for a widget test
+// Wrong - mocking too deep for a widget test
 class MockTaskRemoteDataSource extends Mock implements TaskRemoteDataSource {}
 ```
 
-Use `mocktail` for mocking (not `mockito` — avoids code generation for mocks):
+Use `mocktail` for mocking (not `mockito` - avoids code generation for mocks):
 
 ```dart
 import 'package:mocktail/mocktail.dart';
@@ -119,7 +119,7 @@ testWidgets('shows task list when tasks exist', (tester) async {
 });
 ```
 
-Do not use `MaterialApp.router` with real GoRouter in widget tests — use `MaterialApp` with a specific `home`.
+Do not use `MaterialApp.router` with real GoRouter in widget tests - use `MaterialApp` with a specific `home`.
 
 **Don't test Riverpod internals.** Test what the user sees, not how the provider is structured internally. Prefer `find.text()`, `find.byType()`, and `find.byKey()` over reading provider state directly.
 
@@ -158,7 +158,7 @@ test('createTask adds task to state', () async {
 
 ## Use Case Tests
 
-Use case tests are pure unit tests — no Flutter test runner, no ProviderContainer:
+Use case tests are pure unit tests - no Flutter test runner, no ProviderContainer:
 
 ```dart
 void main() {
@@ -246,7 +246,7 @@ await container.read(someAsyncProvider.future);
 ## What NOT to Test
 
 - Implementation details of generated code (Freezed, riverpod_annotation)
-- Private methods — test through the public API
+- Private methods - test through the public API
 - Flutter framework behavior (e.g., that `Text` renders text)
 - Generated `.g.dart` or `.freezed.dart` files
 

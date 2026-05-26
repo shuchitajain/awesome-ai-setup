@@ -8,19 +8,19 @@ description: Analyze the repository to detect the actual architecture and genera
 
 You are generating an `ARCHITECTURE.md` file for this repository.
 
-This file will be loaded as persistent context for AI coding assistants. Its job is to tell AI tools where things belong, how the system is organized, and what the rules are — before they write a single line of code.
+This file will be loaded as persistent context for AI coding assistants. Its job is to tell AI tools where things belong, how the system is organized, and what the rules are - before they write a single line of code.
 
 **Accuracy matters more than completeness.** An incomplete file that is entirely correct is more useful than a comprehensive file with invented details.
 
 ---
 
-## Step 1 — Read the Repository
+## Step 1 - Read the Repository
 
 Before writing anything, gather information. Read these in order:
 
-1. **Top-level directory listing** — understand the repo structure
-2. **Primary source directory** (`lib/`, `src/`, `app/`, or equivalent) — list all subdirectories
-3. **Dependency manifest** — read `pubspec.yaml`, `package.json`, `Cargo.toml`, `go.mod`, or equivalent. Note the state management, routing, DI, and testing libraries actually present.
+1. **Top-level directory listing** - understand the repo structure
+2. **Primary source directory** (`lib/`, `src/`, `app/`, or equivalent) - list all subdirectories
+3. **Dependency manifest** - read `pubspec.yaml`, `package.json`, `Cargo.toml`, `go.mod`, or equivalent. Note the state management, routing, DI, and testing libraries actually present.
 4. **Detect the primary framework version** by running the appropriate command:
    - Flutter → `flutter --version` (captures Flutter version, Dart version, and channel)
    - Node.js / React / Next.js → `node --version`; read `react`, `next`, `vue`, `svelte`, or `angular` version from the manifest
@@ -43,16 +43,16 @@ Do not proceed to Step 2 until you have read actual code. Do not infer from depe
 ## Reference Example (Optional)
 
 Check for a reference example in this order:
-1. `.ai/reference/*/ARCHITECTURE.md` — if the user copied one during setup
-2. `node_modules/awesome-ai-setup/examples/*/ARCHITECTURE.md` — if the package is installed locally
+1. `.ai/reference/*/ARCHITECTURE.md` - if the user copied one during setup
+2. `node_modules/awesome-ai-setup/examples/*/ARCHITECTURE.md` - if the package is installed locally
 
 If neither path exists, skip this section entirely and proceed to Step 2.
 
-Use it as a **structural guide only** — what sections to include and how to format them. Do not copy its content; it describes a different project. All content must come from reading this codebase in Step 1.
+Use it as a **structural guide only** - what sections to include and how to format them. Do not copy its content; it describes a different project. All content must come from reading this codebase in Step 1.
 
 ---
 
-## Step 2 — Answer These Questions
+## Step 2 - Answer These Questions
 
 Based only on what you read in Step 1, answer each question. If you cannot answer from evidence, write "not observed".
 
@@ -65,7 +65,7 @@ Based only on what you read in Step 1, answer each question. If you cannot answe
 **State Management**
 - What library/pattern is used for state management? (name it from the actual import, not a guess)
 - How is state structured? (classes, records, sealed classes, plain objects?)
-- Where do state changes originate — in the UI layer, a controller/notifier layer, or a dedicated store?
+- Where do state changes originate - in the UI layer, a controller/notifier layer, or a dedicated store?
 
 **Data Access**
 - Is there a repository pattern (interfaces separate from implementations)?
@@ -89,7 +89,7 @@ Based only on what you read in Step 1, answer each question. If you cannot answe
 
 ---
 
-## Step 3 — Generate ARCHITECTURE.md
+## Step 3 - Generate ARCHITECTURE.md
 
 Using your answers from Step 2, generate the file.
 

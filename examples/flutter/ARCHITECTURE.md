@@ -23,7 +23,7 @@ The codebase is organized around features, not layers. Each feature is a self-co
 
 ```
 lib/
-├── core/                          # Shared infrastructure — not feature-specific
+├── core/                          # Shared infrastructure - not feature-specific
 │   ├── constants/
 │   │   ├── app_constants.dart     # App-wide constants (timeout, pagination limits)
 │   │   └── api_constants.dart     # Base URLs, endpoint paths
@@ -176,7 +176,7 @@ RemoteDataSource ←──── dio ────→ REST API
 LocalDataSource  ←──── Hive ───→ Local cache
 ```
 
-Providers do not call data sources directly. They call use cases. Use cases call repository interfaces. This boundary is important — it keeps business logic testable without Flutter or network dependencies.
+Providers do not call data sources directly. They call use cases. Use cases call repository interfaces. This boundary is important - it keeps business logic testable without Flutter or network dependencies.
 
 ---
 
@@ -185,14 +185,14 @@ Providers do not call data sources directly. They call use cases. Use cases call
 ### Provider naming
 
 ```dart
-// Notifiers — describe the state they manage
+// Notifiers - describe the state they manage
 @riverpod
 class TaskList extends _$TaskList { ... }          // taskListProvider
 
 @riverpod
 class TaskDetail extends _$TaskDetail { ... }      // taskDetailProvider
 
-// Simple providers — describe what they provide
+// Simple providers - describe what they provide
 @riverpod
 TaskRepository taskRepository(TaskRepositoryRef ref) { ... }
 
@@ -236,7 +236,7 @@ class TaskList extends _$TaskList {
 }
 ```
 
-Do not mix `AsyncNotifier` and `Notifier` — if the build method is async, the class extends `AsyncNotifier`.
+Do not mix `AsyncNotifier` and `Notifier` - if the build method is async, the class extends `AsyncNotifier`.
 
 ---
 
@@ -253,7 +253,7 @@ abstract class Routes {
   static const profile = '/profile';
 }
 
-// Navigation — always use named routes
+// Navigation - always use named routes
 context.go(Routes.home);
 context.push(Routes.taskDetail, extra: task);
 context.pop();
@@ -305,13 +305,13 @@ features/[feature_name]/
 There is no DI container. Dependencies are wired entirely through Riverpod providers.
 
 ```dart
-// datasource provider — created in data layer
+// datasource provider - created in data layer
 @riverpod
 TaskRemoteDataSource taskRemoteDataSource(TaskRemoteDataSourceRef ref) {
   return TaskRemoteDataSourceImpl(dioClient: ref.watch(dioClientProvider));
 }
 
-// repository provider — created in data layer, typed to domain interface
+// repository provider - created in data layer, typed to domain interface
 @riverpod
 TaskRepository taskRepository(TaskRepositoryRef ref) {
   return TaskRepositoryImpl(
@@ -320,7 +320,7 @@ TaskRepository taskRepository(TaskRepositoryRef ref) {
   );
 }
 
-// use case providers — thin wrappers
+// use case providers - thin wrappers
 @riverpod
 GetTasks getTasks(GetTasksRef ref) {
   return GetTasks(repository: ref.watch(taskRepositoryProvider));
@@ -379,7 +379,7 @@ class AuthFailure extends Failure {
 }
 ```
 
-Use cases return `Either<Failure, T>` from `fpdart` or throw failures directly — this is a project-specific decision. Check `MEMORY.md` for which pattern this project settled on.
+Use cases return `Either<Failure, T>` from `fpdart` or throw failures directly - this is a project-specific decision. Check `MEMORY.md` for which pattern this project settled on.
 
 Providers catch failures and surface them via `AsyncError` state. Screens use `when()` on `AsyncValue` to handle loading, error, and data states.
 
@@ -404,4 +404,4 @@ Generated files (`.g.dart`, `.freezed.dart`) are committed to the repository.
 
 ## Architecture Decision Records
 
-Significant architecture decisions are tracked in `MEMORY.md`. Check there before suggesting alternative approaches to state management, navigation, or dependency injection — these decisions have context.
+Significant architecture decisions are tracked in `MEMORY.md`. Check there before suggesting alternative approaches to state management, navigation, or dependency injection - these decisions have context.

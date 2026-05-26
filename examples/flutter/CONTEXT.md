@@ -5,11 +5,11 @@ version: 0.1.0
 
 # Domain Context
 
-This file describes the application's domain model, business rules, and user workflows. It exists to help AI tools understand what this app does and why — reducing hallucination on domain-specific behavior and preventing suggestions that contradict business requirements.
+This file describes the application's domain model, business rules, and user workflows. It exists to help AI tools understand what this app does and why - reducing hallucination on domain-specific behavior and preventing suggestions that contradict business requirements.
 
 ---
 
-> **Adapter note:** This file uses "TaskFlow" as a placeholder app name. Replace all domain content here with your actual app's domain model. The structure and format are what matters — not the example content.
+> **Adapter note:** This file uses "TaskFlow" as a placeholder app name. Replace all domain content here with your actual app's domain model. The structure and format are what matters - not the example content.
 
 ---
 
@@ -17,7 +17,7 @@ This file describes the application's domain model, business rules, and user wor
 
 **TaskFlow** is a collaborative task management tool for small teams (2–50 members). It allows teams to create workspaces, organize tasks into projects, assign work to members, and track progress across multiple concurrent workstreams.
 
-The app is used primarily on mobile (iOS and Android) with feature parity. There is no separate web app — the Flutter app is the only client.
+The app is used primarily on mobile (iOS and Android) with feature parity. There is no separate web app - the Flutter app is the only client.
 
 ---
 
@@ -28,7 +28,7 @@ The app is used primarily on mobile (iOS and Android) with feature parity. There
 The top-level organizational boundary. Everything in the system belongs to a Workspace.
 
 - A User can belong to multiple Workspaces
-- Workspaces are isolated — data does not cross Workspace boundaries
+- Workspaces are isolated - data does not cross Workspace boundaries
 - Each Workspace has a subscription tier that determines feature limits
 - Workspaces can be Personal (single user) or Team (multiple members)
 
@@ -46,7 +46,7 @@ A container for related Tasks with a defined scope and timeline.
 - Projects belong to exactly one Workspace
 - Projects have a status: `active`, `archived`, `completed`
 - A Project can have one Owner and multiple Contributors
-- Projects are not deleted — they are archived. Archived Projects are hidden by default but not removed.
+- Projects are not deleted - they are archived. Archived Projects are hidden by default but not removed.
 
 ```
 Project
@@ -63,9 +63,9 @@ The core unit of work.
 - Tasks belong to exactly one Project
 - Tasks have a Status: `todo`, `in_progress`, `done`, `cancelled`
 - Tasks can be assigned to one User (the Assignee)
-- Tasks can have sub-tasks (one level deep — sub-tasks cannot have sub-tasks)
+- Tasks can have sub-tasks (one level deep - sub-tasks cannot have sub-tasks)
 - Tasks have a Priority: `none`, `low`, `medium`, `high`, `urgent`
-- Completed and Cancelled are distinct states — "done" means finished successfully, "cancelled" means abandoned
+- Completed and Cancelled are distinct states - "done" means finished successfully, "cancelled" means abandoned
 
 ```
 Task
@@ -83,7 +83,7 @@ An authenticated person with access to one or more Workspaces.
 
 - Users have a global profile (name, avatar) but workspace-specific roles
 - A User's role is per-Workspace, not global
-- Users cannot delete their own accounts directly — they contact support
+- Users cannot delete their own accounts directly - they contact support
 
 ### WorkspaceMember
 
@@ -117,20 +117,20 @@ WorkspaceMember
 These rules are enforced in the domain layer and must not be bypassed by UI shortcuts:
 
 **Workspace rules:**
-- Archiving a Project does not delete its Tasks — they remain in the system but are hidden from default views
-- A Workspace must always have exactly one Owner — ownership must be transferred before the current Owner can leave
+- Archiving a Project does not delete its Tasks - they remain in the system but are hidden from default views
+- A Workspace must always have exactly one Owner - ownership must be transferred before the current Owner can leave
 - Free tier Workspaces are limited to 3 Projects and 10 Members
 
 **Task rules:**
 - A Task cannot be assigned to a Guest user
 - Sub-tasks cannot have their own sub-tasks (enforced at creation)
 - Due dates are stored in UTC. Display in the user's local timezone is the responsibility of the presentation layer
-- Deleting a Task is a hard delete — there is no trash or undo
+- Deleting a Task is a hard delete - there is no trash or undo
 - "Completed" tasks stay visible in their Project; "Cancelled" tasks are visually dimmed
 
 **Member rules:**
 - An Admin cannot modify another Admin's role (only an Owner can)
-- A suspended Member cannot be re-invited — their status must be changed from `suspended` to `active` first
+- A suspended Member cannot be re-invited - their status must be changed from `suspended` to `active` first
 
 ---
 
@@ -196,7 +196,7 @@ These are real situations that have caused bugs or confusion:
 - **Deleted project member assigned to existing tasks:** When a Member is removed from a Project, their existing Task assignments remain. The Task shows their name even though they no longer have project access. This is by design.
 - **Timezone boundary for due dates:** A task due "today" depends on the user's timezone. A task due at 2026-01-01 00:00 UTC appears overdue to a user in UTC+3 but due today to a user in UTC-5.
 - **Guest user seeing sub-tasks:** A Guest invited to a Project can see all Tasks in that Project, including sub-tasks. There is no sub-task-level access control.
-- **Workspace suspension:** A suspended Workspace (non-payment) makes it read-only — users can see data but not create or edit.
+- **Workspace suspension:** A suspended Workspace (non-payment) makes it read-only - users can see data but not create or edit.
 
 ---
 

@@ -91,7 +91,7 @@ class TaskListState with _$TaskListState {
 
 State classes go in the same providers/ directory as the notifier, in a separate file named `[feature]_state.dart`.
 
-For simple providers that only need a single value, a state class is not needed — return the value type directly.
+For simple providers that only need a single value, a state class is not needed - return the value type directly.
 
 ---
 
@@ -139,19 +139,19 @@ class TaskList extends _$TaskList {
 
 ## ref.watch vs ref.read
 
-- `ref.watch` in `build()` — subscribes to changes, triggers rebuild
-- `ref.read` in callbacks — reads once, does not subscribe
+- `ref.watch` in `build()` - subscribes to changes, triggers rebuild
+- `ref.read` in callbacks - reads once, does not subscribe
 - Never `ref.read` inside `build()` to get reactive state
 - Never `ref.watch` inside callbacks or async methods
 
 ```dart
 Widget build(BuildContext context, WidgetRef ref) {
-  // Correct — reactive subscription
+  // Correct - reactive subscription
   final state = ref.watch(taskListProvider);
 
   return ElevatedButton(
     onPressed: () {
-      // Correct — one-time read in callback
+      // Correct - one-time read in callback
       ref.read(taskListProvider.notifier).createTask(params);
     },
     child: ...,
@@ -204,7 +204,7 @@ ref.invalidate(taskListProvider);
 ref.invalidateSelf();
 ```
 
-Do not call `build()` manually from inside a notifier to refresh — use `ref.invalidateSelf()` instead.
+Do not call `build()` manually from inside a notifier to refresh - use `ref.invalidateSelf()` instead.
 
 ---
 
@@ -219,7 +219,7 @@ For providers that should survive navigation (e.g., auth state), use `@Riverpod(
 class AuthState extends _$AuthState { ... }
 ```
 
-Keep the list of `keepAlive` providers small — most providers should autoDispose.
+Keep the list of `keepAlive` providers small - most providers should autoDispose.
 
 ---
 
@@ -259,7 +259,7 @@ testWidgets('shows task list', (tester) async {
 });
 ```
 
-Never mock Riverpod providers directly — override the repository or data source provider, letting the real notifier run against the mock.
+Never mock Riverpod providers directly - override the repository or data source provider, letting the real notifier run against the mock.
 
 ---
 
@@ -275,4 +275,4 @@ State exposed from notifiers should be immutable (Freezed). Never expose a mutab
 Async providers need `await tester.pump()` or `pumpAndSettle()` to complete before assertions.
 
 **Mixing Riverpod 1.x and 2.x APIs**
-This project uses Riverpod 2.x with code generation. Do not use `StateProvider`, `StateNotifierProvider`, `FutureProvider` directly — use `@riverpod` annotations.
+This project uses Riverpod 2.x with code generation. Do not use `StateProvider`, `StateNotifierProvider`, `FutureProvider` directly - use `@riverpod` annotations.

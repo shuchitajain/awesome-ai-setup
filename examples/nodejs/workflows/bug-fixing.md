@@ -48,7 +48,7 @@ Identify which layer has incorrect behavior. Check:
 If the bug involves a database write failing silently or crashing:
 - Check if `PrismaClientKnownRequestError` is being caught and translated in the repository
 - Common codes: `P2002` (unique constraint), `P2025` (record not found), `P2003` (foreign key)
-- Unhandled Prisma errors bubble up as 500s — check the Pino logs for `code` and `meta`
+- Unhandled Prisma errors bubble up as 500s - check the Pino logs for `code` and `meta`
 
 ### 4. Check transaction boundaries
 If partial writes are occurring (some models updated, others not):
@@ -56,7 +56,7 @@ If partial writes are occurring (some models updated, others not):
 - Check if the transaction is wrapping the entire operation or only part of it
 
 ### 5. Fix the root cause
-Fix at the layer where the bug lives — do not add workarounds in a higher layer.
+Fix at the layer where the bug lives - do not add workarounds in a higher layer.
 - If a service returns wrong data → fix the service
 - If a repository returns wrong data → fix the repository query
 - Do not add `if` guards in the controller to paper over service bugs
@@ -76,7 +76,7 @@ If there was no test covering this case, the test you wrote in Step 1 is your re
 
 - [ ] Reproducing test written before any code change
 - [ ] Bug located to a specific layer (not "somewhere in the service")
-- [ ] Fix applied at the root cause layer — no workarounds in higher layers
+- [ ] Fix applied at the root cause layer - no workarounds in higher layers
 - [ ] Full test suite passes after fix
 - [ ] Regression test committed alongside the fix
 - [ ] `MEMORY.md` updated if this was a recurring AI suggestion problem
@@ -85,7 +85,7 @@ If there was no test covering this case, the test you wrote in Step 1 is your re
 
 ## Common Mistakes
 
-- **Fixing the symptom, not the cause** — if a controller is returning wrong data, the bug is in the service or repository, not the controller.
-- **Adding try/catch in the controller** — errors propagate up by design. Catching them in the controller hides bugs.
-- **Testing with `console.log` debugging instead of a failing test** — write the test first. Logs disappear; tests stay.
-- **Assuming Prisma errors are being handled** — if you add a new query, check that `PrismaClientKnownRequestError` is caught for the relevant error codes.
+- **Fixing the symptom, not the cause** - if a controller is returning wrong data, the bug is in the service or repository, not the controller.
+- **Adding try/catch in the controller** - errors propagate up by design. Catching them in the controller hides bugs.
+- **Testing with `console.log` debugging instead of a failing test** - write the test first. Logs disappear; tests stay.
+- **Assuming Prisma errors are being handled** - if you add a new query, check that `PrismaClientKnownRequestError` is caught for the relevant error codes.

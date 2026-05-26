@@ -2,7 +2,7 @@
 
 This is a reference example of what a fully set-up AI context looks like for an **Express + TypeScript + Prisma** REST API project.
 
-The files here are example outputs from the `awesome-ai-setup` agents — they show the format, depth, and specificity that makes AI context useful. They describe a fictional "ShopAPI" (multi-vendor e-commerce). When you run the agents on your actual project, they will generate files specific to your real codebase.
+The files here are example outputs from the `awesome-ai-setup` agents - they show the format, depth, and specificity that makes AI context useful. They describe a fictional "ShopAPI" (multi-vendor e-commerce). When you run the agents on your actual project, they will generate files specific to your real codebase.
 
 ---
 
@@ -35,7 +35,7 @@ The files here are example outputs from the `awesome-ai-setup` agents — they s
 
 ## How to use this example
 
-### Option A — Run the agents on your project (recommended)
+### Option A - Run the agents on your project (recommended)
 
 ```bash
 # From your project root
@@ -44,9 +44,9 @@ node /path/to/awesome-ai-setup/bin/cli.js
 npx awesome-ai-setup
 ```
 
-Then run the `diagnose-and-setup` agent. It will generate files specific to your actual codebase. Use this example as a quality bar — your generated files should be at least this specific.
+Then run the `diagnose-and-setup` agent. It will generate files specific to your actual codebase. Use this example as a quality bar - your generated files should be at least this specific.
 
-### Option B — Adapt directly
+### Option B - Adapt directly
 
 If your project is also Express + TypeScript + Prisma, you can start from these files and adapt them:
 - Replace "ShopAPI" domain model with your actual entities and business rules
@@ -58,7 +58,7 @@ If your project is also Express + TypeScript + Prisma, you can start from these 
 
 ## What makes this context useful
 
-- **Specific, not generic** — "Controllers must not import `@prisma/client`" is useful. "Follow clean architecture principles" is not.
-- **Decisions are locked in** — MEMORY.md says "do not suggest NestJS" because the team evaluated it and moved on. AI tools stop relitigating decided questions.
-- **Anti-patterns are named** — "AI suggests storing prices as floats" documents a real recurring problem. Naming it prevents it.
-- **Workflows are architecture-specific** — "Use `db.$transaction()` for multi-model writes" is specific to this stack. Generic "write tests" advice wastes tokens.
+- **Specific, not generic** - "Controllers must not import `@prisma/client`" is useful. "Follow clean architecture principles" is not.
+- **Decisions are locked in** - MEMORY.md says "do not suggest NestJS" because the team evaluated it and moved on. AI tools stop relitigating decided questions.
+- **Anti-patterns are named** - "AI suggests storing prices as floats" documents a real recurring problem. Naming it prevents it.
+- **Workflows are architecture-specific** - "Use `db.$transaction()` for multi-model writes" is specific to this stack. Generic "write tests" advice wastes tokens.

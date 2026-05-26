@@ -40,14 +40,14 @@ Do NOT use this for bug fixes (see `bug-fixing.md`) or refactors (see `refactori
 
 Follow this order. Each step should be complete before moving to the next.
 
-### Step 1 — Define the Domain
+### Step 1 - Define the Domain
 
 Start in `lib/features/[feature_name]/domain/`.
 
 **Entities first:**
 ```dart
 // domain/entities/[entity].dart
-// Pure Dart class — no Flutter, no JSON, no external packages
+// Pure Dart class - no Flutter, no JSON, no external packages
 // Use Freezed for immutability
 
 @freezed
@@ -93,7 +93,7 @@ One use case per file. One public method per use case. No business logic in use 
 
 ---
 
-### Step 2 — Implement the Data Layer
+### Step 2 - Implement the Data Layer
 
 In `lib/features/[feature_name]/data/`.
 
@@ -176,7 +176,7 @@ class ProjectRepositoryImpl implements ProjectRepository {
 
 ---
 
-### Step 3 — Wire Up Providers
+### Step 3 - Wire Up Providers
 
 In `lib/features/[feature_name]/presentation/providers/`.
 
@@ -230,7 +230,7 @@ dart run build_runner build --delete-conflicting-outputs
 
 ---
 
-### Step 4 — Build the UI
+### Step 4 - Build the UI
 
 In `lib/features/[feature_name]/presentation/`.
 
@@ -270,12 +270,12 @@ class ProjectListScreen extends HookConsumerWidget {
 
 **Widgets:**
 - Each widget is focused on a single visual responsibility
-- Receive data as parameters — do not watch providers inside list item widgets
+- Receive data as parameters - do not watch providers inside list item widgets
 - Use `const` where possible
 
 ---
 
-### Step 5 — Update Navigation
+### Step 5 - Update Navigation
 
 In `core/router/app_router.dart`:
 
@@ -302,20 +302,20 @@ static const createProject = '/projects/new';
 
 ---
 
-### Step 6 — Write Tests
+### Step 6 - Write Tests
 
 Minimum test coverage for a new feature:
 
-1. **Use case test** — happy path + error propagation
-2. **Repository impl test** — verifies data source is called correctly, model is mapped to entity
-3. **Provider test** — happy path, empty state, error state
-4. **Widget smoke test** — screen renders without errors, key content visible
+1. **Use case test** - happy path + error propagation
+2. **Repository impl test** - verifies data source is called correctly, model is mapped to entity
+3. **Provider test** - happy path, empty state, error state
+4. **Widget smoke test** - screen renders without errors, key content visible
 
 See `testing.instructions.md` for specific patterns.
 
 ---
 
-### Step 7 — Review Checklist
+### Step 7 - Review Checklist
 
 Before marking the feature complete:
 

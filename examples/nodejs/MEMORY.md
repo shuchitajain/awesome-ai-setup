@@ -20,9 +20,9 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 **Decision:** Express 5 with a manually structured layered architecture.
 
 **Why Express won:**
-- Smaller team (3 devs) — NestJS's module system added ceremony without proportional benefit at our scale
-- Faster onboarding — Express conventions are universally understood
-- No magic — dependency injection via constructor arguments is explicit and easy to test
+- Smaller team (3 devs) - NestJS's module system added ceremony without proportional benefit at our scale
+- Faster onboarding - Express conventions are universally understood
+- No magic - dependency injection via constructor arguments is explicit and easy to test
 - NestJS's generated boilerplate made PRs harder to review
 
 **What to avoid:** Do not suggest NestJS modules, decorators (`@Injectable`, `@Controller`, `@Module`), or NestJS-specific patterns. If dependency injection is needed, pass dependencies as constructor arguments.
@@ -41,7 +41,7 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 - `prisma.$transaction()` API is simpler than TypeORM's QueryRunner pattern
 - Prisma Studio is useful for debugging data issues quickly
 
-**What to avoid:** Do not suggest TypeORM, `@Entity`, `@Column`, `synchronize: true`, or QueryRunner patterns. Do not suggest Drizzle — the Prisma investment is made. Do not suggest raw SQL for queries that Prisma can express cleanly.
+**What to avoid:** Do not suggest TypeORM, `@Entity`, `@Column`, `synchronize: true`, or QueryRunner patterns. Do not suggest Drizzle - the Prisma investment is made. Do not suggest raw SQL for queries that Prisma can express cleanly.
 
 ---
 
@@ -53,15 +53,15 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 
 **Why Vitest won:**
 - 4x faster test runs with identical assertion API
-- Native ESM support — no `transform` config fighting TypeScript
+- Native ESM support - no `transform` config fighting TypeScript
 - `vi.fn()` and `vi.spyOn()` are drop-in replacements for Jest equivalents
-- Vitest runs in the same process as Vite (if we ever add a frontend) — unified toolchain
+- Vitest runs in the same process as Vite (if we ever add a frontend) - unified toolchain
 
 **What to avoid:** Do not suggest Jest, `jest.fn()`, `jest.mock()`, or Jest configuration. The test runner is Vitest. Use `vi.fn()`, `vi.spyOn()`, `vi.mock()`.
 
 ---
 
-### [2024-05] Prices stored as integer cents — never floats
+### [2024-05] Prices stored as integer cents - never floats
 
 **Context:** Initial implementation stored prices as `Float` in Prisma. Hit floating-point rounding bugs in order total calculations (`$9.99 + $0.01 = $10.000000000002`).
 
@@ -77,17 +77,17 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 
 **Decision:** Zod schemas in `src/schemas/` define the shape. TypeScript types are inferred from Zod schemas with `z.infer<typeof Schema>`. Validation middleware uses the same schema.
 
-**What to avoid:** Do not write separate TypeScript interfaces for request bodies. Do not use `express-validator` or Joi. Do not duplicate type definitions — infer from Zod.
+**What to avoid:** Do not write separate TypeScript interfaces for request bodies. Do not use `express-validator` or Joi. Do not duplicate type definitions - infer from Zod.
 
 ---
 
-### [2024-09] Refresh token rotation — single use
+### [2024-09] Refresh token rotation - single use
 
 **Context:** Implemented long-lived refresh tokens without rotation. Identified that a stolen refresh token could be silently reused indefinitely.
 
 **Decision:** Refresh tokens are single-use. Each use invalidates the current token and issues a new one. Tokens are stored hashed in the `RefreshToken` table. Reuse of an invalidated token triggers a family revocation (all refresh tokens for that user are invalidated).
 
-**What to avoid:** Do not implement stateless refresh tokens (JWT-signed, no database storage). Do not allow refresh token reuse. Do not store raw refresh tokens — always store the hash.
+**What to avoid:** Do not implement stateless refresh tokens (JWT-signed, no database storage). Do not allow refresh token reuse. Do not store raw refresh tokens - always store the hash.
 
 ---
 
@@ -106,4 +106,4 @@ Prices are integers (cents). This is non-negotiable. See decision above.
 Never use `any`. Use `unknown` with type narrowing, or define the correct type. If a third-party library returns `any`, wrap it in a typed function at the boundary.
 
 ### AI suggests in-memory database for integration tests
-Integration tests run against a real PostgreSQL database (Docker Compose in CI). Do not use SQLite or in-memory databases — they hide real-world query behavior and Prisma-specific issues.
+Integration tests run against a real PostgreSQL database (Docker Compose in CI). Do not use SQLite or in-memory databases - they hide real-world query behavior and Prisma-specific issues.

@@ -8,35 +8,35 @@ description: Detect per-file-type conventions across the codebase and generate s
 
 You are generating scoped instruction files for this repository.
 
-Scoped instructions are per-file-type rules that AI coding assistants apply automatically when working with specific files. Unlike a global instructions file (`CLAUDE.md`, `copilot-instructions.md`), scoped instructions apply only to matching files — making them more precise and less likely to cause noise.
+Scoped instructions are per-file-type rules that AI coding assistants apply automatically when working with specific files. Unlike a global instructions file (`CLAUDE.md`, `copilot-instructions.md`), scoped instructions apply only to matching files - making them more precise and less likely to cause noise.
 
 **The goal is to capture conventions that are actually present in the codebase, not conventions you'd recommend for this type of project.**
 
 ---
 
-## Step 1 — Read the Repository
+## Step 1 - Read the Repository
 
 Gather the information needed to detect actual conventions.
 
 **Required reading:**
 
-1. **Dependency manifest** — what libraries are actually in use (state management, testing, UI framework, code generation)
-2. **Existing instruction files** — `CLAUDE.md`, `.github/copilot-instructions.md`, `.cursorrules` — don't duplicate what's there
-3. **Architecture file** — `ARCHITECTURE.md` if present — understand the layer structure before generating layer-specific instructions
+1. **Dependency manifest** - what libraries are actually in use (state management, testing, UI framework, code generation)
+2. **Existing instruction files** - `CLAUDE.md`, `.github/copilot-instructions.md`, `.cursorrules` - don't duplicate what's there
+3. **Architecture file** - `ARCHITECTURE.md` if present - understand the layer structure before generating layer-specific instructions
 
-**File sampling — read 3–5 examples of each relevant type:**
+**File sampling - read 3–5 examples of each relevant type:**
 
 For each file type that's significant in this project, sample files to detect conventions:
 
-- **UI components/widgets/screens** — detect base class, spacing patterns, state approach, theming patterns
-- **State management files** — detect provider/store/reducer patterns, state structure, naming
-- **Test files** — detect mock strategy, test structure, fixture patterns, assertion style
-- **Data/API layer files** — detect error handling patterns, serialization approach
-- **Domain/business logic files** — detect use case structure, entity patterns
+- **UI components/widgets/screens** - detect base class, spacing patterns, state approach, theming patterns
+- **State management files** - detect provider/store/reducer patterns, state structure, naming
+- **Test files** - detect mock strategy, test structure, fixture patterns, assertion style
+- **Data/API layer files** - detect error handling patterns, serialization approach
+- **Domain/business logic files** - detect use case structure, entity patterns
 
 ---
 
-## Step 2 — Detect Conventions Per File Type
+## Step 2 - Detect Conventions Per File Type
 
 For each relevant file type, identify the consistent patterns. Assess each pattern:
 
@@ -65,7 +65,7 @@ For each relevant file type, identify the consistent patterns. Assess each patte
 
 ---
 
-## Step 3 — Determine Which Instruction Files to Create
+## Step 3 - Determine Which Instruction Files to Create
 
 Create one instruction file per meaningful file type grouping. Common groupings:
 
@@ -81,7 +81,7 @@ Only create files for groupings where you found meaningful, consistent conventio
 
 ---
 
-## Step 4 — Generate the Instruction Files
+## Step 4 - Generate the Instruction Files
 
 For each file type grouping identified in Step 3, generate an instruction file.
 
@@ -112,7 +112,7 @@ Brief one-line description of what these conventions cover.
 
 [Rule or convention with concise explanation]
 
-[Code example showing the correct pattern — use real patterns from the codebase]
+[Code example showing the correct pattern - use real patterns from the codebase]
 
 ---
 
@@ -126,7 +126,7 @@ Brief one-line description of what these conventions cover.
 - Include a code example for any non-obvious rule
 - Reference actual class names, library names, and patterns from the codebase
 - If a pattern is forbidden, show both the forbidden version and the correct version
-- Keep each file under 150 lines — these are scoped for a reason
+- Keep each file under 150 lines - these are scoped for a reason
 
 ---
 
@@ -177,11 +177,11 @@ Keep it under 80 lines. Scoped files handle the details.
 
 ## Constraints
 
-**Only document observed conventions, not recommended ones.** If the codebase inconsistently uses two approaches, do not pick one and document it as the convention — flag it instead.
+**Only document observed conventions, not recommended ones.** If the codebase inconsistently uses two approaches, do not pick one and document it as the convention - flag it instead.
 
 **No generic best practices.** "Prefer composition over inheritance" is not a codebase-specific convention. "Use `HookConsumerWidget` as the base class for all stateful widgets" is.
 
-**Reference actual library names and class names.** Not "the state management library" — "Riverpod's `AsyncNotifier`".
+**Reference actual library names and class names.** Not "the state management library" - "Riverpod's `AsyncNotifier`".
 
 **Scoped files should be additive, not duplicative.** If a rule appears in the global instructions file, don't repeat it in a scoped file.
 
@@ -199,4 +199,4 @@ For each instruction file to create, output the full file content with a header 
 [file content]
 ```
 
-After all instruction files, list any gaps — conventions that should exist but are too inconsistent in the current codebase to document.
+After all instruction files, list any gaps - conventions that should exist but are too inconsistent in the current codebase to document.

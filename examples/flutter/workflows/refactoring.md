@@ -7,7 +7,7 @@ version: 0.1.0
 
 A structured approach to refactoring in this Flutter Riverpod Clean Architecture project.
 
-Refactoring without a plan in a layered architecture tends to cascade — a rename in the domain layer breaks data models, which breaks providers, which breaks widget tests. This workflow helps contain the blast radius.
+Refactoring without a plan in a layered architecture tends to cascade - a rename in the domain layer breaks data models, which breaks providers, which breaks widget tests. This workflow helps contain the blast radius.
 
 ---
 
@@ -38,7 +38,7 @@ grep -r "Navigator.push" lib/
 
 Rename: entity, class, method, enum, provider, route constant.
 
-1. Use your IDE's rename refactoring (F2 / right-click → Rename) — it updates all references automatically
+1. Use your IDE's rename refactoring (F2 / right-click → Rename) - it updates all references automatically
 2. Run the analyzer after: `dart analyze`
 3. Run `dart run build_runner build --delete-conflicting-outputs` if renaming a `@riverpod` class or `@freezed` class
 4. Check generated files have updated names (`.g.dart`, `.freezed.dart`)
@@ -47,7 +47,7 @@ Rename: entity, class, method, enum, provider, route constant.
 **Watch for:** Enum values serialized to/from JSON. If you rename `TaskStatus.inProgress` to `TaskStatus.inProgressStatus`, your `toJson` output changes unless you have `@JsonValue` annotations.
 
 ```dart
-// Safe rename — JSON key is fixed regardless of Dart name
+// Safe rename - JSON key is fixed regardless of Dart name
 enum TaskStatus {
   @JsonValue('todo') todo,
   @JsonValue('in_progress') inProgress,  // rename this in Dart without breaking JSON
@@ -65,7 +65,7 @@ Move logic from one place to a more appropriate one.
 
 Before:
 ```dart
-// In TaskListNotifier — mixing state management with filtering logic
+// In TaskListNotifier - mixing state management with filtering logic
 Future<void> filterByStatus(TaskStatus? status) async {
   final allTasks = await ref.read(taskRepositoryProvider).getTasks();
   final filtered = status == null
@@ -155,7 +155,7 @@ This project has done several such migrations (documented in `MEMORY.md`). The a
 
 ## Refactoring Checklist
 
-- [ ] Scope is clearly defined — I know exactly what's changing and what's not
+- [ ] Scope is clearly defined - I know exactly what's changing and what's not
 - [ ] All call sites are identified before starting
 - [ ] Tests exist for the code being changed (or written first)
 - [ ] Refactor doesn't mix with unrelated changes
@@ -173,4 +173,4 @@ This project has done several such migrations (documented in `MEMORY.md`). The a
 
 **Don't fix bugs while refactoring.** If you find a bug while refactoring, note it and fix it separately. Combining refactor + bugfix makes it impossible to know which change fixed (or introduced) what.
 
-**Don't refactor generated code.** `.g.dart` and `.freezed.dart` files are generated — modifying them directly will be overwritten by build_runner. Refactor the source annotations instead.
+**Don't refactor generated code.** `.g.dart` and `.freezed.dart` files are generated - modifying them directly will be overwritten by build_runner. Refactor the source annotations instead.

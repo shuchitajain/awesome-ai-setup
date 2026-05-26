@@ -8,11 +8,11 @@ description: Assess the repository's current AI context maturity and produce a p
 
 You are diagnosing the current AI development setup for this repository and producing a short, prioritized action plan.
 
-The output is a numbered list of agents to run — specific to what's missing in this project, in the right order. Nothing more.
+The output is a numbered list of agents to run - specific to what's missing in this project, in the right order. Nothing more.
 
 ---
 
-## Step 1 — Check for Existing AI Setup Files
+## Step 1 - Check for Existing AI Setup Files
 
 Check whether each of these files exists. Read the ones that do.
 
@@ -28,30 +28,30 @@ Check whether each of these files exists. Read the ones that do.
 - `MEMORY.md` (root)
 
 **Scoped instruction files:**
-- `.github/instructions/` — list any `.instructions.md` files present
+- `.github/instructions/` - list any `.instructions.md` files present
 
 **Tooling:**
-- `.vscode/mcp.json` or `.cursor/mcp.json` — note if present
+- `.vscode/mcp.json` or `.cursor/mcp.json` - note if present
 
 **Agentic:**
-- `AGENTS.md` — note if present
-- `workflows/` — list any workflow files present
+- `AGENTS.md` - note if present
+- `workflows/` - list any workflow files present
 
 **README:**
 - Read `README.md` if present. Assess whether it contains real, project-specific content or is auto-generated / template boilerplate (e.g. scaffolded by a CLI tool, contains only installation placeholders, generic "Getting Started" sections with no project-specific detail, or identical to a framework's default README).
 
 For each file that exists, assess its quality:
-- **Thin** — file exists but has fewer than 30 meaningful lines, or contains only placeholder content
-- **Partial** — file has real content but is missing major sections
-- **Complete** — file has substantive, project-specific content
+- **Thin** - file exists but has fewer than 30 meaningful lines, or contains only placeholder content
+- **Partial** - file has real content but is missing major sections
+- **Complete** - file has substantive, project-specific content
 
 ---
 
-## Step 2 — Assess Codebase Maturity
+## Step 2 - Assess Codebase Maturity
 
 1. List the top-level directory
 2. Identify the primary source directory (`lib/`, `src/`, `app/`, or equivalent)
-3. Read the dependency manifest (`pubspec.yaml`, `package.json`, `Cargo.toml`, etc.) — identify the tech stack and key libraries
+3. Read the dependency manifest (`pubspec.yaml`, `package.json`, `Cargo.toml`, etc.) - identify the tech stack and key libraries
 4. Estimate codebase size by listing the source directory
 5. **Detect the primary framework version** by running the appropriate command in the terminal:
    - Flutter project (`pubspec.yaml` present) → run `flutter --version` and extract the Flutter and Dart versions from the output
@@ -59,16 +59,16 @@ For each file that exists, assess its quality:
    - Rust project (`Cargo.toml` present) → run `rustc --version`
    - Go project (`go.mod` present) → run `go version`
    - Python project (`pyproject.toml` / `requirements.txt` present) → run `python3 --version`
-   If the command is unavailable (tool not on PATH), note "version unavailable — run manually" rather than guessing.
+   If the command is unavailable (tool not on PATH), note "version unavailable - run manually" rather than guessing.
 
 **Classify as one of:**
-- **Empty** — no source directory yet, or fewer than 5 source files
-- **Early** — 5–40 source files, architecture starting to form but patterns not yet established
-- **Active** — 40+ source files, consistent patterns visible across the codebase
+- **Empty** - no source directory yet, or fewer than 5 source files
+- **Early** - 5–40 source files, architecture starting to form but patterns not yet established
+- **Active** - 40+ source files, consistent patterns visible across the codebase
 
 ---
 
-## Step 3 — Determine Current Maturity Level
+## Step 3 - Determine Current Maturity Level
 
 Based on Steps 1 and 2:
 
@@ -81,11 +81,11 @@ Based on Steps 1 and 2:
 | **4** | `MEMORY.md` exists with real entries |
 | **5** | `AGENTS.md` and at least one workflow file exist |
 
-Note gaps within the current level (e.g., "Level 1 — but instruction file is thin").
+Note gaps within the current level (e.g., "Level 1 - but instruction file is thin").
 
 ---
 
-## Step 4 — Generate Action Plan
+## Step 4 - Generate Action Plan
 
 Produce the action plan in this exact format:
 
@@ -93,17 +93,17 @@ Produce the action plan in this exact format:
 ## AI Setup Diagnosis
 
 **Codebase:** [Empty / Early / Active]
-**Tech stack:** [detected from dependency manifest — list primary frameworks and key libraries, including exact version from Step 2.5 — e.g. "Flutter 3.29.3 / Dart 3.7.2" or "React 19.1.0 / Node 22.13.0"]
-**Current level:** [0–5] — [level name from the maturity model]
+**Tech stack:** [detected from dependency manifest - list primary frameworks and key libraries, including exact version from Step 2.5 - e.g. "Flutter 3.29.3 / Dart 3.7.2" or "React 19.1.0 / Node 22.13.0"]
+**Current level:** [0–5] - [level name from the maturity model]
 
 ### What you have
 [One bullet per AI setup file found, with quality assessment]
 [Or: "No AI setup files found." if none]
-[If README.md exists, include one bullet assessing whether it is auto-generated/boilerplate or project-specific. If auto-generated, flag it: "README.md — auto-generated template. Offer to rewrite."]
+[If README.md exists, include one bullet assessing whether it is auto-generated/boilerplate or project-specific. If auto-generated, flag it: "README.md - auto-generated template. Offer to rewrite."]
 
 ### Recommended next steps
 
-[one of the three blocks below — choose based on codebase maturity]
+[one of the three blocks below - choose based on codebase maturity]
 ```
 
 **If codebase is Empty or Early:**
@@ -117,12 +117,12 @@ Do this now:
    → Fill in the placeholder sections by hand as your codebase develops.
 
 Return to this diagnostic after your first 2–3 features are built. At that point, run:
-2. `generate-architecture.md` — documents your folder structure and layer conventions
-3. `generate-context.md` — documents your domain model and business rules
-4. `update-memory.md` — records decisions made during early development
+2. `generate-architecture.md` - documents your folder structure and layer conventions
+3. `generate-context.md` - documents your domain model and business rules
+4. `update-memory.md` - records decisions made during early development
 ```
 
-**If codebase is Active — no existing AI setup (Level 0):**
+**If codebase is Active - no existing AI setup (Level 0):**
 
 ```markdown
 Run these agents in order:
@@ -142,14 +142,14 @@ Run these agents in order:
 Run 1 → 2 → 3 → 4 in sequence.
 ```
 
-**If codebase is Active — partial AI setup (Level 1–4):**
+**If codebase is Active - partial AI setup (Level 1–4):**
 
 ```markdown
 You have [X]. You're missing [Y].
 
 [List only the agents needed for the gaps found. Skip anything already covered by complete files.]
 
-[If an existing file is thin or stale, note: "Re-run [agent] — existing [file] is [thin/stale]."]
+[If an existing file is thin or stale, note: "Re-run [agent] - existing [file] is [thin/stale]."]
 ```
 
 ---
@@ -166,33 +166,33 @@ You have [X]. You're missing [Y].
 
 **Keep the action plan short.** The numbered list is the output. No lengthy explanations, no repeating information the user already has.
 
-**Don't diagnose quality problems in the codebase itself.** This agent assesses AI setup files only — not code quality, architectural violations, or technical debt.
+**Don't diagnose quality problems in the codebase itself.** This agent assesses AI setup files only - not code quality, architectural violations, or technical debt.
 
 ---
 
-## Step 5 — Offer to Execute
+## Step 5 - Offer to Execute
 
 After outputting the action plan, ask the user exactly this:
 
-> "Want me to run these now? I'll execute each agent in the order above — starting with [first agent name], then [subsequent agents]. Just say yes to proceed."
+> "Want me to run these now? I'll execute each agent in the order above - starting with [first agent name], then [subsequent agents]. Just say yes to proceed."
 
 If the user confirms:
 
-1. Read the first agent's file from the agents directory (`agents/`, `.github/agents/`, or `.cursor/commands/` — whichever exists in this project). Execute its full instructions against this codebase.
+1. Read the first agent's file from the agents directory (`agents/`, `.github/agents/`, or `.cursor/commands/` - whichever exists in this project). Execute its full instructions against this codebase.
 2. Once complete, proceed to the next agent(s). Where the plan allows parallel execution, say so and execute them in sequence within this conversation.
 3. After each agent completes, confirm what was produced before moving to the next.
 
-Do not ask for confirmation between each agent — the user already said yes. Only pause if you encounter a genuine ambiguity that requires their input (e.g., conflicting patterns in the codebase).
+Do not ask for confirmation between each agent - the user already said yes. Only pause if you encounter a genuine ambiguity that requires their input (e.g., conflicting patterns in the codebase).
 
 Once all planned agents have completed, ask:
 
-> "Core setup done. Want me to also generate an MCP config for this project? I'll detect which integrations are relevant (database, GitHub, filesystem, external APIs) based on what the codebase actually uses and generate a config tailored to your stack — more accurate than the generic CLI stub."
+> "Core setup done. Want me to also generate an MCP config for this project? I'll detect which integrations are relevant (database, GitHub, filesystem, external APIs) based on what the codebase actually uses and generate a config tailored to your stack - more accurate than the generic CLI stub."
 
 If yes, read and execute `generate-mcp-config` from the agents directory. If no, skip it.
 
 Then ask:
 
-> "Want me to also run `generate-agent-workflows`? It will generate `AGENTS.md` and structured workflow files tailored to this project's architecture — useful if you want a consistent AI-assisted development process across your team."
+> "Want me to also run `generate-agent-workflows`? It will generate `AGENTS.md` and structured workflow files tailored to this project's architecture - useful if you want a consistent AI-assisted development process across your team."
 
 Run it if the user says yes. Skip it if they say no.
 

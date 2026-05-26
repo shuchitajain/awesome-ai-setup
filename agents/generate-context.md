@@ -8,45 +8,45 @@ description: Extract the domain model, business rules, terminology, and user rol
 
 You are generating a `CONTEXT.md` file for this repository.
 
-This file captures domain knowledge — what the application does, who uses it, what the core entities are, and what business rules govern them. It is read by AI tools to reduce hallucination on domain-specific behavior and to prevent suggestions that contradict business rules.
+This file captures domain knowledge - what the application does, who uses it, what the core entities are, and what business rules govern them. It is read by AI tools to reduce hallucination on domain-specific behavior and to prevent suggestions that contradict business rules.
 
 **The goal is to document what the application actually does, not what a similar application might do.**
 
 ---
 
-## Step 1 — Read the Repository
+## Step 1 - Read the Repository
 
 Gather information from the codebase before writing anything.
 
 **Primary sources (read these):**
 1. Any existing documentation: `README.md`, `docs/`, `CONTEXT.md`, wiki files
-2. **Entity and model definitions** — files in `domain/entities/`, `models/`, `types/`, or equivalent. These reveal the core domain vocabulary.
-3. **Use cases or service layer** — files in `domain/usecases/`, `services/`, `interactors/`, or equivalent. These reveal business operations and rules.
-4. **Repository or API interfaces** — reveal what data operations exist
-5. **Auth-related files** — reveal user roles and permissions
-6. **Routing configuration** — reveals what screens/views exist (= what workflows exist)
-7. **Validation logic** — reveals business rules as code
+2. **Entity and model definitions** - files in `domain/entities/`, `models/`, `types/`, or equivalent. These reveal the core domain vocabulary.
+3. **Use cases or service layer** - files in `domain/usecases/`, `services/`, `interactors/`, or equivalent. These reveal business operations and rules.
+4. **Repository or API interfaces** - reveal what data operations exist
+5. **Auth-related files** - reveal user roles and permissions
+6. **Routing configuration** - reveals what screens/views exist (= what workflows exist)
+7. **Validation logic** - reveals business rules as code
 
 **Secondary sources (read if primary sources are sparse):**
-- UI screens/components — reveal user workflows from the user's perspective
-- API client code — reveals backend capabilities and data structures
-- Test files — often contain realistic domain examples and edge cases
+- UI screens/components - reveal user workflows from the user's perspective
+- API client code - reveals backend capabilities and data structures
+- Test files - often contain realistic domain examples and edge cases
 
 ---
 
 ## Reference Example (Optional)
 
 Check for a reference example in this order:
-1. `.ai/reference/*/CONTEXT.md` — if the user copied one during setup
-2. `node_modules/awesome-ai-setup/examples/*/CONTEXT.md` — if the package is installed locally
+1. `.ai/reference/*/CONTEXT.md` - if the user copied one during setup
+2. `node_modules/awesome-ai-setup/examples/*/CONTEXT.md` - if the package is installed locally
 
 If neither path exists, skip this section entirely and proceed to Step 2.
 
-Use it as a **structural guide only** — what sections to include and how to format them. Do not copy its content; it describes a different project. All content must come from reading this codebase in Step 1.
+Use it as a **structural guide only** - what sections to include and how to format them. Do not copy its content; it describes a different project. All content must come from reading this codebase in Step 1.
 
 ---
 
-## Step 2 — Extract Domain Information
+## Step 2 - Extract Domain Information
 
 Based on what you read, extract the following. For each item, note your source (file name) and confidence level (certain / inferred / uncertain).
 
@@ -80,7 +80,7 @@ From validation code, guards, conditions in use cases:
 
 ---
 
-## Step 3 — Identify Gaps
+## Step 3 - Identify Gaps
 
 Some domain context cannot be inferred from code alone. Identify what's missing:
 
@@ -90,11 +90,11 @@ Some domain context cannot be inferred from code alone. Identify what's missing:
 - Out-of-scope features (what the app intentionally does NOT do)
 - Non-obvious terminology distinctions
 
-Mark these as `<!-- TODO: add domain context — cannot infer from code -->` in the output.
+Mark these as `<!-- TODO: add domain context - cannot infer from code -->` in the output.
 
 ---
 
-## Step 4 — Generate CONTEXT.md
+## Step 4 - Generate CONTEXT.md
 
 Using your extracted information, generate the file.
 
@@ -106,7 +106,7 @@ Using your extracted information, generate the file.
 ### Core Domain Model
 For each primary entity:
 ```
-**[EntityName]** — one-line description
+**[EntityName]** - one-line description
 - Key fields and their significance
 - Relationships to other entities
 - Status values (if applicable)
@@ -116,7 +116,7 @@ For each primary entity:
 Table or list of roles with their capabilities and restrictions.
 
 ### Business Rules
-Explicit rules that govern the system. Favor rules that a developer might not infer from reading the code — the non-obvious constraints.
+Explicit rules that govern the system. Favor rules that a developer might not infer from reading the code - the non-obvious constraints.
 
 ### User Workflows
 The primary workflows from the user's perspective. Not screen-by-screen navigation, but the meaningful sequences of actions.
@@ -138,7 +138,7 @@ What external services the app integrates with and what each one is responsible 
 
 **Use the exact names from the codebase.** If the model is `WorkspaceMember` not `TeamMember`, use `WorkspaceMember`.
 
-**Don't document generic CRUD.** "Users can create tasks" is not useful domain context — it's obvious from the name. Document non-obvious rules: "a Task cannot be assigned to a Guest user" or "Archiving a Project does not delete its Tasks."
+**Don't document generic CRUD.** "Users can create tasks" is not useful domain context - it's obvious from the name. Document non-obvious rules: "a Task cannot be assigned to a Guest user" or "Archiving a Project does not delete its Tasks."
 
 **Flag inferences explicitly.** If you're inferring a business rule from a validation function rather than documentation, note it: `(inferred from validation logic in task_repository_impl.dart)`.
 

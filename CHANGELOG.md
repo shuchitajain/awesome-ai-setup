@@ -5,9 +5,9 @@ All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Bump rules:
-- **Patch** (`0.1.x`) — typo fixes, small prompt tweaks, wording improvements
-- **Minor** (`0.x.0`) — new agents, new examples, behavior changes to existing agents
-- **Major** (`x.0.0`) — breaking changes to file structure or agent contracts
+- **Patch** (`0.1.x`) - typo fixes, small prompt tweaks, wording improvements
+- **Minor** (`0.x.0`) - new agents, new examples, behavior changes to existing agents
+- **Major** (`x.0.0`) - breaking changes to file structure or agent contracts
 
 ---
 

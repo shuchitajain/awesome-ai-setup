@@ -16,7 +16,7 @@ Level 0 ──── Level 1 ──── Level 2 ──── Level 3 ───
 
 ---
 
-## Level 0 — Raw Autocomplete
+## Level 0 - Raw Autocomplete
 
 **What you have:** An AI coding assistant installed. Nothing project-specific configured.
 
@@ -26,65 +26,35 @@ Level 0 ──── Level 1 ──── Level 2 ──── Level 3 ───
 
 **The experience:** Useful for boilerplate and syntax. Actively harmful when it suggests patterns that violate your architecture or recreates things you've moved away from.
 
-**Diagnostic questions:**
-- Does your AI assistant know how your project is structured?
-- Does it know which packages you use and avoid?
-- Does it understand your naming conventions?
-
 **How to level up:** Add a top-level instructions file (`CLAUDE.md`, `copilot-instructions.md`, `.cursorrules`). Even 20 lines of focused conventions improves suggestions significantly.
 
 ---
 
-## Level 1 — Instructions
+## Level 1 - Instructions
 
 **What you have:** A project-level instructions file that AI reads before generating suggestions.
 
 **Common files:**
-- `CLAUDE.md` — for Claude Code
-- `.github/copilot-instructions.md` — for GitHub Copilot
-- `.cursorrules` — for Cursor
-- `.windsurfrules` — for Windsurf
+- `CLAUDE.md` - for Claude Code
+- `.github/copilot-instructions.md` - for GitHub Copilot
+- `.cursorrules` - for Cursor
+- `.windsurfrules` - for Windsurf
 
 **What AI can do:** Follow basic conventions. Use the right packages. Apply naming patterns. Avoid anti-patterns you've listed.
 
 **What AI cannot do:** Understand your system's shape. Know where things belong. Reason about layer boundaries. Understand your domain.
 
-**Common Level 1 content:**
-```markdown
-## Tech Stack
-- Flutter 3.x, Dart 3.x
-- Riverpod for state management (NOT Provider, NOT BLoC)
-- GoRouter for navigation
-- Freezed for code generation
-- dio for HTTP
-
-## Conventions
-- Use HookConsumerWidget unless stateless is appropriate
-- Feature-first folder structure under lib/features/
-- Repository pattern — all data access through repository interfaces
-
-## Avoid
-- StatefulWidget (use HookConsumerWidget)
-- Provider package
-- Direct database access outside of datasource layer
-```
-
-**Diagnostic questions:**
-- Does AI apply your naming conventions without being told?
-- Does it use the right packages for the right problems?
-- Does it know what to avoid?
-
-**How to level up:** The instructions file tells AI what you use and prefer. The next step is telling it *how the system is shaped* — that's `ARCHITECTURE.md`.
+**How to level up:** The instructions file tells AI what you use and prefer. The next step is telling it *how the system is shaped* - that's `ARCHITECTURE.md`.
 
 ---
 
-## Level 2 — Architecture-Aware
+## Level 2 - Architecture-Aware
 
 **What you have:** Structured documentation of your system that AI can use to reason about where things belong.
 
 **Key files:**
-- `ARCHITECTURE.md` — system shape, layers, data flow, conventions
-- `CONTEXT.md` — domain model, business logic, terminology, user roles
+- `ARCHITECTURE.md` - system shape, layers, data flow, conventions
+- `CONTEXT.md` - domain model, business logic, terminology, user roles
 
 **What AI can do at this level:**
 - Understand where new features should live
@@ -93,30 +63,17 @@ Level 0 ──── Level 1 ──── Level 2 ──── Level 3 ───
 - Apply the repository pattern correctly
 - Generate code in the right place with the right dependencies
 
-**What this looks like in practice:**
-
-Without `ARCHITECTURE.md`, ask AI to add a "user profile" feature and it might create a file anywhere, mix presentation and business logic, and skip the repository layer entirely.
-
-With `ARCHITECTURE.md`, it understands that:
-- UI goes in `features/profile/presentation/screens/`
-- Business logic goes through a use case in `features/profile/domain/usecases/`
-- Data access goes through a repository interface
-- State lives in a Riverpod provider in `features/profile/presentation/providers/`
+**In practice:** Without `ARCHITECTURE.md`, AI may create files anywhere and mix concerns across layers. With it, AI knows which folder each piece belongs in and respects layer boundaries without being told.
 
 **The value of `CONTEXT.md`:**
 
-`CONTEXT.md` covers domain knowledge that architecture docs don't — business terminology, user workflows, edge cases, feature intent. It reduces hallucination on domain-specific behavior and prevents AI from suggesting features that contradict your business model.
+`CONTEXT.md` covers domain knowledge that architecture docs don't - business terminology, user workflows, edge cases, feature intent. It reduces hallucination on domain-specific behavior and prevents AI from suggesting features that contradict your business model.
 
-**Diagnostic questions:**
-- If you ask AI to add a feature, does it know where to put it?
-- Does it understand your layer boundaries without you explaining them?
-- Does it understand what your app actually does and why?
-
-**How to level up:** Add MCP integrations so AI can query live data — your actual schema, file system, or API.
+**How to level up:** Add MCP integrations so AI can query live data - your actual schema, file system, or API.
 
 ---
 
-## Level 3 — Tool-Connected
+## Level 3 - Tool-Connected
 
 **What you have:** MCP (Model Context Protocol) integrations that give AI access to live data and tools.
 
@@ -127,10 +84,10 @@ With `ARCHITECTURE.md`, it understands that:
 - AI can access documentation, APIs, and external services
 
 **Common integrations at this level:**
-- **Filesystem MCP** — AI can list, read, and search actual project files
-- **GitHub MCP** — AI can read issues, PRs, and comments in context
-- **Database MCP** (Supabase, Firebase, Postgres) — AI can query schema directly
-- **Search MCP** — AI can search documentation or internal wikis
+- **Filesystem MCP** - AI can list, read, and search actual project files
+- **GitHub MCP** - AI can read issues, PRs, and comments in context
+- **Database MCP** (Supabase, Firebase, Postgres) - AI can query schema directly
+- **Search MCP** - AI can search documentation or internal wikis
 
 **The practical difference:**
 
@@ -140,17 +97,13 @@ With MCP: AI queries the actual schema directly, catches drift between docs and 
 
 **Important caveats:**
 
-MCP is a relatively new protocol and the ecosystem is still forming. Server quality varies significantly. Treat integrations as experimental infrastructure — useful when they work, but don't build critical workflows that depend on them without fallbacks.
+MCP is a relatively new protocol and the ecosystem is still forming. Server quality varies significantly. Treat integrations as experimental infrastructure - useful when they work, but don't build critical workflows that depend on them without fallbacks.
 
 → See [MCP_GUIDE.md](MCP_GUIDE.md) for integration details.
 
-**Diagnostic questions:**
-- Does AI know what's actually in your database, or what you've told it?
-- Can AI understand your project's real structure without you describing it?
-
 ---
 
-## Level 4 — Memory-Aware
+## Level 4 - Memory-Aware
 
 **What you have:** A persistent record of architectural decisions, lessons learned, and patterns to avoid.
 
@@ -158,7 +111,7 @@ MCP is a relatively new protocol and the ecosystem is still forming. Server qual
 
 **The problem this solves:**
 
-AI assistants don't have persistent memory across conversations. Every new session, they start fresh. Without `MEMORY.md`, you'll repeatedly correct the same mistakes — it'll keep suggesting the same anti-patterns you've moved away from, the same approaches you've tried and abandoned.
+AI assistants don't have persistent memory across conversations. Every new session, they start fresh. Without `MEMORY.md`, you'll repeatedly correct the same mistakes - it'll keep suggesting the same anti-patterns you've moved away from, the same approaches you've tried and abandoned.
 
 `MEMORY.md` is a manually maintained record of decisions that should be permanent context.
 
@@ -177,20 +130,15 @@ AI assistants don't have persistent memory across conversations. Every new sessi
 
 **Maintenance:** `MEMORY.md` is only valuable if it's updated. Add an entry when you make a significant architectural decision, complete a migration, or fix a recurring mistake that came from AI suggestions. Stale memory is actively harmful.
 
-**Diagnostic questions:**
-- Does AI keep recommending patterns you've explicitly moved away from?
-- Does it know why you made the decisions you made?
-- Can it avoid the same mistakes you've already corrected?
-
 ---
 
-## Level 5 — Agentic
+## Level 5 - Agentic
 
 **What you have:** Defined agents, skills, and multi-step workflows that AI can execute with minimal guidance.
 
 **Key files:**
-- `AGENTS.md` — agent role definitions and scope boundaries
-- `workflows/` — structured multi-step workflows
+- `AGENTS.md` - agent role definitions and scope boundaries
+- `workflows/` - structured multi-step workflows
 - Skill definitions (tool-specific)
 
 **What this enables:**
@@ -208,11 +156,6 @@ Instead of asking AI to write a feature from scratch, you ask it to execute a de
 
 Level 5 is powerful but requires solid foundations. Agentic workflows that don't have Level 1-4 in place produce fast, wrong results. Architecture-unaware agents create technical debt at scale.
 
-**Diagnostic questions:**
-- Can you describe a repeatable multi-step workflow that AI could execute?
-- Are your agents bounded — do they have clear scope limits?
-- Do your workflows produce consistent results across different features?
-
 ---
 
 ## Progression Guide
@@ -224,7 +167,7 @@ Level 5 is powerful but requires solid foundations. Agentic workflows that don't
 | AI ignores your architecture | Check that AI tool is actually reading the file |
 | AI keeps suggesting patterns you've moved away from | Add `MEMORY.md` |
 | AI doesn't understand your domain | Add `CONTEXT.md` |
-| AI has good context but suggestions are slow | Try MCP — run `generate-mcp-config` |
+| AI has good context but suggestions are slow | Try MCP - run `generate-mcp-config` |
 | Confident in Levels 1-4 | Define your first workflow in `workflows/` |
 
 ---
@@ -235,7 +178,7 @@ Level 5 is powerful but requires solid foundations. Agentic workflows that don't
 
 **Writing too much in instructions files.** An `ARCHITECTURE.md` that's 3,000 lines won't be fully read or processed. Prioritize ruthlessly. What does AI absolutely need to know?
 
-**Letting files go stale.** A `MEMORY.md` from a year ago describing your old architecture is worse than nothing — AI will follow outdated guidance confidently.
+**Letting files go stale.** A `MEMORY.md` from a year ago describing your old architecture is worse than nothing - AI will follow outdated guidance confidently.
 
 **Global instructions when scoped would work better.** "When editing `*_test.dart` files, always mock via the repository interface" is more precise than adding it to a global instructions file and hoping AI applies it contextually.
 

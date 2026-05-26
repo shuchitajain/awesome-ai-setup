@@ -36,7 +36,7 @@ Bugs in lower layers (data, domain) tend to manifest in the UI. Always trace to 
 
 ## Investigation Steps
 
-### Step 1 — Reproduce Consistently
+### Step 1 - Reproduce Consistently
 
 If you can't reproduce it reliably, you can't verify the fix. Identify the minimum set of steps to trigger the bug every time.
 
@@ -45,7 +45,7 @@ If the bug is intermittent, identify:
 - Is it state-dependent? (only after certain actions)
 - Is it data-dependent? (specific values trigger it)
 
-### Step 2 — Trace the Data Flow
+### Step 2 - Trace the Data Flow
 
 Follow the data from UI to data source (or data source to UI for display bugs):
 
@@ -58,22 +58,22 @@ UI display ← AsyncValue state ← Provider state ← Repository → Entity
 At each layer, ask: "Is the data correct here?" Add temporary debug logging if needed:
 
 ```dart
-// Temporary — remove before committing
+// Temporary - remove before committing
 debugPrint('[DEBUG] Task from API: ${taskModel.toJson()}');
 debugPrint('[DEBUG] Task entity: $task');
 debugPrint('[DEBUG] Provider state: $state');
 ```
 
-### Step 3 — Identify the Root Cause
+### Step 3 - Identify the Root Cause
 
 Distinguish between:
-- **Logic bug** — wrong calculation, wrong condition, wrong data transformation
-- **State bug** — provider not updating, stale data, wrong invalidation
-- **Navigation bug** — wrong route, missing route parameter
-- **Async bug** — race condition, missing `await`, missing `mounted` check
-- **Data bug** — API returning unexpected format, missing field
+- **Logic bug** - wrong calculation, wrong condition, wrong data transformation
+- **State bug** - provider not updating, stale data, wrong invalidation
+- **Navigation bug** - wrong route, missing route parameter
+- **Async bug** - race condition, missing `await`, missing `mounted` check
+- **Data bug** - API returning unexpected format, missing field
 
-### Step 4 — Write a Failing Test First (when practical)
+### Step 4 - Write a Failing Test First (when practical)
 
 For non-trivial bugs, write a test that demonstrates the bug before fixing it:
 
@@ -116,10 +116,10 @@ Future<void> createTask(CreateTaskParams params) async {
 
 **Fix patterns:**
 ```dart
-// Option 1 — invalidate and rebuild
+// Option 1 - invalidate and rebuild
 ref.invalidateSelf();
 
-// Option 2 — optimistic update with rollback
+// Option 2 - optimistic update with rollback
 final previous = state;
 state = state.whenData((s) => s.copyWith(tasks: [...s.tasks, optimisticTask]));
 try {
@@ -166,14 +166,14 @@ onPressed: () async {
 **Cause:** Using `ref.read` instead of `ref.watch` in provider `build()`.
 
 ```dart
-// Bug — doesn't react when auth changes
+// Bug - doesn't react when auth changes
 @override
 Future<TaskListState> build() async {
   final user = ref.read(authStateProvider).valueOrNull;  // ← wrong
   ...
 }
 
-// Fix — reacts when auth changes
+// Fix - reacts when auth changes
 @override
 Future<TaskListState> build() async {
   final user = ref.watch(authStateProvider).valueOrNull;  // ← correct
@@ -207,7 +207,7 @@ DateTime? dueDate;           // model field name
 
 **Symptom:** App shows blank screen or infinite loading. Console shows rapid navigation events.
 
-**Cause:** Auth redirect logic creates a loop — redirecting to login redirects to login.
+**Cause:** Auth redirect logic creates a loop - redirecting to login redirects to login.
 
 **Investigation:**
 ```dart

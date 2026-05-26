@@ -32,8 +32,6 @@ There are five distinct types of context. Each one has a different job.
 
 **Job:** Prevent AI from putting code in the wrong place. Enable AI to understand dependencies correctly. Let AI generate code that fits the system shape without you explaining it every time.
 
-**Signs you need it:** AI suggestions ignore your folder structure. It mixes concerns across layers. It creates files that don't fit your conventions.
-
 ### 2. Domain Context
 
 **What:** What your application does. Business terminology. User workflows. Edge cases. Feature behavior.
@@ -41,8 +39,6 @@ There are five distinct types of context. Each one has a different job.
 **Where:** `CONTEXT.md`
 
 **Job:** Reduce hallucination on domain-specific behavior. Help AI understand the "why" behind features. Prevent suggestions that violate business rules.
-
-**Signs you need it:** AI suggests features that contradict your business model. It uses generic terminology instead of your domain language. It doesn't understand the distinction between entities that matter in your domain.
 
 ### 3. Memory Context
 
@@ -52,8 +48,6 @@ There are five distinct types of context. Each one has a different job.
 
 **Job:** Prevent AI from recommending patterns you've already rejected. Carry forward the reasoning behind architectural decisions. Avoid repeating corrected mistakes across sessions.
 
-**Signs you need it:** AI keeps suggesting the same approaches you've told it to avoid. It recommends packages you've migrated away from. It recreates patterns you removed months ago.
-
 ### 4. Instruction Context
 
 **What:** Conventions, preferences, rules that should always apply. What to use and what to avoid.
@@ -62,17 +56,13 @@ There are five distinct types of context. Each one has a different job.
 
 **Job:** Set the baseline for every interaction. Equivalent to team standards written once, applied automatically.
 
-**Signs you need it:** AI uses different naming conventions than your codebase. It imports packages you don't use. It applies style choices inconsistently.
-
 ### 5. Tool Context
 
-**What:** Real-time access to your actual project state — file system, database schema, documentation, external APIs.
+**What:** Real-time access to your actual project state - file system, database schema, documentation, external APIs.
 
 **Where:** MCP integrations
 
 **Job:** Bridge the gap between what you've documented and what's actually true. Let AI query live data instead of relying on descriptions.
-
-**Signs you need it:** AI generates code based on outdated schema. It doesn't know about files you've added since you wrote the docs. Documented architecture has drifted from actual structure.
 
 ---
 
@@ -105,9 +95,9 @@ lib/
 │   └── theme/               # design tokens, not widget styling
 ├── features/
 │   └── [feature_name]/
-│       ├── data/            # implementation detail — repositories, API calls
-│       ├── domain/          # business rules — entities, repository interfaces, use cases
-│       └── presentation/    # Flutter-specific — screens, widgets, providers
+│       ├── data/            # implementation detail - repositories, API calls
+│       ├── domain/          # business rules - entities, repository interfaces, use cases
+│       └── presentation/    # Flutter-specific - screens, widgets, providers
 └── shared/
     └── widgets/             # reusable UI components used across features
 ```
@@ -144,7 +134,7 @@ User Action → Widget → Provider (Riverpod) → UseCase → Repository (inter
 
 Show what a complete feature looks like. AI will model new features on this.
 
-**Keep it scannable.** Use headers, bullet points, and code blocks. Dense prose doesn't get processed well. AI reads this file token by token — structure matters.
+**Keep it scannable.** Use headers, bullet points, and code blocks. Dense prose doesn't get processed well. AI reads this file token by token - structure matters.
 
 ---
 
@@ -159,10 +149,10 @@ What are the core entities? What are their relationships? What terminology is do
 ```markdown
 ## Core Entities
 
-**Task** — a unit of work with a due date, assignee, and status. Tasks can be
+**Task** - a unit of work with a due date, assignee, and status. Tasks can be
            standalone or part of a Project.
-**Project** — a container for related Tasks with its own deadline and owner.
-**Workspace** — top-level organizational boundary. A User belongs to one or
+**Project** - a container for related Tasks with its own deadline and owner.
+**Workspace** - top-level organizational boundary. A User belongs to one or
                 more Workspaces.
 ```
 
@@ -171,10 +161,10 @@ What are the core entities? What are their relationships? What terminology is do
 ```markdown
 ## User Roles
 
-**Owner** — full admin access, can delete workspace
-**Admin** — can manage members and billing, cannot delete workspace
-**Member** — can create and edit tasks, cannot change workspace settings
-**Guest** — read-only access to specific projects only
+**Owner** - full admin access, can delete workspace
+**Admin** - can manage members and billing, cannot delete workspace
+**Member** - can create and edit tasks, cannot change workspace settings
+**Guest** - read-only access to specific projects only
 ```
 
 **Call out non-obvious business rules.**
@@ -182,10 +172,10 @@ What are the core entities? What are their relationships? What terminology is do
 ```markdown
 ## Business Rules
 
-- Archiving a Project does not delete its Tasks — they become orphaned
+- Archiving a Project does not delete its Tasks - they become orphaned
 - A Task cannot be assigned to a Guest user
 - Due dates are stored in UTC, displayed in the user's local timezone
-- "Completed" and "Archived" are different states — completed tasks remain
+- "Completed" and "Archived" are different states - completed tasks remain
   visible; archived tasks are hidden by default
 ```
 
@@ -196,10 +186,10 @@ This prevents AI from suggesting features outside your scope.
 ```markdown
 ## Out of Scope
 
-- This app does not support real-time collaboration — no live cursors, no
+- This app does not support real-time collaboration - no live cursors, no
   operational transforms
-- There is no public API — all data access is through the app
-- We do not support SSO — email/password and Google sign-in only
+- There is no public API - all data access is through the app
+- We do not support SSO - email/password and Google sign-in only
 ```
 
 ---
@@ -244,7 +234,7 @@ from the GoRouter API.
 
 **Writing for humans, not AI.** AI doesn't need prose-heavy explanations. It needs clear structure, explicit rules, and concrete examples. Be direct and specific.
 
-**Documenting the obvious.** Don't explain Riverpod to AI — it already knows Riverpod. Document how *your* project uses Riverpod. The conventions, the patterns, the specific rules that are unique to your codebase.
+**Documenting the obvious.** Don't explain Riverpod to AI - it already knows Riverpod. Document how *your* project uses Riverpod. The conventions, the patterns, the specific rules that are unique to your codebase.
 
 **Too much context.** Token limits are real. A 5,000-line `ARCHITECTURE.md` is worse than a focused 500-line one. AI tools may not process the full file, or may weight later content less. Prioritize ruthlessly.
 
@@ -252,7 +242,7 @@ from the GoRouter API.
 
 **One file for everything.** Scoped context is more useful than one giant instructions file. A `riverpod.instructions.md` scoped to `*.dart` files is more precise than adding Riverpod conventions to a global file and hoping they apply.
 
-**Not testing your context.** After writing `ARCHITECTURE.md`, ask AI where a new feature should be created. Does it get it right? Ask it to generate a new repository — does it follow the pattern? Context files need testing like code does.
+**Not testing your context.** After writing `ARCHITECTURE.md`, ask AI where a new feature should be created. Does it get it right? Ask it to generate a new repository - does it follow the pattern? Context files need testing like code does.
 
 ---
 

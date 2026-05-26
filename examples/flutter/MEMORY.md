@@ -15,7 +15,7 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 
 ### [2024-06] Chose Riverpod over BLoC
 
-**Context:** Evaluated BLoC (flutter_bloc 8.x) and Riverpod 2.x for state management. The codebase had grown to where BLoC boilerplate was slowing feature development significantly — each feature required a Cubit class, state classes, and verbose test setup.
+**Context:** Evaluated BLoC (flutter_bloc 8.x) and Riverpod 2.x for state management. The codebase had grown to where BLoC boilerplate was slowing feature development significantly - each feature required a Cubit class, state classes, and verbose test setup.
 
 **Decision:** Riverpod 2.x with `riverpod_annotation` and code generation.
 
@@ -25,13 +25,13 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 - Better support for async state with `AsyncNotifier`
 - Test setup with `ProviderContainer` is cleaner than `BlocProvider` trees in tests
 
-**What to avoid:** Do not suggest BLoC, Cubit, or the `flutter_bloc` package. If asked to compare state management options, the decision is made — Riverpod is the answer.
+**What to avoid:** Do not suggest BLoC, Cubit, or the `flutter_bloc` package. If asked to compare state management options, the decision is made - Riverpod is the answer.
 
 ---
 
 ### [2024-08] Chose GoRouter over auto_route
 
-**Context:** Started with `auto_route` for type-safe navigation. The code generation approach worked but added friction — generated files were large, and the type-safe navigator required significant boilerplate for each new route.
+**Context:** Started with `auto_route` for type-safe navigation. The code generation approach worked but added friction - generated files were large, and the type-safe navigator required significant boilerplate for each new route.
 
 **Decision:** Migrated to `go_router` with string route constants in `core/router/routes.dart`.
 
@@ -47,7 +47,7 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 
 ### [2024-09] Chose Freezed over hand-written value objects
 
-**Context:** We had inconsistent value object implementations — some used `equatable`, some implemented `==` manually, some neither. This caused subtle bugs with Riverpod state comparison and `ListView` diffing.
+**Context:** We had inconsistent value object implementations - some used `equatable`, some implemented `==` manually, some neither. This caused subtle bugs with Riverpod state comparison and `ListView` diffing.
 
 **Decision:** All state classes and domain entities use `@freezed`. All model classes use `@JsonSerializable` (via Freezed's `fromJson`/`toJson` support).
 
@@ -201,11 +201,11 @@ class MyWidget extends HookConsumerWidget {
 
 ## Known Technical Debt
 
-These issues are acknowledged and tracked. Do not work around them with new abstractions — fix them directly when addressing the relevant feature area.
+These issues are acknowledged and tracked. Do not work around them with new abstractions - fix them directly when addressing the relevant feature area.
 
-- **Pagination not implemented** — task lists currently load all tasks. This will become a problem with large datasets. Tracked in the backlog, not a blocking issue yet.
-- **Offline support is incomplete** — the app shows cached data when offline but cannot create or edit tasks. Network detection exists but error messaging is inconsistent.
-- **Error messages are too generic** — most `ServerFailure` messages show "Something went wrong". Proper error categorization is a backlog item.
+- **Pagination not implemented** - task lists currently load all tasks. This will become a problem with large datasets. Tracked in the backlog, not a blocking issue yet.
+- **Offline support is incomplete** - the app shows cached data when offline but cannot create or edit tasks. Network detection exists but error messaging is inconsistent.
+- **Error messages are too generic** - most `ServerFailure` messages show "Something went wrong". Proper error categorization is a backlog item.
 
 ---
 
@@ -213,7 +213,7 @@ These issues are acknowledged and tracked. Do not work around them with new abst
 
 Problems that keep appearing in AI suggestions, documented here to prevent repetition:
 
-- **Suggesting `Provider` package** — We do not use `provider`. The package is not in `pubspec.yaml`. Riverpod is the only state management solution.
-- **Using `context.mounted` incorrectly** — `context.mounted` checks should always wrap `context` usage after an `await`. If code uses `context` after an `await` without a mounted check, flag it as a bug.
-- **Missing `const` constructors** — Freezed-generated classes support `const` constructors. Prefer `const` for immutable objects.
-- **Suggesting `StatefulWidget` for animations** — Use `AnimationController` with `SingleTickerProviderStateMixin` only for complex custom animations. For simple animations, use `flutter_animate` or `AnimatedSwitcher`. Never use `StatefulWidget` just for a simple animation.
+- **Suggesting `Provider` package** - We do not use `provider`. The package is not in `pubspec.yaml`. Riverpod is the only state management solution.
+- **Using `context.mounted` incorrectly** - `context.mounted` checks should always wrap `context` usage after an `await`. If code uses `context` after an `await` without a mounted check, flag it as a bug.
+- **Missing `const` constructors** - Freezed-generated classes support `const` constructors. Prefer `const` for immutable objects.
+- **Suggesting `StatefulWidget` for animations** - Use `AnimationController` with `SingleTickerProviderStateMixin` only for complex custom animations. For simple animations, use `flutter_animate` or `AnimatedSwitcher`. Never use `StatefulWidget` just for a simple animation.

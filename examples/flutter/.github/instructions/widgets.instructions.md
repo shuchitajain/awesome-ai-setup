@@ -13,7 +13,7 @@ These conventions apply to all Flutter widget code in `lib/`.
 Use `HookConsumerWidget` as the default base class.
 
 ```dart
-// Standard widget — use this by default
+// Standard widget - use this by default
 class TaskCard extends HookConsumerWidget {
   const TaskCard({super.key, required this.task});
 
@@ -25,7 +25,7 @@ class TaskCard extends HookConsumerWidget {
   }
 }
 
-// Pure display widget — use this when there is no state or provider usage
+// Pure display widget - use this when there is no state or provider usage
 class StatusBadge extends StatelessWidget {
   const StatusBadge({super.key, required this.status});
 
@@ -44,7 +44,7 @@ Do not use `StatefulWidget`, `ConsumerWidget`, `ConsumerStatefulWidget`, or `Hoo
 
 ## Local State
 
-Local widget state uses `useState` and `useAnimationController` hooks — not `setState`.
+Local widget state uses `useState` and `useAnimationController` hooks - not `setState`.
 
 ```dart
 // Correct
@@ -53,7 +53,7 @@ final tabController = useTabController(initialLength: 3);
 final textController = useTextEditingController();
 final scrollController = useScrollController();
 
-// Wrong — do not use
+// Wrong - do not use
 // setState(() { _isExpanded = true; });
 ```
 
@@ -63,7 +63,7 @@ Hooks are called at the top of `build()` before any conditional returns. Never c
 
 ## Spacing and Layout
 
-Use spacing constants from `AppSpacing` — do not hardcode pixel values.
+Use spacing constants from `AppSpacing` - do not hardcode pixel values.
 
 ```dart
 // Correct
@@ -131,7 +131,7 @@ LayoutBuilder(
 )
 ```
 
-For font scaling, rely on `TextScaler` from `MediaQuery` — do not disable text scaling.
+For font scaling, rely on `TextScaler` from `MediaQuery` - do not disable text scaling.
 
 ---
 
@@ -150,7 +150,7 @@ const TaskCard(task: task) // only if task is const
 SizedBox(height: AppSpacing.md) // missing const
 ```
 
-Run the analyzer — it flags missing `const` opportunities.
+Run the analyzer - it flags missing `const` opportunities.
 
 ---
 
@@ -159,7 +159,7 @@ Run the analyzer — it flags missing `const` opportunities.
 Prefer small, focused widgets over one large `build()` method. Extract when a widget has distinct visual responsibilities or when a sub-tree can be independently `const`.
 
 ```dart
-// Preferred — composable parts
+// Preferred - composable parts
 class TaskDetailScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(children: [
@@ -171,7 +171,7 @@ class TaskDetailScreen extends HookConsumerWidget {
   }
 }
 
-// Avoid — one massive build method with nested builders
+// Avoid - one massive build method with nested builders
 ```
 
 When extracting widgets, prefer separate classes over private methods returning `Widget`. Private builder methods like `_buildHeader()` don't benefit from Flutter's widget rebuild optimization.
@@ -180,7 +180,7 @@ When extracting widgets, prefer separate classes over private methods returning 
 
 ## Keys
 
-Use `ValueKey` for list items that can change order or be filtered. Use `GlobalKey` only for scroll-to-top and form state — never for identity.
+Use `ValueKey` for list items that can change order or be filtered. Use `GlobalKey` only for scroll-to-top and form state - never for identity.
 
 ```dart
 // List items
@@ -196,7 +196,7 @@ ListView.builder(
 
 ## Loading and Error States
 
-Use the shared `AppAsyncBuilder` widget (or handle `AsyncValue` with `when()`) — do not write ad-hoc loading/error UI in screens.
+Use the shared `AppAsyncBuilder` widget (or handle `AsyncValue` with `when()`) - do not write ad-hoc loading/error UI in screens.
 
 ```dart
 // Preferred
@@ -216,7 +216,7 @@ The `ErrorView` and `TaskListSkeleton` (or equivalent feature skeleton) are in `
 
 ## Navigation from Widgets
 
-Navigation always goes through GoRouter — never through `Navigator` directly.
+Navigation always goes through GoRouter - never through `Navigator` directly.
 
 ```dart
 // Correct

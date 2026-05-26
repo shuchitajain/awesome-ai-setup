@@ -2,7 +2,7 @@
 
 Practical agents and patterns for AI-native repository workflows.
 
-This is not a prompt collection. It's a structured approach to context engineering — using AI itself to analyze your repository and generate accurate, project-specific documentation that makes AI coding assistants significantly more effective.
+This is not a prompt collection. It's a structured approach to context engineering - using AI itself to analyze your repository and generate accurate, project-specific documentation that makes AI coding assistants significantly more effective.
 
 ---
 
@@ -26,19 +26,19 @@ copy examples/flutter/ARCHITECTURE.md → your-project/ARCHITECTURE.md
 # infers your conventions, and generates an accurate file.
 ```
 
-The result is documentation that reflects your real project — not a generic ideal.
+The result is documentation that reflects your real project - not a generic ideal.
 
 ---
 
 ## Why This Matters
 
-**Static templates rot.** A copied `ARCHITECTURE.md` is accurate on day one, stale by month three, and actively misleading by year two. Agents can be re-executed when the architecture evolves.
+**Static templates rot.** A copied `ARCHITECTURE.md` is accurate on day one, stale by month three. Agents can be re-run whenever your architecture evolves.
 
-**Templates describe averages, not your project.** Your project doesn't have every layer a template assumes. It has patterns a template doesn't cover. AI-generated context from your actual code is more precise than any template.
+**Works across tools.** Plain markdown files, compatible with Claude Code, Cursor, Copilot, Codex, Aider, and anything else that can read a file. No vendor lock-in, no tool-specific syntax.
 
-**Works across tools.** These agents follow the open AGENTS.md convention. They work with Claude Code, Cursor, Copilot, Codex, Aider, and any other AI assistant with codebase access. No vendor lock-in.
+**Infer, don't invent.** Every agent has a "Do NOT" section. Hallucination constraints are as important as generation instructions. Output is derived from your actual code, not a template.
 
-**Leverages what AI is actually good at.** Modern AI assistants are excellent at reading codebases and inferring patterns. Use them for that, not for adapting templates manually.
+**Composable.** Run one agent or all seven. The files work independently.
 
 ---
 
@@ -47,67 +47,25 @@ The result is documentation that reflects your real project — not a generic id
 ```
 awesome-ai-setup/
 
-README.md
-
-agents/                               # The core product — executable AI agents
-  README.md                           # How to use the agents
-  diagnose-and-setup.md               # Assess current AI setup → generate action plan
-  generate-architecture.md            # Analyze repo → generate ARCHITECTURE.md
-  generate-context.md                 # Analyze domain → generate CONTEXT.md
-  update-memory.md                    # Audit patterns → generate MEMORY.md
-  generate-scoped-instructions.md     # Analyze conventions → generate instruction files
-  generate-mcp-config.md              # Detect stack → generate tool-specific MCP config
-  generate-agent-workflows.md         # Analyze workflows → generate project-specific AGENTS.md
+agents/               # 7 executable AI agents (the core product)
+  README.md           # invocation reference for all agents and tools
+  *.md                # one file per agent
 
 docs/
-  MATURITY_MODEL.md                   # Diagnostic framework for AI readiness
-  CONTEXT_ENGINEERING.md              # How to write context that actually helps
-  MCP_GUIDE.md                        # Model Context Protocol integration guide
+  MATURITY_MODEL.md
+  CONTEXT_ENGINEERING.md
+  MCP_GUIDE.md
 
 examples/
-  flutter/
-    README.md                         # How to use this example
-    ARCHITECTURE.md                   # Reference example of generated output
-    CONTEXT.md                        # Reference example of generated output
-    MEMORY.md                         # Reference example of generated output
-    AGENTS.md                         # Reference example of generated output
-
-    .github/
-      copilot-instructions.md
-      instructions/
-        widgets.instructions.md
-        riverpod.instructions.md
-        testing.instructions.md
-
-    .vscode/
-      mcp.json
-
-    workflows/
-      feature-development.md
-      bug-fixing.md
-      refactoring.md
-
-  nodejs/
-    README.md
-    ARCHITECTURE.md
-    CONTEXT.md
-    MEMORY.md
-    AGENTS.md
-
-    .github/
-      copilot-instructions.md
-
-    workflows/
-      feature-development.md
-      bug-fixing.md
-      refactoring.md
+  flutter/            # Flutter + Riverpod + Clean Architecture reference output
+  nodejs/             # Node.js + Express + TypeScript reference output
 ```
 
 ---
 
 ## Quick Start
 
-### Step 1 — Install the agents into your project
+### Step 1 - Install the agents into your project
 
 Run this from your project root. It copies the `agents/` folder and asks which tools you use.
 
@@ -115,7 +73,7 @@ Run this from your project root. It copies the `agents/` folder and asks which t
 npx awesome-ai-setup
 ```
 
-### Step 2 — Run the diagnostic
+### Step 2 - Run the diagnostic
 
 Start here regardless of where you are: fresh project, existing project with no AI setup, or existing project with a partial setup.
 
@@ -126,7 +84,7 @@ Read agents/diagnose-and-setup.md and execute it on this repository.
 
 **Cursor**
 ```
-@.cursor/commands/diagnose-and-setup.md — execute this on the current codebase
+@.cursor/commands/diagnose-and-setup.md - execute this on the current codebase
 ```
 
 **GitHub Copilot (VS Code)**
@@ -136,15 +94,11 @@ Open Copilot Chat, click the agent picker (mode dropdown), select **diagnose-and
 execute the diagnostic on this codebase
 ```
 
-The diagnostic produces a short action plan tailored to your situation:
+The diagnostic produces a short, prioritized action plan tailored to your current state: fresh project, no AI setup, or partial setup.
 
-- **Fresh or early-stage project** — identifies what's useful to set up now vs. what should wait until the codebase has established patterns
-- **Existing project, no AI setup** — gives you a prioritized sequence of agents to run
-- **Existing project, partial setup** — identifies gaps in what you already have and skips agents for files that are already complete
+### Step 3 - Follow the generated action plan
 
-### Step 3 — Follow the generated action plan
-
-Run the recommended agents in the same tool. For Claude Code and Cursor, swap the filename. For Copilot, select the agent from the picker. Review each output before committing — agents mark uncertain sections with `<!-- TODO: verify -->` for human review. Review each output before committing. Agents mark uncertain sections with `<!-- TODO: verify -->` for human review.
+Run the recommended agents in the same tool. For Claude Code and Cursor, swap the filename. For Copilot, select the agent from the picker. Review each output before committing - agents mark uncertain sections with `<!-- TODO: verify -->` for human review.
 
 ### Using an example as reference
 
@@ -163,11 +117,11 @@ Current examples:
 
 | Agent                          | What It Generates                                   | When to Use                                  |
 |--------------------------------|-----------------------------------------------------|----------------------------------------------|
-| `diagnose-and-setup`           | Prioritized action plan                             | **Start here** — any project, any stage      |
+| `diagnose-and-setup`           | Prioritized action plan                             | **Start here** - any project, any stage      |
 | `generate-architecture`        | `ARCHITECTURE.md`                                   | Active codebase setup, after major refactors |
 | `generate-context`             | `CONTEXT.md`                                        | Active codebase setup, when domain evolves   |
 | `update-memory`                | `MEMORY.md`                                         | After architectural decisions, migrations    |
-| `generate-scoped-instructions` | `.github/instructions/*.md`                         | Any stage — works with minimal code          |
+| `generate-scoped-instructions` | `.github/instructions/*.instructions.md`, `.github/copilot-instructions.md` | Any stage - works with minimal code          |
 | `generate-mcp-config`          | `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` | When adding tool connections (Level 3)       |
 | `generate-agent-workflows`     | `AGENTS.md`, `workflows/`                           | After Levels 1–4 are in place                |
 
@@ -186,23 +140,9 @@ Use this as a diagnostic, not a checklist.
 | **2** | Architecture + domain context                   | Add MCP config via `generate-mcp-config`                                              |
 | **3** | Tool-connected (MCP)                            | Add `MEMORY.md` via `update-memory`                                                   |
 | **4** | Memory-aware                                    | Add agentic workflows via `generate-agent-workflows`                                  |
-| **5** | Agentic workflows                               | —                                                                                     |
+| **5** | Agentic workflows                               | -                                                                                     |
 
 → [Full maturity model](docs/MATURITY_MODEL.md)
-
----
-
-## Design Principles
-
-**AI as execution engine, not output recipient.** The agents instruct AI to analyze your actual codebase. The generated files are accurate because they're derived from your code, not from a template.
-
-**Infer, don't invent.** Every agent has a "Do NOT" section. Constraints on hallucination are as important as instructions for what to generate.
-
-**Re-executable over perfect.** An agent that can be re-run when your architecture evolves is more valuable than a perfectly crafted static file that goes stale.
-
-**Works across tools.** These agents follow the open AGENTS.md convention — plain markdown with minimal frontmatter. They work with any AI assistant that can read files and a codebase. No vendor-specific syntax, no plugin required.
-
-**Composable.** Run one agent or all seven. Add what's useful, skip what isn't. The files produced work independently.
 
 ---
 
@@ -215,4 +155,4 @@ Use this as a diagnostic, not a checklist.
 
 ---
 
-*These patterns reflect what's working in production today. The AI tooling ecosystem is moving fast — the agent-driven approach is specifically designed to stay useful as capabilities evolve.*
+*These patterns reflect what's working in production today. The AI tooling ecosystem is moving fast - the agent-driven approach is specifically designed to stay useful as capabilities evolve.*
