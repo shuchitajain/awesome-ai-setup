@@ -12,12 +12,12 @@ These conventions apply to all Riverpod provider code in `lib/`.
 
 Use the right provider type for the situation:
 
-| Situation | Use | Why |
-|-----------|-----|-----|
-| Async state with logic | `AsyncNotifier` | Build is async, exposes methods |
-| Sync state with logic | `Notifier` | Build is sync, exposes methods |
-| Simple computed value | `@riverpod` function | No methods needed |
-| Async data fetch | `@riverpod` async function | Simple read-only async value |
+| Situation              | Use                        | Why                             |
+|------------------------|----------------------------|---------------------------------|
+| Async state with logic | `AsyncNotifier`            | Build is async, exposes methods |
+| Sync state with logic  | `Notifier`                 | Build is sync, exposes methods  |
+| Simple computed value  | `@riverpod` function       | No methods needed               |
+| Async data fetch       | `@riverpod` async function | Simple read-only async value    |
 
 ```dart
 // Async state with user actions

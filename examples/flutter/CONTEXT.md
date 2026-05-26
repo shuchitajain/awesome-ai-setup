@@ -101,12 +101,12 @@ WorkspaceMember
 
 ## User Roles
 
-| Role | Description | Key Capabilities |
-|------|-------------|-----------------|
-| **Owner** | Created the workspace or was transferred ownership | Full admin access, can delete workspace, transfer ownership |
-| **Admin** | Elevated member | Manage members, manage billing, cannot delete workspace |
-| **Member** | Standard team member | Create/edit tasks and projects, cannot change workspace settings |
-| **Guest** | External collaborator | Read-only access to specific Projects only, cannot see other projects |
+| Role       | Description                                        | Key Capabilities                                                      |
+|------------|----------------------------------------------------|-----------------------------------------------------------------------|
+| **Owner**  | Created the workspace or was transferred ownership | Full admin access, can delete workspace, transfer ownership           |
+| **Admin**  | Elevated member                                    | Manage members, manage billing, cannot delete workspace               |
+| **Member** | Standard team member                               | Create/edit tasks and projects, cannot change workspace settings      |
+| **Guest**  | External collaborator                              | Read-only access to specific Projects only, cannot see other projects |
 
 **Important:** Guests are scoped to Projects, not the full Workspace. A Guest has no visibility into Projects they weren't explicitly invited to.
 
@@ -163,15 +163,15 @@ These rules are enforced in the domain layer and must not be bypassed by UI shor
 
 Use these terms consistently. AI suggestions should use domain language, not generic CRUD terms:
 
-| Domain Term | Meaning | Do not say |
-|-------------|---------|-----------|
-| Workspace | Top-level organization | Organization, Team, Account |
-| Project | Container for Tasks | Board, Sprint, List |
-| Task | Unit of work | Item, Ticket, Card, Issue |
-| Assignee | User a Task is assigned to | Owner (reserved for Workspace) |
-| Member | User with active workspace access | User (use Member in UI copy) |
-| Guest | Read-only external collaborator | Viewer, Observer |
-| Archive | Hide without deleting | Soft-delete |
+| Domain Term | Meaning                           | Do not say                     |
+|-------------|-----------------------------------|--------------------------------|
+| Workspace   | Top-level organization            | Organization, Team, Account    |
+| Project     | Container for Tasks               | Board, Sprint, List            |
+| Task        | Unit of work                      | Item, Ticket, Card, Issue      |
+| Assignee    | User a Task is assigned to        | Owner (reserved for Workspace) |
+| Member      | User with active workspace access | User (use Member in UI copy)   |
+| Guest       | Read-only external collaborator   | Viewer, Observer               |
+| Archive     | Hide without deleting             | Soft-delete                    |
 
 ---
 
@@ -202,13 +202,13 @@ These are real situations that have caused bugs or confusion:
 
 ## Integration Points
 
-| Integration | Purpose | Status |
-|-------------|---------|--------|
-| Firebase Auth | Authentication tokens, session management | Production |
-| Firestore | Primary data store | Production |
-| Firebase Storage | User avatar uploads | Production |
-| Firebase Messaging | Push notifications | Production |
-| Google Sign-In | OAuth flow | Production |
-| RevenueCat | Subscription management | Production |
+| Integration        | Purpose                                   | Status     |
+|--------------------|-------------------------------------------|------------|
+| Firebase Auth      | Authentication tokens, session management | Production |
+| Firestore          | Primary data store                        | Production |
+| Firebase Storage   | User avatar uploads                       | Production |
+| Firebase Messaging | Push notifications                        | Production |
+| Google Sign-In     | OAuth flow                                | Production |
+| RevenueCat         | Subscription management                   | Production |
 
 All integrations go through repository interfaces in the domain layer. The presentation layer has no direct Firebase dependencies.

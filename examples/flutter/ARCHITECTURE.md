@@ -333,21 +333,21 @@ Provider overrides in tests replace the repository layer without touching the UI
 
 ## Naming Conventions
 
-| Concept | Pattern | Example |
-|---------|---------|---------|
-| Feature folder | `snake_case` | `features/task_management/` |
-| Screen | `[Name]Screen` | `TaskDetailScreen` |
-| Widget | `[Name]` (descriptive) | `TaskCard`, `EmptyState` |
-| Entity | `[Name]` (singular noun) | `Task`, `User`, `Project` |
-| Model | `[Name]Model` | `TaskModel`, `UserModel` |
-| Repository interface | `[Feature]Repository` | `TaskRepository` |
-| Repository impl | `[Feature]RepositoryImpl` | `TaskRepositoryImpl` |
-| DataSource interface | `[Feature]RemoteDataSource` | `TaskRemoteDataSource` |
-| DataSource impl | `[Feature]RemoteDataSourceImpl` | `TaskRemoteDataSourceImpl` |
-| UseCase | `[Verb][Entity]` | `GetTasks`, `CreateTask` |
-| Notifier | `[Entity][Context]` | `TaskList`, `TaskDetail` |
-| State | `[Notifier]State` | `TaskListState` |
-| Provider (generated) | `[notifierName]Provider` | `taskListProvider` |
+| Concept              | Pattern                         | Example                     |
+|----------------------|---------------------------------|-----------------------------|
+| Feature folder       | `snake_case`                    | `features/task_management/` |
+| Screen               | `[Name]Screen`                  | `TaskDetailScreen`          |
+| Widget               | `[Name]` (descriptive)          | `TaskCard`, `EmptyState`    |
+| Entity               | `[Name]` (singular noun)        | `Task`, `User`, `Project`   |
+| Model                | `[Name]Model`                   | `TaskModel`, `UserModel`    |
+| Repository interface | `[Feature]Repository`           | `TaskRepository`            |
+| Repository impl      | `[Feature]RepositoryImpl`       | `TaskRepositoryImpl`        |
+| DataSource interface | `[Feature]RemoteDataSource`     | `TaskRemoteDataSource`      |
+| DataSource impl      | `[Feature]RemoteDataSourceImpl` | `TaskRemoteDataSourceImpl`  |
+| UseCase              | `[Verb][Entity]`                | `GetTasks`, `CreateTask`    |
+| Notifier             | `[Entity][Context]`             | `TaskList`, `TaskDetail`    |
+| State                | `[Notifier]State`               | `TaskListState`             |
+| Provider (generated) | `[notifierName]Provider`        | `taskListProvider`          |
 
 ---
 

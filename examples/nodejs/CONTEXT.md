@@ -130,15 +130,15 @@ OrderLineItem
 
 ## User Roles and Permissions
 
-| Action | Customer | Vendor | Admin |
-|---|---|---|---|
-| Browse products | ✓ | ✓ | ✓ |
-| Create product | — | own only | ✓ |
-| Update product | — | own only | ✓ |
-| Place order | ✓ | — | ✓ |
-| View own orders | ✓ | — | ✓ |
-| Cancel order | own (pending/confirmed) | — | any |
-| Manage users | — | — | ✓ |
+| Action          | Customer                | Vendor   | Admin |
+|-----------------|-------------------------|----------|-------|
+| Browse products | ✓                       | ✓        | ✓     |
+| Create product  | —                       | own only | ✓     |
+| Update product  | —                       | own only | ✓     |
+| Place order     | ✓                       | —        | ✓     |
+| View own orders | ✓                       | —        | ✓     |
+| Cancel order    | own (pending/confirmed) | —        | any   |
+| Manage users    | —                       | —        | ✓     |
 
 ---
 

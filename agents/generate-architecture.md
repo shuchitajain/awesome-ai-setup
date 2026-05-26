@@ -34,7 +34,7 @@ Before writing anything, gather information. Read these in order:
    - A data access file (repository, service, API client, data source)
    - A domain/business logic file (use case, interactor, domain service) if present
    - A test file
-5. **Router/navigation config** if it exists as a separate file
+6. **Router/navigation config** if it exists as a separate file
 
 Do not proceed to Step 2 until you have read actual code. Do not infer from dependency names alone.
 

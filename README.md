@@ -70,6 +70,7 @@ examples/
     ARCHITECTURE.md                   # Reference example of generated output
     CONTEXT.md                        # Reference example of generated output
     MEMORY.md                         # Reference example of generated output
+    AGENTS.md                         # Reference example of generated output
 
     .github/
       copilot-instructions.md
@@ -81,7 +82,21 @@ examples/
     .vscode/
       mcp.json
 
+    workflows/
+      feature-development.md
+      bug-fixing.md
+      refactoring.md
+
+  nodejs/
+    README.md
+    ARCHITECTURE.md
+    CONTEXT.md
+    MEMORY.md
     AGENTS.md
+
+    .github/
+      copilot-instructions.md
+
     workflows/
       feature-development.md
       bug-fixing.md
@@ -146,15 +161,15 @@ Current examples:
 
 ## The Agents
 
-| Agent | What It Generates | When to Use |
-|-------|------------------|-------------|
-| `diagnose-and-setup` | Prioritized action plan | **Start here** — any project, any stage |
-| `generate-architecture` | `ARCHITECTURE.md` | Active codebase setup, after major refactors |
-| `generate-context` | `CONTEXT.md` | Active codebase setup, when domain evolves |
-| `update-memory` | `MEMORY.md` | After architectural decisions, migrations |
-| `generate-scoped-instructions` | `.github/instructions/*.md` | Any stage — works with minimal code |
-| `generate-mcp-config` | `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` | When adding tool connections (Level 3) |
-| `generate-agent-workflows` | `AGENTS.md`, `workflows/` | After Levels 1–4 are in place |
+| Agent                          | What It Generates                                   | When to Use                                  |
+|--------------------------------|-----------------------------------------------------|----------------------------------------------|
+| `diagnose-and-setup`           | Prioritized action plan                             | **Start here** — any project, any stage      |
+| `generate-architecture`        | `ARCHITECTURE.md`                                   | Active codebase setup, after major refactors |
+| `generate-context`             | `CONTEXT.md`                                        | Active codebase setup, when domain evolves   |
+| `update-memory`                | `MEMORY.md`                                         | After architectural decisions, migrations    |
+| `generate-scoped-instructions` | `.github/instructions/*.md`                         | Any stage — works with minimal code          |
+| `generate-mcp-config`          | `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` | When adding tool connections (Level 3)       |
+| `generate-agent-workflows`     | `AGENTS.md`, `workflows/`                           | After Levels 1–4 are in place                |
 
 → [Agents documentation](agents/README.md)
 
@@ -164,14 +179,14 @@ Current examples:
 
 Use this as a diagnostic, not a checklist.
 
-| Level | What You Have | Next Step |
-|-------|---------------|-----------|
-| **0** | AI autocomplete, no project context | Run `diagnose-and-setup` |
+| Level | What You Have                                   | Next Step                                                                             |
+|-------|-------------------------------------------------|---------------------------------------------------------------------------------------|
+| **0** | AI autocomplete, no project context             | Run `diagnose-and-setup`                                                              |
 | **1** | Instructions file (`CLAUDE.md`, `.cursorrules`) | Add `ARCHITECTURE.md` + `CONTEXT.md` via `generate-architecture` + `generate-context` |
-| **2** | Architecture + domain context | Add MCP config via `generate-mcp-config` |
-| **3** | Tool-connected (MCP) | Add `MEMORY.md` via `update-memory` |
-| **4** | Memory-aware | Add agentic workflows via `generate-agent-workflows` |
-| **5** | Agentic workflows | — |
+| **2** | Architecture + domain context                   | Add MCP config via `generate-mcp-config`                                              |
+| **3** | Tool-connected (MCP)                            | Add `MEMORY.md` via `update-memory`                                                   |
+| **4** | Memory-aware                                    | Add agentic workflows via `generate-agent-workflows`                                  |
+| **5** | Agentic workflows                               | —                                                                                     |
 
 → [Full maturity model](docs/MATURITY_MODEL.md)
 

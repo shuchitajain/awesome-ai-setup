@@ -254,12 +254,12 @@ await container.read(someAsyncProvider.future);
 
 ## Coverage Expectations
 
-| Layer | Target | Notes |
-|-------|--------|-------|
-| Domain / use cases | High | Pure Dart, fast, no mocking needed |
-| Repository impls | Medium | Focus on error handling and caching logic |
-| Notifiers / providers | Medium | Happy path + error state |
-| Screens | Low | Smoke test for render, interaction for critical flows |
-| Shared widgets | Low | Only when complex enough to have logic |
+| Layer                 | Target | Notes                                                 |
+|-----------------------|--------|-------------------------------------------------------|
+| Domain / use cases    | High   | Pure Dart, fast, no mocking needed                    |
+| Repository impls      | Medium | Focus on error handling and caching logic             |
+| Notifiers / providers | Medium | Happy path + error state                              |
+| Screens               | Low    | Smoke test for render, interaction for critical flows |
+| Shared widgets        | Low    | Only when complex enough to have logic                |
 
 Do not write tests purely for coverage numbers. Write tests for behavior that matters.

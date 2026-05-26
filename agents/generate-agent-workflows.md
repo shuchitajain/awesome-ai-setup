@@ -181,6 +181,80 @@ Only update instruction files that already exist. Do not create them.
 
 ---
 
+## Step 7 — Generate Tool Automation Files
+
+This step makes agents directly invokable without manually reading `AGENTS.md` or copy-pasting prompts.
+
+**Detect which tools are active** using the same signals as `generate-mcp-config`:
+- `CLAUDE.md` present → Claude Code
+- `.cursor/` present → Cursor
+- `.github/copilot-instructions.md` present → GitHub Copilot
+
+Generate the appropriate files for each detected tool only.
+
+---
+
+### For Cursor — `.cursor/rules/*.mdc`
+
+For each agent defined in Step 3, create `.cursor/rules/[agent-slug].mdc`.
+
+Format:
+```
+---
+description: [one-line description of when this agent activates]
+globs: [comma-separated glob patterns matching the files this agent's Scope covers]
+---
+# [Agent Name]
+
+[Agent role and constraints from AGENTS.md]
+
+When editing files matching the paths above, follow the workflow in `workflows/[relevant-workflow].md`.
+```
+
+Map each agent's **Scope** from Step 3 to glob patterns (e.g., scope `lib/providers/` → glob `lib/providers/**`). If an agent has no file-path scope (e.g., an Architecture Reviewer), omit `globs` — the rule will be available on-demand in Cursor Composer but won't auto-apply.
+
+---
+
+### For Claude Code — CLAUDE.md shortcuts block
+
+Append to the existing `CLAUDE.md` (do not overwrite anything):
+
+```markdown
+## Agent Shortcuts
+
+| Shortcut | Agent | Workflow |
+|----------|-------|----------|
+| `[shortcut] <target>` | [Agent Name] | `workflows/[workflow].md` |
+| [one row per agent — derive shortcut from agent name, lowercase hyphenated] |
+
+To invoke: start your message with the shortcut. Example: `scaffold user-profile` runs the Feature Scaffolder workflow for the user-profile feature.
+```
+
+---
+
+### For GitHub Copilot — `.github/agents/*.md`
+
+For each agent defined in Step 3, create `.github/agents/[agent-slug].md`.
+
+Format:
+```markdown
+---
+name: [agent-slug]
+description: [one sentence — specific enough to identify this agent in a picker list]
+tools: [read_file, create_file, run_in_terminal — include only what this agent actually needs]
+---
+
+[Paste the agent's full "Invoke with" prompt from AGENTS.md as the system prompt body]
+
+# Workflow
+
+[Embed the full content of the corresponding workflow file from workflows/]
+```
+
+Each file must be self-contained — the developer selects the agent from the Copilot Chat agent picker and types a brief task; the embedded workflow provides full context without requiring any additional file reads. If an agent maps to more than one workflow file, embed all of them under separate `# Workflow: [name]` headings.
+
+---
+
 ## Constraints
 
 **Don't define agents that don't match the architecture.** If the project has no domain layer, don't define a "Domain Architect" agent. If there's no test suite, don't define a "Test Writer" agent. Match agents to the actual project structure.
@@ -197,7 +271,7 @@ Only update instruction files that already exist. Do not create them.
 
 ## Output
 
-Output two sections:
+Output three sections:
 
 **Section 1 — AGENTS.md content:**
 Begin with:
@@ -209,6 +283,18 @@ Begin with:
 For each workflow, output the full file content with a header:
 ```
 ## File: workflows/[name].md
+[content]
+```
+
+**Section 3 — Tool automation files:**
+For each detected tool, output each generated file with a header:
+```
+## File: .cursor/rules/[agent-slug].mdc
+## File: .github/agents/[agent-slug].md
+```
+For Claude Code, output the block to append:
+```
+## Append to: CLAUDE.md
 [content]
 ```
 
