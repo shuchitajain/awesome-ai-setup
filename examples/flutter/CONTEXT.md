@@ -1,3 +1,8 @@
+---
+example: flutter
+version: 0.1.0
+---
+
 # Domain Context
 
 This file describes the application's domain model, business rules, and user workflows. It exists to help AI tools understand what this app does and why — reducing hallucination on domain-specific behavior and preventing suggestions that contradict business requirements.

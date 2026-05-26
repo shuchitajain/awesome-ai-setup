@@ -1,5 +1,6 @@
 ---
 name: generate-context
+version: 0.1.0
 description: Extract the domain model, business rules, terminology, and user roles from the codebase and generate a CONTEXT.md
 ---
 
@@ -30,6 +31,18 @@ Gather information from the codebase before writing anything.
 - UI screens/components — reveal user workflows from the user's perspective
 - API client code — reveals backend capabilities and data structures
 - Test files — often contain realistic domain examples and edge cases
+
+---
+
+## Reference Example (Optional)
+
+Check for a reference example in this order:
+1. `.ai/reference/*/CONTEXT.md` — if the user copied one during setup
+2. `node_modules/awesome-ai-setup/examples/*/CONTEXT.md` — if the package is installed locally
+
+If neither path exists, skip this section entirely and proceed to Step 2.
+
+Use it as a **structural guide only** — what sections to include and how to format them. Do not copy its content; it describes a different project. All content must come from reading this codebase in Step 1.
 
 ---
 

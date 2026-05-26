@@ -16,7 +16,7 @@ This repository takes a different approach.
 
 ```
 # Instead of this:
-copy presets/flutter/ARCHITECTURE.md → your-project/ARCHITECTURE.md
+copy examples/flutter/ARCHITECTURE.md → your-project/ARCHITECTURE.md
 # and manually adapt 300 lines of template...
 
 # You do this:
@@ -64,9 +64,9 @@ docs/
   CONTEXT_ENGINEERING.md              # How to write context that actually helps
   MCP_GUIDE.md                        # Model Context Protocol integration guide
 
-presets/
-  flutter-riverpod-clean-architecture/
-    README.md                         # How to use this preset
+examples/
+  flutter/
+    README.md                         # How to use this example
     ARCHITECTURE.md                   # Reference example of generated output
     CONTEXT.md                        # Reference example of generated output
     MEMORY.md                         # Reference example of generated output
@@ -81,13 +81,11 @@ presets/
     .vscode/
       mcp.json
 
+    AGENTS.md
     workflows/
       feature-development.md
       bug-fixing.md
       refactoring.md
-
-    agents/
-      AGENTS.md
 ```
 
 ---
@@ -113,12 +111,14 @@ Read agents/diagnose-and-setup.md and execute it on this repository.
 
 **Cursor**
 ```
-@agents/diagnose-and-setup.md — execute this on the current codebase
+@.cursor/commands/diagnose-and-setup.md — execute this on the current codebase
 ```
 
 **GitHub Copilot (VS Code)**
+
+Open Copilot Chat, click the agent picker (mode dropdown), select **diagnose-and-setup**, then send:
 ```
-#file:agents/diagnose-and-setup.md execute the instructions in this file on this codebase
+execute the diagnostic on this codebase
 ```
 
 The diagnostic produces a short action plan tailored to your situation:
@@ -129,17 +129,18 @@ The diagnostic produces a short action plan tailored to your situation:
 
 ### Step 3 — Follow the generated action plan
 
-Run the recommended agents in the same tool using the same syntax — just swap the filename. Review each output before committing. Agents mark uncertain sections with `<!-- TODO: verify -->` for human review.
+Run the recommended agents in the same tool. For Claude Code and Cursor, swap the filename. For Copilot, select the agent from the picker. Review each output before committing — agents mark uncertain sections with `<!-- TODO: verify -->` for human review. Review each output before committing. Agents mark uncertain sections with `<!-- TODO: verify -->` for human review.
 
-### Using a preset as reference
+### Using an example as reference
 
-On existing projects (where `src/`, `lib/`, or `app/` exists), the CLI will offer to copy a preset during setup. You can also browse `presets/` directly at any time to see what high-quality agent output looks like for a specific stack.
+On existing projects (where `src/`, `lib/`, or `app/` exists), the CLI will offer to copy an example during setup. You can also browse `examples/` directly at any time to see what high-quality agent output looks like for a specific stack.
 
-Current presets:
+Current examples:
 
-| Preset | Stack |
-|--------|-------|
-| `flutter-riverpod-clean-architecture` | Flutter, Riverpod 2.x, Clean Architecture, GoRouter, Freezed |
+| Example | Stack |
+|---------|-------|
+| `flutter` | Flutter, Riverpod 2.x, Clean Architecture, GoRouter, Freezed |
+| `nodejs` | Node.js 22, Express 5, TypeScript (strict), Prisma, Zod, Vitest |
 
 ---
 
@@ -147,13 +148,13 @@ Current presets:
 
 | Agent | What It Generates | When to Use |
 |-------|------------------|-------------|
-| `diagnose-and-setup.md` | Prioritized action plan | **Start here** — any project, any stage |
-| `generate-architecture.md` | `ARCHITECTURE.md` | Active codebase setup, after major refactors |
-| `generate-context.md` | `CONTEXT.md` | Active codebase setup, when domain evolves |
-| `update-memory.md` | `MEMORY.md` | After architectural decisions, migrations |
-| `generate-scoped-instructions.md` | `.github/instructions/*.md` | Any stage — works with minimal code |
-| `generate-mcp-config.md` | `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` | When adding tool connections (Level 3) |
-| `generate-agent-workflows.md` | `AGENTS.md`, `workflows/` | After Levels 1–4 are in place |
+| `diagnose-and-setup` | Prioritized action plan | **Start here** — any project, any stage |
+| `generate-architecture` | `ARCHITECTURE.md` | Active codebase setup, after major refactors |
+| `generate-context` | `CONTEXT.md` | Active codebase setup, when domain evolves |
+| `update-memory` | `MEMORY.md` | After architectural decisions, migrations |
+| `generate-scoped-instructions` | `.github/instructions/*.md` | Any stage — works with minimal code |
+| `generate-mcp-config` | `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` | When adding tool connections (Level 3) |
+| `generate-agent-workflows` | `AGENTS.md`, `workflows/` | After Levels 1–4 are in place |
 
 → [Agents documentation](agents/README.md)
 

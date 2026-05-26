@@ -1,5 +1,6 @@
 ---
 name: generate-architecture
+version: 0.1.0
 description: Analyze the repository to detect the actual architecture and generate an accurate ARCHITECTURE.md from observed patterns
 ---
 
@@ -20,7 +21,14 @@ Before writing anything, gather information. Read these in order:
 1. **Top-level directory listing** — understand the repo structure
 2. **Primary source directory** (`lib/`, `src/`, `app/`, or equivalent) — list all subdirectories
 3. **Dependency manifest** — read `pubspec.yaml`, `package.json`, `Cargo.toml`, `go.mod`, or equivalent. Note the state management, routing, DI, and testing libraries actually present.
-4. **Sample 4–6 files** from different areas of the codebase:
+4. **Detect the primary framework version** by running the appropriate command:
+   - Flutter → `flutter --version` (captures Flutter version, Dart version, and channel)
+   - Node.js / React / Next.js → `node --version`; read `react`, `next`, `vue`, `svelte`, or `angular` version from the manifest
+   - Rust → `rustc --version`
+   - Go → `go version`
+   - Python → `python3 --version`
+   If the command fails or the tool is not on PATH, note "version unavailable" and continue.
+5. **Sample 4–6 files** from different areas of the codebase:
    - A file that manages state (store, provider, notifier, view model, reducer)
    - A screen, view, or component file
    - A data access file (repository, service, API client, data source)
@@ -29,6 +37,18 @@ Before writing anything, gather information. Read these in order:
 5. **Router/navigation config** if it exists as a separate file
 
 Do not proceed to Step 2 until you have read actual code. Do not infer from dependency names alone.
+
+---
+
+## Reference Example (Optional)
+
+Check for a reference example in this order:
+1. `.ai/reference/*/ARCHITECTURE.md` — if the user copied one during setup
+2. `node_modules/awesome-ai-setup/examples/*/ARCHITECTURE.md` — if the package is installed locally
+
+If neither path exists, skip this section entirely and proceed to Step 2.
+
+Use it as a **structural guide only** — what sections to include and how to format them. Do not copy its content; it describes a different project. All content must come from reading this codebase in Step 1.
 
 ---
 
@@ -76,7 +96,7 @@ Using your answers from Step 2, generate the file.
 **Structure your output with these sections** (omit sections that don't apply to this project):
 
 ### System Overview
-3–5 sentences describing how this project is actually organized. Mention the organizational principle (feature-first, layer-first, domain-driven), the state management approach, and the data flow direction.
+3–5 sentences describing how this project is actually organized. Mention the organizational principle (feature-first, layer-first, domain-driven), the state management approach, and the data flow direction. **Include the exact primary framework and runtime versions detected in Step 1.4** (e.g. `Flutter 3.29.3 • Dart 3.7.2` or `Next.js 15.3.2 • Node 22.13.0`). If the version was unavailable, note that explicitly.
 
 ### Folder Structure
 Show the actual directory tree with annotations. Use the real folder names from Step 1. Annotate each folder with its purpose (one short phrase). Do not invent folders that don't exist.

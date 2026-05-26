@@ -1,35 +1,37 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
+import { readdirSync, existsSync } from 'fs';
+import { join } from 'path';
 
 function countFilesIn(dir) {
   let count = 0;
   try {
-    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
       if (entry.isDirectory() && !entry.name.startsWith('.')) {
-        count += countFilesIn(path.join(dir, entry.name));
+        count += countFilesIn(join(dir, entry.name));
       } else if (entry.isFile()) {
         count++;
       }
     }
-  } catch {}
+  } catch { }
   return count;
 }
 
+const AGENT_DIRS = ['agents', '.cursor/commands', '.github/agents'];
+
 function detect(cwd) {
-  const agentsExist = fs.existsSync(path.join(cwd, 'agents'));
+  const agentsExist = AGENT_DIRS.some(d => existsSync(join(cwd, d)));
 
   const srcDir = ['lib', 'src', 'app'].find(d =>
-    fs.existsSync(path.join(cwd, d))
+    existsSync(join(cwd, d))
   );
 
-  const sourceFileCount = srcDir ? countFilesIn(path.join(cwd, srcDir)) : 0;
+  const sourceFileCount = srcDir ? countFilesIn(join(cwd, srcDir)) : 0;
   const maturity =
     sourceFileCount === 0 ? 'empty' :
-    sourceFileCount < 40  ? 'early' : 'active';
+      sourceFileCount < 40 ? 'early' : 'active';
 
   return { agentsExist, maturity };
 }
 
-module.exports = { detect };
+export { detect };

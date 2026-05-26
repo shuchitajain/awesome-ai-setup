@@ -1,3 +1,8 @@
+---
+example: flutter
+version: 0.1.0
+---
+
 # Memory
 
 This file records architectural decisions, lessons learned, and patterns to avoid. It exists so AI tools don't recommend approaches we've already evaluated and moved away from.

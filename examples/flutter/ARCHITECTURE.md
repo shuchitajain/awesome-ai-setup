@@ -1,3 +1,8 @@
+---
+example: flutter
+version: 0.1.0
+---
+
 # Architecture
 
 This document describes the structure, layers, and conventions of this Flutter application. It is the primary context file for AI tools to understand where code belongs and how the system is organized.

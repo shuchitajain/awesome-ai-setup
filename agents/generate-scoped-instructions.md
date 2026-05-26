@@ -1,5 +1,6 @@
 ---
 name: generate-scoped-instructions
+version: 0.1.0
 description: Detect per-file-type conventions across the codebase and generate scoped AI instruction files plus a global instructions file
 ---
 

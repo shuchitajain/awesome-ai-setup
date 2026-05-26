@@ -1,3 +1,9 @@
+---
+name: generate-mcp-config
+version: 0.1.0
+description: Detect relevant integrations and generate MCP configuration files for each AI tool in use
+---
+
 # Agent: Generate MCP Configuration
 
 You are generating MCP (Model Context Protocol) configuration files for this repository.
@@ -74,6 +80,14 @@ For each AI tool detected in Step 1, generate the appropriate config file.
 }
 ```
 
+**VS Code / GitHub Copilot uses `"servers"` as the top-level key** (not `"mcpServers"`). Use the correct key per tool:
+
+| Tool | Top-level key |
+|------|---------------|
+| Claude Code (`.mcp.json`) | `"mcpServers"` |
+| Cursor (`.cursor/mcp.json`) | `"mcpServers"` |
+| GitHub Copilot / VS Code (`.vscode/mcp.json`) | `"servers"` |
+
 **File paths by tool:**
 
 | Tool | Config path |
@@ -136,7 +150,6 @@ followed by the file content as a JSON code block.
 
 After all files, output a **Setup checklist** listing:
 - Each env var that needs a real value and where to get it
-- Any servers that were not included and why (so the developer can add them manually if needed)
 - A note to add MCP config file paths to `.gitignore` if they contain secrets
 
-Do not preface with explanation. Start directly with the first file.
+Do not list servers that were considered but not included. Do not preface with explanation. Start directly with the first file.

@@ -27,7 +27,7 @@
     "bin/",
     "src/",
     "agents/",
-    "presets/"
+    "examples/"
   ],
   "dependencies": {
     "fs-extra": "^11.2.0",
@@ -35,5 +35,6 @@
   },
   "engines": {
     "node": ">=16.0.0"
-  }
+  },
+  "type": "module"
 }

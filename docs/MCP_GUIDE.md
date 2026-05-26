@@ -123,7 +123,7 @@ MCP servers are configured in tool-specific files. The config structure is the s
 }
 ```
 
-Use `generate-mcp-config.md` to generate the right config for your stack automatically, or see the Flutter preset for an annotated example: [`../presets/flutter-riverpod-clean-architecture/.vscode/mcp.json`](../presets/flutter-riverpod-clean-architecture/.vscode/mcp.json)
+Use `generate-mcp-config.md` to generate the right config for your stack automatically, or see the Flutter example for an annotated reference: [`../examples/flutter/.vscode/mcp.json`](../examples/flutter/.vscode/mcp.json)
 
 ---
 

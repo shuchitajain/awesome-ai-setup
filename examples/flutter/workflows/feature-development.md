@@ -1,3 +1,8 @@
+---
+example: flutter
+version: 0.1.0
+---
+
 # Workflow: Feature Development
 
 A structured process for implementing new features in this Flutter Riverpod Clean Architecture project.

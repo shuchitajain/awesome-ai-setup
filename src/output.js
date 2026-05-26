@@ -7,11 +7,11 @@ const TOOL_COMMANDS = {
   },
   'cursor': {
     name: 'Cursor',
-    command: '@agents/diagnose-and-setup.md — execute this on the current codebase',
+    command: '@.cursor/commands/diagnose-and-setup.md — execute this on the current codebase',
   },
   'copilot': {
     name: 'GitHub Copilot',
-    command: '#file:agents/diagnose-and-setup.md execute the instructions in this file on this codebase',
+    command: 'Open Copilot Chat → agent picker → select "diagnose-and-setup" → send: execute the diagnostic on this codebase',
   },
 };
 
@@ -34,4 +34,4 @@ function printSummary({ installed }, tools) {
   console.log('The diagnostic checks your current AI setup level and tells you which agents to run next.\n');
 }
 
-module.exports = { printSummary };
+export { printSummary };

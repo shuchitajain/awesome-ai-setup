@@ -1,3 +1,8 @@
+---
+example: flutter
+version: 0.1.0
+---
+
 # Agent Definitions
 
 This file defines the AI agents used in this project, their responsibilities, scope boundaries, and how to invoke them.

@@ -1,5 +1,6 @@
 ---
 name: generate-agent-workflows
+version: 0.1.0
 description: Read the architecture, identify repeatable workflows, and generate project-specific AGENTS.md and workflow files
 ---
 
@@ -30,6 +31,18 @@ This agent should be run after architecture and context files exist. Read them f
 - What are the natural "hand-off points" between layers?
 - What repeatable tasks happen most often? (new feature, bug fix, refactor, migration?)
 - What does a complete feature look like in terms of files? (count them, name the patterns)
+
+---
+
+## Reference Example (Optional)
+
+Check for a reference example in this order:
+1. `.ai/reference/*/AGENTS.md` and `.ai/reference/*/workflows/` — if the user copied one during setup
+2. `node_modules/awesome-ai-setup/examples/*/AGENTS.md` and `.../workflows/` — if the package is installed locally
+
+If neither path exists, skip this section entirely and proceed to Step 2.
+
+Use them as a **structural guide only** — what sections to include, how agents are defined, and how workflow steps are formatted. Do not copy their content; they describe a different project. All content must come from reading this codebase in Step 1.
 
 ---
 
@@ -72,6 +85,8 @@ Based on the layer structure and workflows, identify the distinct agent roles.
 ---
 
 ## Step 4 — Generate AGENTS.md
+
+Create this file at the **project root** as `AGENTS.md`.
 
 Generate the file with these sections:
 
@@ -149,6 +164,20 @@ For each primary workflow identified in Step 2, generate a workflow file.
 ```
 
 **Important:** Workflow steps should be specific to this project's architecture. Reference actual folder names, actual patterns, actual layer names. Generic advice ("write tests") is not useful — specific advice ("write a `ProviderContainer` test for the notifier before writing widget tests") is.
+
+---
+
+## Step 6 — Update Instruction Files
+
+After generating `workflows/`, add a reference to it in whichever instruction files exist in this project:
+
+- **`CLAUDE.md`** — add: `"For step-by-step development procedures, follow the workflows in ./workflows/."`
+- **`.cursorrules`** — add: `"Execute multi-step tasks by following the relevant workflow in ./workflows/."`
+- **`.github/copilot-instructions.md`** — add a `## Development Workflows` section pointing to `./workflows/` and listing the available workflows by name.
+
+This is the unified approach: `workflows/` is the single source of truth, and each tool's instruction file references it. Do not copy workflow content into instruction files — just reference the path.
+
+Only update instruction files that already exist. Do not create them.
 
 ---
 

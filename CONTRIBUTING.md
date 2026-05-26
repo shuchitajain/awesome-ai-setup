@@ -4,7 +4,7 @@
 
 **New agents** — if you've built an agent that generates a useful context file and it works across at least two AI tools (Claude Code, Cursor, Copilot), it belongs here. Follow the existing agent format: YAML frontmatter with `name` and `description`, then clear step-by-step instructions, a "Do NOT" section, and an output template.
 
-**Preset improvements** — corrections to the Flutter preset (outdated package versions, wrong patterns, missing layers), or new presets for other stacks (Next.js, Django, Rails, etc.). A preset needs: `ARCHITECTURE.md`, `CONTEXT.md`, `MEMORY.md`, `README.md`, at least one workflow, and a scoped instructions example.
+**Example improvements** — corrections to the Flutter or Node.js examples (outdated package versions, wrong patterns, missing layers), or new examples for other stacks (Next.js, Django, Rails, etc.). An example needs: `ARCHITECTURE.md`, `CONTEXT.md`, `MEMORY.md`, `README.md`, at least one workflow, and a scoped instructions example.
 
 **Doc fixes** — typos, broken links, stale version numbers in `docs/`.
 
@@ -28,8 +28,8 @@ node /path/to/awesome-ai-setup/bin/cli.js
 ls agents/
 ```
 
-**Presets** — open the generated files as a new user of that stack. If you'd need to make significant edits before using them, they're not ready.
+**Examples** — open the generated files as a new user of that stack. If you'd need to make significant edits before using them, they're not ready.
 
 ## Submitting
 
-Open a PR with a short description of what changed and why. For new agents or presets, include one example of the generated output.
+Open a PR with a short description of what changed and why. For new agents or examples, include one example of the generated output.

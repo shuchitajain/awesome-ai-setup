@@ -1,5 +1,6 @@
 ---
 name: update-memory
+version: 0.1.0
 description: Audit current decisions, abandoned patterns, and anti-patterns in the codebase, and generate or update MEMORY.md
 ---
 
@@ -36,6 +37,18 @@ Gather information to understand the current state and history.
 **If git is available:**
 - Run `git log --oneline -50` to see recent commit history. Migration commits, refactor commits, and "remove X" commits are strong signals.
 - Check for commits with messages like "migrate from X to Y", "remove deprecated", "switch to", "replace".
+
+---
+
+## Reference Example (Optional)
+
+Check for a reference example in this order:
+1. `.ai/reference/*/MEMORY.md` — if the user copied one during setup
+2. `node_modules/awesome-ai-setup/examples/*/MEMORY.md` — if the package is installed locally
+
+If neither path exists, skip this section entirely and proceed to Step 2.
+
+Use it as a **structural guide only** — what sections to include and how to format them. Do not copy its content; it describes a different project. All content must come from reading this codebase in Step 1.
 
 ---
 

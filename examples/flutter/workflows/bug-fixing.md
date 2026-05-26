@@ -1,3 +1,8 @@
+---
+example: flutter
+version: 0.1.0
+---
+
 # Workflow: Bug Fixing
 
 A structured approach to investigating and fixing bugs in this Flutter Riverpod Clean Architecture project.

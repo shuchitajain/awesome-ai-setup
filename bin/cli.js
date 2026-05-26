@@ -1,17 +1,18 @@
 #!/usr/bin/env node
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const prompts = require('prompts');
-const { detect } = require('../src/detect');
-const { install } = require('../src/install');
-const { printSummary } = require('../src/output');
+import { existsSync } from 'fs';
+import { join } from 'path';
+import prompts from 'prompts';
+import { detect } from '../src/detect.js';
+import { install } from '../src/install.js';
+import { printSummary } from '../src/output.js';
 
 const PROJECT_MARKERS = ['package.json', 'pubspec.yaml', 'Cargo.toml', 'go.mod', '.git'];
 
-const PRESETS = [
-  { title: 'Flutter + Riverpod + Clean Architecture', value: 'flutter-riverpod-clean-architecture' },
+const EXAMPLES = [
+  { title: 'Flutter + Riverpod + Clean Architecture', value: 'flutter', tag: 'Flutter' },
+  { title: 'Node.js REST API (Express + TypeScript + Prisma)', value: 'nodejs', tag: 'Node.js' },
 ];
 
 // Human-readable ignore file names per tool, for the prompt label
@@ -33,7 +34,7 @@ async function main() {
   const cwd = process.cwd();
 
   // Guard: warn if run outside a recognisable project directory
-  const isProjectRoot = PROJECT_MARKERS.some(m => fs.existsSync(path.join(cwd, m)));
+  const isProjectRoot = PROJECT_MARKERS.some(m => existsSync(join(cwd, m)));
   if (!isProjectRoot) {
     const { proceed } = await prompts({
       type: 'confirm',
@@ -51,7 +52,7 @@ async function main() {
     const { overwrite } = await prompts({
       type: 'confirm',
       name: 'overwrite',
-      message: 'agents/ already exists. Overwrite?',
+      message: 'AI agent files already exist in this project. Overwrite?',
       initial: false,
     });
     if (overwrite === undefined) process.exit(0);
@@ -67,9 +68,9 @@ async function main() {
     name: 'tools',
     message: 'Which AI coding tools do you use?',
     choices: [
-      { title: 'Claude Code', value: 'claude-code', selected: true },
-      { title: 'Cursor', value: 'cursor' },
-      { title: 'GitHub Copilot', value: 'copilot' },
+      { title: 'GitHub Copilot', value: 'copilot', selected: true },
+      { title: 'Claude Code', value: 'claude-code', selected: false },
+      { title: 'Cursor', value: 'cursor', selected: false },
     ],
     min: 1,
     hint: '— Space to select, Enter to confirm',
@@ -96,11 +97,13 @@ async function main() {
   ];
 
   if (state.maturity !== 'empty') {
-    extraChoices.push({
-      title: 'Stack preset reference',
-      value: 'preset',
-      selected: false,
-      description: 'Copy a reference example showing what high-quality agent output looks like',
+    EXAMPLES.forEach(p => {
+      extraChoices.push({
+        title: `${p.tag} reference example`,
+        value: `example:${p.value}`,
+        selected: false,
+        description: `Copied to .ai/reference/${p.value}/ — AI agents use it as a structural guide when generating your context files`,
+      });
     });
   }
 
@@ -113,22 +116,12 @@ async function main() {
   });
   if (extras === undefined) process.exit(0);
 
-  // Preset selection (only if user selected it above)
-  let preset = null;
-  if (extras.includes('preset')) {
-    const { selected } = await prompts({
-      type: 'select',
-      name: 'selected',
-      message: 'Which preset?',
-      choices: PRESETS,
-    });
-    if (selected === undefined) process.exit(0);
-    preset = selected;
-  }
+  const exampleChoice = extras.find(e => e.startsWith('example:'));
+  const example = exampleChoice ? exampleChoice.replace('example:', '') : null;
 
   const result = await install(cwd, {
     tools,
-    preset,
+    example,
     ignoreFiles: extras.includes('ignore'),
     mcpStubs: extras.includes('mcp'),
   });

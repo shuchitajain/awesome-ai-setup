@@ -1,5 +1,6 @@
 ---
 name: diagnose-and-setup
+version: 0.1.0
 description: Assess the repository's current AI context maturity and produce a prioritized action plan pointing to the agents that should run next
 ---
 
@@ -36,6 +37,9 @@ Check whether each of these files exists. Read the ones that do.
 - `AGENTS.md` — note if present
 - `workflows/` — list any workflow files present
 
+**README:**
+- Read `README.md` if present. Assess whether it contains real, project-specific content or is auto-generated / template boilerplate (e.g. scaffolded by a CLI tool, contains only installation placeholders, generic "Getting Started" sections with no project-specific detail, or identical to a framework's default README).
+
 For each file that exists, assess its quality:
 - **Thin** — file exists but has fewer than 30 meaningful lines, or contains only placeholder content
 - **Partial** — file has real content but is missing major sections
@@ -49,6 +53,13 @@ For each file that exists, assess its quality:
 2. Identify the primary source directory (`lib/`, `src/`, `app/`, or equivalent)
 3. Read the dependency manifest (`pubspec.yaml`, `package.json`, `Cargo.toml`, etc.) — identify the tech stack and key libraries
 4. Estimate codebase size by listing the source directory
+5. **Detect the primary framework version** by running the appropriate command in the terminal:
+   - Flutter project (`pubspec.yaml` present) → run `flutter --version` and extract the Flutter and Dart versions from the output
+   - Node.js / React / Next.js project (`package.json` present) → run `node --version`; also read the `dependencies` / `devDependencies` fields for the exact `react`, `next`, `vue`, `svelte`, or `angular` version
+   - Rust project (`Cargo.toml` present) → run `rustc --version`
+   - Go project (`go.mod` present) → run `go version`
+   - Python project (`pyproject.toml` / `requirements.txt` present) → run `python3 --version`
+   If the command is unavailable (tool not on PATH), note "version unavailable — run manually" rather than guessing.
 
 **Classify as one of:**
 - **Empty** — no source directory yet, or fewer than 5 source files
@@ -82,12 +93,13 @@ Produce the action plan in this exact format:
 ## AI Setup Diagnosis
 
 **Codebase:** [Empty / Early / Active]
-**Tech stack:** [detected from dependency manifest — list primary frameworks and key libraries]
+**Tech stack:** [detected from dependency manifest — list primary frameworks and key libraries, including exact version from Step 2.5 — e.g. "Flutter 3.29.3 / Dart 3.7.2" or "React 19.1.0 / Node 22.13.0"]
 **Current level:** [0–5] — [level name from the maturity model]
 
 ### What you have
 [One bullet per AI setup file found, with quality assessment]
 [Or: "No AI setup files found." if none]
+[If README.md exists, include one bullet assessing whether it is auto-generated/boilerplate or project-specific. If auto-generated, flag it: "README.md — auto-generated template. Offer to rewrite."]
 
 ### Recommended next steps
 
@@ -122,13 +134,12 @@ Run these agents in order:
    → Domain model, business rules, terminology. Reduces hallucination on domain-specific behavior.
 
 3. `update-memory.md`
-   → Decisions made, patterns abandoned, anti-patterns to avoid. Run after completing 1 and 2.
+   → Decisions made, patterns abandoned, anti-patterns to avoid. Needs 1 and 2 complete first.
 
 4. `generate-scoped-instructions.md`
-   → Per-file-type instruction files and a global instructions file. Run after completing 1.
+   → Per-file-type instruction files and a global instructions file. Needs 1, 2, and 3 complete first.
 
-Run 1, then 4 can run in parallel with 2 and 3.
-After all four: consider `generate-agent-workflows.md` if you want structured agentic development.
+Run 1 → 2 → 3 → 4 in sequence.
 ```
 
 **If codebase is Active — partial AI setup (Level 1–4):**
@@ -149,6 +160,8 @@ You have [X]. You're missing [Y].
 
 **Do recommend re-running for thin or stale files.** A 20-line `ARCHITECTURE.md` with no folder structure documentation should be flagged.
 
+**Flag and offer to fix an auto-generated README.** If `README.md` reads like scaffolded output (generic sections, no project-specific detail, framework default text), call it out explicitly in the diagnosis and ask the user if they want you to rewrite it with accurate project context before proceeding with other agents.
+
 **Be direct about the early-codebase limitation.** Running context-generation agents on a project with fewer than 5 features produces output that will need to be thrown away and regenerated. Say this plainly.
 
 **Keep the action plan short.** The numbered list is the output. No lengthy explanations, no repeating information the user already has.
@@ -156,6 +169,34 @@ You have [X]. You're missing [Y].
 **Don't diagnose quality problems in the codebase itself.** This agent assesses AI setup files only — not code quality, architectural violations, or technical debt.
 
 ---
+
+## Step 5 — Offer to Execute
+
+After outputting the action plan, ask the user exactly this:
+
+> "Want me to run these now? I'll execute each agent in the order above — starting with [first agent name], then [subsequent agents]. Just say yes to proceed."
+
+If the user confirms:
+
+1. Read the first agent's file from the agents directory (`agents/`, `.github/agents/`, or `.cursor/commands/` — whichever exists in this project). Execute its full instructions against this codebase.
+2. Once complete, proceed to the next agent(s). Where the plan allows parallel execution, say so and execute them in sequence within this conversation.
+3. After each agent completes, confirm what was produced before moving to the next.
+
+Do not ask for confirmation between each agent — the user already said yes. Only pause if you encounter a genuine ambiguity that requires their input (e.g., conflicting patterns in the codebase).
+
+Once all planned agents have completed, ask:
+
+> "Core setup done. Want me to also generate an MCP config for this project? I'll detect which integrations are relevant (database, GitHub, filesystem, external APIs) based on what the codebase actually uses and generate a config tailored to your stack — more accurate than the generic CLI stub."
+
+If yes, read and execute `generate-mcp-config` from the agents directory. If no, skip it.
+
+Then ask:
+
+> "Want me to also run `generate-agent-workflows`? It will generate `AGENTS.md` and structured workflow files tailored to this project's architecture — useful if you want a consistent AI-assisted development process across your team."
+
+Run it if the user says yes. Skip it if they say no.
+
+If the user says no to the initial offer, stop after the action plan.
 
 ## Output
 

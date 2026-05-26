@@ -112,3 +112,13 @@ Do not skip layers. Do not generate UI before domain is defined.
 - Test file naming: `[source_file_name]_test.dart` in matching `test/` hierarchy
 
 See `.github/instructions/testing.instructions.md` for full testing conventions.
+
+---
+
+## Development Workflows
+
+For step-by-step procedures, follow the relevant workflow file in `./workflows/`:
+
+- `workflows/feature-development.md` — implementing a new feature end-to-end
+- `workflows/bug-fixing.md` — investigating and fixing bugs
+- `workflows/refactoring.md` — safe refactoring with blast-radius control

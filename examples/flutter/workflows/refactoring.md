@@ -1,3 +1,8 @@
+---
+example: flutter
+version: 0.1.0
+---
+
 # Workflow: Refactoring
 
 A structured approach to refactoring in this Flutter Riverpod Clean Architecture project.
