@@ -1,4 +1,29 @@
-# awesome-ai-setup
+<div align="center">
+
+<img src="banner.png" width="100%" />
+
+# Awesome AI Setup
+> Turn AI coding tools into a real engineering system.
+
+Claude Code • Cursor • MCP • Memory • Context Engineering • Agent Workflows • Architecture Awareness
+
+<p>
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#why-this-exists">Why This Exists</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#core-concepts">Core Concepts</a> •
+  <a href="#setup">Setup</a>
+</p>
+
+<p>
+  <a href="https://www.linkedin.com/in/shuchita-jain/"><img src="https://img.shields.io/badge/Follow%20on-LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>&nbsp;
+  <a href="https://medium.com/@coderSJ"><img src="https://img.shields.io/badge/Follow%20on-Medium-12100E?style=for-the-badge" /></a>
+</p>
+
+
+</div>
+
+---
 
 Practical agents and patterns for AI-native repository workflows.
 
