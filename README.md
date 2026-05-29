@@ -9,7 +9,7 @@ Claude Code • Cursor • MCP • Memory • Context Engineering • Agent Work
 
 <p>
   <a href="#quick-start">Quick Start</a> •
-  <a href="#what's-in-this-repo">What's in This Repo</a> •
+  <a href="#whats-in-this-repo">What's in This Repo</a> •
   <a href="#the-agents">The Agents</a> •
   <a href="#ai-maturity-model">AI Maturity Model</a> •
   <a href="#docs">Docs</a>
