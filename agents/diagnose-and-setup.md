@@ -1,6 +1,6 @@
 ---
 name: diagnose-and-setup
-version: 0.1.0
+version: 0.2.0
 description: Assess the repository's current AI context maturity and produce a prioritized action plan pointing to the agents that should run next
 ---
 
@@ -17,10 +17,9 @@ The output is a numbered list of agents to run - specific to what's missing in t
 Check whether each of these files exists. Read the ones that do.
 
 **Global instruction files** (read if present):
-- `CLAUDE.md` (root)
-- `.github/copilot-instructions.md`
-- `.cursorrules`
-- `.windsurfrules`
+- `CLAUDE.md` (root) — Claude Code
+- `.github/copilot-instructions.md` — GitHub Copilot
+- `.cursorrules` — Cursor
 
 **Architecture and context files** (read if present):
 - `ARCHITECTURE.md` (root)
@@ -28,10 +27,24 @@ Check whether each of these files exists. Read the ones that do.
 - `MEMORY.md` (root)
 
 **Scoped instruction files:**
-- `.github/instructions/` - list any `.instructions.md` files present
+- `.github/instructions/` - list any `.instructions.md` files present (GitHub Copilot)
+- `.claude/rules/` - list any `.md` files present (Claude Code)
+- `.cursor/rules/` - list any `.mdc` files present (Cursor)
 
-**Tooling:**
-- `.vscode/mcp.json` or `.cursor/mcp.json` - note if present
+**Tooling — MCP config:**
+
+Check project-level first, then user-level as fallback:
+
+| Tool | Project-level path | User-level path |
+|------|-------------------|----------------|
+| GitHub Copilot | `.vscode/mcp.json` | `~/.config/github-copilot/intellij/mcp.json` (JetBrains/Android Studio) |
+| Claude Code | `.mcp.json` (root) | `~/.claude.json` (contains `mcpServers` key) |
+| Cursor | `.cursor/mcp.json` | `~/.cursor/mcp.json` |
+
+For each tool detected as in use, report MCP status as one of:
+- **Project-level** — `[path]` present ✓
+- **User-level only** — no project config found, but `[user path]` exists (servers apply globally, not project-specifically — flag as a gap)
+- **Missing** — no config at either level ✗
 
 **Agentic:**
 - `AGENTS.md` - note if present
@@ -77,7 +90,7 @@ Based on Steps 1 and 2:
 | **0** | No AI setup files exist |
 | **1** | At least one instruction file exists and has real content |
 | **2** | `ARCHITECTURE.md` exists and documents real structure |
-| **3** | MCP configuration exists |
+| **3** | MCP configuration exists for at least one active tool (`.vscode/mcp.json`, `.mcp.json`, or `.cursor/mcp.json`) |
 | **4** | `MEMORY.md` exists with real entries |
 | **5** | `AGENTS.md` and at least one workflow file exist |
 
@@ -156,6 +169,18 @@ You have [X]. You're missing [Y].
 
 ## Constraints
 
+**Assess each detected tool independently for its full set of config files.** Presence of config for one tool never satisfies a gap for another. Detect which tools are in use by checking: `agents/` or `.mcp.json` or `.claudeignore` → Claude Code; `.github/agents/` or `.github/copilot-instructions.md` or `.vscode/mcp.json` → Copilot; `.cursor/` or `.cursorrules` or `.cursor/rules/` → Cursor.
+
+For each tool detected as in use, the complete set of expected files is:
+
+| Tool | Global instructions | Scoped rules | MCP config |
+|------|--------------------|--------------|-----------|
+| GitHub Copilot | `.github/copilot-instructions.md` | `.github/instructions/*.instructions.md` | `.vscode/mcp.json` |
+| Claude Code | `CLAUDE.md` | `.claude/rules/*.md` | `.mcp.json` |
+| Cursor | `.cursorrules` | `.cursor/rules/*.mdc` | `.cursor/mcp.json` |
+
+Flag every missing file as a gap for that tool. If global instructions or scoped rules are missing, recommend `generate-scoped-instructions.md`. If MCP config is missing at project level, recommend `generate-mcp-config.md`.
+
 **Don't recommend agents for files that already exist and appear complete.** If `ARCHITECTURE.md` has substantial, project-specific content, skip `generate-architecture`.
 
 **Do recommend re-running for thin or stale files.** A 20-line `ARCHITECTURE.md` with no folder structure documentation should be flagged.
@@ -184,9 +209,11 @@ If the user confirms:
 
 Do not ask for confirmation between each agent - the user already said yes. Only pause if you encounter a genuine ambiguity that requires their input (e.g., conflicting patterns in the codebase).
 
-Once all planned agents have completed, ask:
+Once all planned agents have completed, check whether any detected tool is missing a project-level MCP config. If at least one is missing, ask — naming the specific file and tool:
 
-> "Core setup done. Want me to also generate an MCP config for this project? I'll detect which integrations are relevant (database, GitHub, filesystem, external APIs) based on what the codebase actually uses and generate a config tailored to your stack - more accurate than the generic CLI stub."
+> "Core setup done. Want me to also generate an MCP config for this project? [List each missing file, e.g. '`.mcp.json` is missing for Claude Code, `.cursor/mcp.json` is missing for Cursor.'] I'll detect which integrations are relevant (database, GitHub, filesystem, external APIs) based on what the codebase actually uses and generate a config tailored to your stack - more accurate than the generic CLI stub."
+
+If all detected tools already have a project-level MCP config, skip this offer entirely — do not mention it.
 
 If yes, read and execute `generate-mcp-config` from the agents directory. If no, skip it.
 
