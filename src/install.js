@@ -3,7 +3,7 @@
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import pkg from 'fs-extra';
-const { emptyDir, readdir, copy, pathExists, outputFile } = pkg;
+const { emptyDir, readdir, copy, pathExists, outputFile, readFile } = pkg;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -77,24 +77,51 @@ Thumbs.db
 *.min.css
 `;
 
-// VS Code uses "servers", Claude Code and Cursor use "mcpServers"
-function mcpContent(tool) {
-  const key = tool === 'copilot' ? 'servers' : 'mcpServers';
-  return `{
-  "${key}": {
-    // Uncomment and add your token to enable GitHub MCP server
-    // "github": {
-    //   "command": "npx",
-    //   "args": ["-y", "@modelcontextprotocol/server-github"],
-    //   "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_TOKEN_HERE" }
-    // },
-    "filesystem": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
-    }
+// Read mcpServers/servers from a JSON file, return the servers object or null.
+async function readMcpServers(filePath) {
+  if (!await pathExists(filePath)) return null;
+  try {
+    const parsed = JSON.parse(await readFile(filePath, 'utf8'));
+    const servers = parsed.servers || parsed.mcpServers;
+    return (servers && Object.keys(servers).length > 0) ? servers : null;
+  } catch {
+    return null;
   }
 }
-`;
+
+// Gather the best available set of MCP servers to seed a new config file.
+// Tries all known MCP config locations (project + user level, all tools) in priority order,
+// skipping the destination file itself. Returns the first source that has servers, or null.
+async function gatherKnownServers(cwd, excludePath) {
+  const homedir = (await import('os')).homedir();
+  const sources = [
+    // Project-level (all tools)
+    join(cwd, '.vscode', 'mcp.json'),   // Copilot
+    join(cwd, '.cursor', 'mcp.json'),   // Cursor
+    join(cwd, '.mcp.json'),             // Claude Code
+    // User-level (all tools)
+    join(homedir, '.cursor', 'mcp.json'),  // Cursor user-level
+    join(homedir, '.mcp.json'),            // Claude Code user-level
+    join(homedir, '.claude.json'),         // Claude Code user-level (alt)
+    join(homedir, '.config', 'github-copilot', 'intellij', 'mcp.json'),  // Copilot user-level (JetBrains/Android Studio)
+  ].filter(s => s !== excludePath);
+
+  for (const src of sources) {
+    const servers = await readMcpServers(src);
+    if (servers) return { servers, source: src };
+  }
+  return null;
+}
+
+// Generate MCP config content for a tool, mirroring servers from the best available source.
+async function mcpContentForTool(tool, cwd, destPath) {
+  const key = tool === 'copilot' ? 'servers' : 'mcpServers';
+  const found = await gatherKnownServers(cwd, destPath);
+  const servers = found ? found.servers : {
+    filesystem: { command: 'npx', args: ['-y', '@modelcontextprotocol/server-filesystem', '.'] },
+  };
+  return { content: JSON.stringify({ [key]: servers }, null, 2) + '\n', source: found ? found.source : null };
+}
 }
 
 async function install(cwd, { tools = [], example, ignoreFiles, mcpStubs } = {}) {
@@ -140,8 +167,12 @@ async function install(cwd, { tools = [], example, ignoreFiles, mcpStubs } = {})
       if (!configPath) continue;
       const dest = join(cwd, configPath);
       if (!await pathExists(dest)) {
-        await outputFile(dest, mcpContent(tool) + '\n');
-        installed.push({ label: configPath, detail: `${tool} MCP config stub` });
+        const { content, source } = await mcpContentForTool(tool, cwd, dest);
+        await outputFile(dest, content);
+        const detail = source
+          ? `${tool} MCP config (mirrored from ${source.replace(process.env.HOME, '~')})`
+          : `${tool} MCP config stub (filesystem only — no existing config found to mirror)`;
+        installed.push({ label: configPath, detail });
       } else {
         installed.push({ label: configPath, detail: `${tool} MCP config (already exists — skipped)` });
       }

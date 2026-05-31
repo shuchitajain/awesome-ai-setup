@@ -49,14 +49,14 @@ async function main() {
 
   // Handle existing agents/ folder
   if (state.agentsExist) {
-    const { overwrite } = await prompts({
+    const { update } = await prompts({
       type: 'confirm',
-      name: 'overwrite',
-      message: 'AI agent files already exist in this project. Overwrite?',
+      name: 'update',
+      message: 'Agent files already exist. Refresh them to the latest version? (ignore files and MCP configs will not be changed)',
       initial: false,
     });
-    if (overwrite === undefined) process.exit(0);
-    if (!overwrite) {
+    if (update === undefined) process.exit(0);
+    if (!update) {
       console.log('\nNo changes made.\n');
       return;
     }

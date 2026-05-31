@@ -5,13 +5,14 @@
 # Awesome AI Setup
 > Turn AI coding tools into a real engineering system.
 
-Claude Code • Cursor • MCP • Memory • Context Engineering • Agent Workflows • Architecture Awareness
+Claude Code • GitHub Copilot • Cursor • MCP • Memory • Context Engineering • Agent Workflows • Architecture Awareness
 
 <p>
   <a href="#quick-start">Quick Start</a> •
   <a href="#whats-in-this-repo">What's in This Repo</a> •
   <a href="#the-agents">The Agents</a> •
   <a href="#ai-maturity-model">AI Maturity Model</a> •
+  <a href="#config-file-reference">Config Reference</a> •
   <a href="#docs">Docs</a>
 </p>
 
@@ -146,8 +147,8 @@ Current examples:
 | `generate-architecture`        | `ARCHITECTURE.md`                                   | Active codebase setup, after major refactors |
 | `generate-context`             | `CONTEXT.md`                                        | Active codebase setup, when domain evolves   |
 | `update-memory`                | `MEMORY.md`                                         | After architectural decisions, migrations    |
-| `generate-scoped-instructions` | `.github/instructions/*.instructions.md`, `.github/copilot-instructions.md` | Any stage - works with minimal code          |
-| `generate-mcp-config`          | `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` | When adding tool connections (Level 3)       |
+| `generate-scoped-instructions` | Per-file-type rules + global instructions file (all detected tools) | Any stage - works with minimal code          |
+| `generate-mcp-config`          | MCP config per detected tool                        | When adding tool connections (Level 3)       |
 | `generate-agent-workflows`     | `AGENTS.md`, `workflows/`                           | After Levels 1–4 are in place                |
 
 → [Agents documentation](agents/README.md)
@@ -168,6 +169,47 @@ Use this as a diagnostic, not a checklist.
 | **5** | Agentic workflows                               | -                                                                                     |
 
 → [Full maturity model](docs/MATURITY_MODEL.md)
+
+---
+
+## Config File Reference
+
+Each AI tool has its own file format and location for each type of config. The agents generate all of them automatically for every tool you use.
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                          YOUR PROJECT                                           │
+│                                                                                 │
+│  SHARED (all tools read these)                                                  │
+│  ├── ARCHITECTURE.md       folder structure, layers, conventions                │
+│  ├── CONTEXT.md            domain model, business rules, terminology            │
+│  ├── MEMORY.md             decisions made, anti-patterns, AI mistake log        │
+│  ├── AGENTS.md             agent definitions + invoke templates                 │
+│  └── workflows/            new-feature.md  bug-fix.md  refactor.md  ...         │
+│                                                                                 │
+│  COPILOT                   CLAUDE CODE               CURSOR                     │
+│  ├── Global instructions   ├── Global instructions   ├── Global instructions    │
+│  │   .github/              │   CLAUDE.md             │   .cursorrules           │
+│  │   copilot-instructions  │                         │                          │
+│  │   .md                   ├── Scoped rules          ├── Scoped rules           │
+│  ├── Scoped rules          │   .claude/rules/        │   .cursor/rules/         │
+│  │   .github/instructions/ │   [name].md             │   [name].mdc             │
+│  │   [name].instructions   │   (always loaded)       │   globs: **/*.dart       │
+│  │   .md                   │                         │   alwaysApply: false     │
+│  │   applyTo: "**/*.dart"  │                         │                          │
+│  ├── MCP config            ├── MCP config            ├── MCP config             │
+│  │   .vscode/mcp.json      │   .mcp.json             │   .cursor/mcp.json       │
+│  │   ~/.config/copilot/  ¹ │   ~/.claude.json ¹      │   ~/.cursor/mcp.json ¹   │
+│  │   intellij/mcp.json     │                         │                          │
+│  ├── Ignore file           ├── Ignore file           ├── Ignore file            │
+│  │   .copilotignore        │   .claudeignore         │   .cursorignore          │
+│  └── Agents                └── Agents                └── Agents                 │
+│      .github/agents/           agents/                   .cursor/commands/      │
+│      [name].agent.md           [name].md                 [name].md              │
+│                                                                                 │
+│  ¹ user-level — applies globally, not project-specifically                      │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 

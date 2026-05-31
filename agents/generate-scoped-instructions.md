@@ -1,6 +1,6 @@
 ---
 name: generate-scoped-instructions
-version: 0.1.0
+version: 0.2.0
 description: Detect per-file-type conventions across the codebase and generate scoped AI instruction files plus a global instructions file
 ---
 
@@ -83,17 +83,39 @@ Only create files for groupings where you found meaningful, consistent conventio
 
 ## Step 4 - Generate the Instruction Files
 
-For each file type grouping identified in Step 3, generate an instruction file.
+For each file type grouping identified in Step 3, generate scoped instruction files for every AI tool detected as in use.
 
-**File naming:** `[file-type].instructions.md`
-**Location:** `.github/instructions/` (for GitHub Copilot compatibility)
+**Detect which tools are active** by checking:
+- `agents/` or `.mcp.json` or `.claudeignore` present → Claude Code in use
+- `.github/agents/` or `.github/copilot-instructions.md` or `.vscode/mcp.json` present → Copilot in use
+- `.cursor/` or `.cursor/rules/` or `.cursorrules` present → Cursor in use
 
-**Required frontmatter:**
+Generate the same conventions to all detected tools using the format for each:
+
+| Tool | Location | File naming | Frontmatter |
+|------|----------|-------------|-------------|
+| GitHub Copilot | `.github/instructions/` | `[name].instructions.md` | `applyTo: "[glob]"` |
+| Claude Code | `.claude/rules/` | `[name].md` | none required |
+| Cursor | `.cursor/rules/` | `[name].mdc` | `globs: [glob]` + `alwaysApply: false` |
+
+Do not generate for tools not detected as in use.
+
+**GitHub Copilot frontmatter:**
 ```markdown
 ---
 applyTo: "[glob pattern matching the target files]"
 ---
 ```
+
+**Cursor frontmatter:**
+```markdown
+---
+globs: [glob pattern matching the target files]
+alwaysApply: false
+---
+```
+
+**Claude Code:** No frontmatter. Start directly with the `# [File Type] Conventions` heading.
 
 **Content structure for each file:**
 
@@ -161,9 +183,19 @@ Brief one-line description of what these conventions cover.
 
 ---
 
-## Also Generate: Global Instructions File
+## Also Generate: Global Instructions Files
 
-If no global instructions file exists, generate one at `.github/copilot-instructions.md` (also usable as `CLAUDE.md`).
+For each AI tool detected as in use, generate its global instructions file if absent:
+
+| Tool | File | Notes |
+|------|------|-------|
+| GitHub Copilot | `.github/copilot-instructions.md` | Auto-loaded by Copilot in VS Code |
+| Claude Code | `CLAUDE.md` | Read at every session start |
+| Cursor | `.cursorrules` | Auto-loaded by Cursor |
+
+If a file already exists, skip it — do not overwrite.
+
+All three files should contain the same content:
 
 The global file should cover:
 - Tech stack (libraries actually in use)
@@ -191,12 +223,14 @@ Keep it under 80 lines. Scoped files handle the details.
 
 ## Output
 
-For each instruction file to create, output the full file content with a header indicating the file path:
+For each file to create, output the full file content with a header indicating the file path:
 
 ```
-## File: .github/instructions/[name].instructions.md
+## File: [path]
 
 [file content]
 ```
+
+Group output by file type (e.g. all three screens files together), not by tool. This makes it easier to verify the conventions are consistent across tools.
 
 After all instruction files, list any gaps - conventions that should exist but are too inconsistent in the current codebase to document.
