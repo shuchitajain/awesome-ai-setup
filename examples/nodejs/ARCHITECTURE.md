@@ -209,6 +209,13 @@ Prisma with PostgreSQL. Schema lives in `prisma/schema.prisma`.
 - Client: singleton exported from `src/db.ts` - import `db` everywhere, never `new PrismaClient()`
 - Transactions: use `db.$transaction()` for any operation touching multiple models
 - Never call Prisma outside `src/repositories/`
+- All monetary values are stored as `Int` (cents) in the Prisma schema. Never use `Float`, `Decimal`, or `number` for money at the service or repository layer. Format to display strings (e.g. `$9.99`) only at the response serialization layer.
+
+---
+
+## Request Validation
+
+Zod schemas in `src/schemas/` are the single source of truth for request shapes. TypeScript types for request bodies are inferred from Zod schemas with `z.infer<typeof Schema>` — never write separate TypeScript interfaces for request bodies. The `validate(Schema)` middleware in `src/middleware/validate.ts` uses the same schema object for runtime validation. Do not use `express-validator`, Joi, or hand-written interfaces.
 
 ---
 

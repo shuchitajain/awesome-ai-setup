@@ -180,6 +180,27 @@ Providers do not call data sources directly. They call use cases. Use cases call
 
 ---
 
+## Widget Base Class
+
+The default widget base class for all screens and complex widgets is `HookConsumerWidget`, regardless of whether the current implementation uses hooks or providers. This makes it trivial to add either without class refactoring.
+
+```dart
+class TaskListScreen extends HookConsumerWidget {
+  const TaskListScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // ref.watch and useState both available
+  }
+}
+```
+
+Use `StatelessWidget` only for pure display widgets that receive all data as parameters and have no state or provider dependencies (e.g., `AppButton`, `ErrorView`).
+
+Do not use `StatefulWidget`, `ConsumerWidget`, `ConsumerStatefulWidget`, or `HookWidget` for new code.
+
+---
+
 ## Riverpod Conventions
 
 ### Provider naming
@@ -379,9 +400,9 @@ class AuthFailure extends Failure {
 }
 ```
 
-Use cases return `Either<Failure, T>` from `fpdart` or throw failures directly - this is a project-specific decision. Check `MEMORY.md` for which pattern this project settled on.
+Use cases throw typed exceptions extending `AppException` from `core/errors/exceptions.dart`. Do not use `Either<Failure, T>`, `fpdart`, or `dartz`.
 
-Providers catch failures and surface them via `AsyncError` state. Screens use `when()` on `AsyncValue` to handle loading, error, and data states.
+Providers catch exceptions with `AsyncValue.guard()` or `try/catch`, surfacing them as `AsyncError` state. Screens use `when()` on `AsyncValue` to handle loading, error, and data states.
 
 ---
 
@@ -400,8 +421,4 @@ dart run build_runner watch --delete-conflicting-outputs
 
 Generated files (`.g.dart`, `.freezed.dart`) are committed to the repository.
 
----
 
-## Architecture Decision Records
-
-Significant architecture decisions are tracked in `MEMORY.md`. Check there before suggesting alternative approaches to state management, navigation, or dependency injection - these decisions have context.

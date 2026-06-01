@@ -63,6 +63,8 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 
 ### [2024-05] Prices stored as integer cents - never floats
 
+**Constraint documented in:** `ARCHITECTURE.md` > Database — this entry records the reasoning.
+
 **Context:** Initial implementation stored prices as `Float` in Prisma. Hit floating-point rounding bugs in order total calculations (`$9.99 + $0.01 = $10.000000000002`).
 
 **Decision:** All prices are stored as `Int` (cents) in the database. Formatting to display strings (`$9.99`) happens only at the response serialization layer.
@@ -72,6 +74,8 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 ---
 
 ### [2024-07] Zod schemas are the single source of truth for request shape
+
+**Constraint documented in:** `ARCHITECTURE.md` > Request Validation — this entry records the reasoning.
 
 **Context:** Had duplicate validation: TypeScript interfaces defined request shapes and separate validation logic checked them at runtime. They drifted.
 

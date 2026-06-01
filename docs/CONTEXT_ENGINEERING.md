@@ -198,6 +198,16 @@ This prevents AI from suggesting features outside your scope.
 
 `MEMORY.md` is a decision log, not documentation. The format should emphasize *why* over *what*.
 
+**The ownership rule:**
+
+`MEMORY.md` owns the *reasoning* behind constraints — why they exist, what was rejected, what broke. Active constraints themselves (rules the AI must follow when generating code) belong in `ARCHITECTURE.md` at the relevant section.
+
+If a decision creates a behavioral rule — "never use X", "always go through Y for Z" — add that rule to `ARCHITECTURE.md` first. Then record the context, the alternatives rejected, and the reasoning in `MEMORY.md`. A cross-reference in the `MEMORY.md` entry pointing to the `ARCHITECTURE.md` section is the only link needed. `ARCHITECTURE.md` does not reference `MEMORY.md`.
+
+**Why this matters:**
+
+An agent reading `ARCHITECTURE.md` to implement a feature will miss constraints that only live in `MEMORY.md`. Some agents skip `MEMORY.md` entirely; others deprioritize it relative to `ARCHITECTURE.md`. Either way, a constraint buried only in `MEMORY.md` is a constraint that gets violated silently.
+
 **Structure entries like this:**
 
 ```markdown

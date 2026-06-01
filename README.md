@@ -180,7 +180,7 @@ Each AI tool has its own file format and location for each type of config. The a
 ┌─────────────────────────────────────────────────────────────────────────────────┐
 │                          YOUR PROJECT                                           │
 │                                                                                 │
-│  SHARED (all tools read these)                                                  │
+│  CANONICAL PROJECT CONTEXT (each tool needs instructions to read these)         │
 │  ├── ARCHITECTURE.md       folder structure, layers, conventions                │
 │  ├── CONTEXT.md            domain model, business rules, terminology            │
 │  ├── MEMORY.md             decisions made, anti-patterns, AI mistake log        │

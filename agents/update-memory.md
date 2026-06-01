@@ -97,6 +97,22 @@ Look for signals that certain patterns were tried and abandoned or explicitly wa
 
 ---
 
+## Step 3.5 - Route Active Constraints to ARCHITECTURE.md
+
+Before writing `MEMORY.md` entries, identify which findings are **active behavioral constraints** — rules that must affect how AI generates code right now (e.g., "never use float for prices", "always extend `HookConsumerWidget`", "never call Prisma outside repositories").
+
+These constraints must exist in `ARCHITECTURE.md` at the relevant section. If the constraint is not already there, add it before (or alongside) writing the `MEMORY.md` entry.
+
+`MEMORY.md` entries for these decisions should include a cross-reference:
+
+```markdown
+**Constraint documented in:** `ARCHITECTURE.md` > [Section Name] — this entry records the reasoning and what was rejected.
+```
+
+Do not let `MEMORY.md` be the only place a behavioral constraint lives. If an agent reads only `ARCHITECTURE.md` for a task, it will miss the constraint entirely.
+
+---
+
 ## Step 4 - Generate MEMORY.md
 
 Generate the file with entries organized into these sections:
