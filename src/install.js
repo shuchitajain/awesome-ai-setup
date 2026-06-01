@@ -13,7 +13,7 @@ const EXAMPLES_SRC = join(__dirname, '..', 'examples');
 // Tool → agents destination folder (relative to project root)
 const AGENTS_DEST = {
   'claude-code': 'agents',
-  'cursor': '.cursor/commands',
+  'cursor': '.cursor/skills',
   'copilot': '.github/agents',
 };
 
@@ -122,7 +122,6 @@ async function mcpContentForTool(tool, cwd, destPath) {
   };
   return { content: JSON.stringify({ [key]: servers }, null, 2) + '\n', source: found ? found.source : null };
 }
-}
 
 async function install(cwd, { tools = [], example, ignoreFiles, mcpStubs } = {}) {
   const installed = [];
@@ -135,14 +134,20 @@ async function install(cwd, { tools = [], example, ignoreFiles, mcpStubs } = {})
     const srcFiles = await readdir(AGENTS_SRC);
     for (const file of srcFiles) {
       if (!file.endsWith('.md')) continue;
-      // Copilot requires .agent.md extension; README stays as-is
-      const destFile = (destDir === AGENTS_DEST.copilot && file !== 'README.md')
-        ? file.replace(/\.md$/, '.agent.md')
-        : file;
-      await copy(join(AGENTS_SRC, file), join(agentsDest, destFile));
+      if (destDir === AGENTS_DEST.cursor) {
+        // Skills format: each agent gets its own folder with a SKILL.md file
+        if (file === 'README.md') continue;
+        const skillName = file.replace(/\.md$/, '');
+        await copy(join(AGENTS_SRC, file), join(agentsDest, skillName, 'SKILL.md'));
+      } else {
+        await copy(join(AGENTS_SRC, file), join(agentsDest, file));
+      }
     }
     const agentFiles = (await readdir(agentsDest)).filter(f => f !== 'README.md');
-    installed.push({ label: `${destDir}/`, detail: `${agentFiles.length} agents + README` });
+    const detail = destDir === AGENTS_DEST.cursor
+      ? `${agentFiles.length} skills`
+      : `${agentFiles.length} agents + README`;
+    installed.push({ label: `${destDir}/`, detail });
   }
 
   // Tool-specific ignore files
@@ -181,11 +186,11 @@ async function install(cwd, { tools = [], example, ignoreFiles, mcpStubs } = {})
 
   // Copy reference example if requested — skip (don't partial-merge) if it already exists
   if (example) {
-    const exampleDest = path.join(cwd, '.ai', 'reference', example);
-    if (await fse.pathExists(exampleDest)) {
+    const exampleDest = join(cwd, '.ai', 'reference', example);
+    if (await pathExists(exampleDest)) {
       installed.push({ label: `.ai/reference/${example}/`, detail: 'reference example (already exists — skipped)' });
     } else {
-      await fse.copy(path.join(EXAMPLES_SRC, example), exampleDest);
+      await copy(join(EXAMPLES_SRC, example), exampleDest);
       installed.push({ label: `.ai/reference/${example}/`, detail: 'reference example' });
     }
   }

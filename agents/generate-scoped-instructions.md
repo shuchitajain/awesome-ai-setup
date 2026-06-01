@@ -1,6 +1,6 @@
 ---
 name: generate-scoped-instructions
-version: 0.2.0
+version: 0.3.0
 description: Detect per-file-type conventions across the codebase and generate scoped AI instruction files plus a global instructions file
 ---
 
@@ -207,6 +207,55 @@ Keep it under 80 lines. Scoped files handle the details.
 
 ---
 
+## Also Generate: Named Agent Wrappers
+
+Named agent wrappers make the agents in `agents/` natively discoverable in each tool - as a mode dropdown entry in Copilot or a `/skill-name` slash command in Cursor - without duplicating any agent logic.
+
+**How to generate them:**
+
+Scan all `agents/*.md` files. For each, read the `name` and `description` from the YAML frontmatter.
+
+Generate wrappers only for tools detected as in use (same detection logic as scoped instruction files). Skip Claude Code - its `agents/` folder is already the native format. Skip any wrapper file that already exists.
+
+---
+
+### GitHub Copilot wrapper
+
+**Location:** `.github/agents/<name>.md`
+
+```markdown
+---
+name: <name>
+description: <description from source agent frontmatter>
+tools: [codebase, editFiles, readFile]
+---
+
+Read agents/<name>.md and execute it on this repository.
+```
+
+Each wrapper appears in the Copilot Chat mode dropdown by name. One file per agent.
+
+---
+
+### Cursor wrapper (Agent Skill)
+
+**Location:** `.agents/skills/<name>/SKILL.md`
+
+The `name` frontmatter field must exactly match the containing folder name.
+
+```markdown
+---
+name: <name>
+description: <description from source agent frontmatter>
+---
+
+Read agents/<name>.md and execute it on this repository.
+```
+
+Invoke with `/<name>` in Cursor Agent chat, or let the agent auto-trigger based on the description. One folder per agent.
+
+---
+
 ## Constraints
 
 **Only document observed conventions, not recommended ones.** If the codebase inconsistently uses two approaches, do not pick one and document it as the convention - flag it instead.
@@ -234,3 +283,5 @@ For each file to create, output the full file content with a header indicating t
 Group output by file type (e.g. all three screens files together), not by tool. This makes it easier to verify the conventions are consistent across tools.
 
 After all instruction files, list any gaps - conventions that should exist but are too inconsistent in the current codebase to document.
+
+After gaps, list any agent wrapper files to create (Copilot `.github/agents/` and Cursor `.agents/skills/`), grouped by tool.

@@ -1,6 +1,6 @@
 ---
 name: diagnose-and-setup
-version: 0.2.0
+version: 0.3.0
 description: Assess the repository's current AI context maturity and produce a prioritized action plan pointing to the agents that should run next
 ---
 
@@ -203,7 +203,7 @@ After outputting the action plan, ask the user exactly this:
 
 If the user confirms:
 
-1. Read the first agent's file from the agents directory (`agents/`, `.github/agents/`, or `.cursor/commands/` - whichever exists in this project). Execute its full instructions against this codebase.
+1. Read the first agent's file from the agents directory (`agents/`, `.github/agents/`, or `.cursor/skills/` - whichever exists in this project). Execute its full instructions against this codebase.
 2. Once complete, proceed to the next agent(s). Where the plan allows parallel execution, say so and execute them in sequence within this conversation.
 3. After each agent completes, confirm what was produced before moving to the next.
 

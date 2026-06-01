@@ -28,13 +28,13 @@ Once installed, invoke any agent using your tool's native syntax:
 
 | Agent | Command |
 |-------|---------|
-| `diagnose-and-setup` | `@.cursor/commands/diagnose-and-setup.md - execute this on the current codebase` |
-| `generate-architecture` | `@.cursor/commands/generate-architecture.md - execute this on the current codebase` |
-| `generate-context` | `@.cursor/commands/generate-context.md - execute this on the current codebase` |
-| `update-memory` | `@.cursor/commands/update-memory.md - execute this on the current codebase` |
-| `generate-scoped-instructions` | `@.cursor/commands/generate-scoped-instructions.md - execute this on the current codebase` |
-| `generate-mcp-config` | `@.cursor/commands/generate-mcp-config.md - execute this on the current codebase` |
-| `generate-agent-workflows` | `@.cursor/commands/generate-agent-workflows.md - execute this on the current codebase` |
+| `diagnose-and-setup` | `/diagnose-and-setup` |
+| `generate-architecture` | `/generate-architecture` |
+| `generate-context` | `/generate-context` |
+| `update-memory` | `/update-memory` |
+| `generate-scoped-instructions` | `/generate-scoped-instructions` |
+| `generate-mcp-config` | `/generate-mcp-config` |
+| `generate-agent-workflows` | `/generate-agent-workflows` |
 
 **GitHub Copilot (VS Code)**
 
@@ -66,7 +66,7 @@ This works for all three starting points:
 | `generate-architecture` | `ARCHITECTURE.md` | 40+ source files | Re-run after major refactors |
 | `generate-context` | `CONTEXT.md` | `ARCHITECTURE.md` recommended | Run after architecture is documented |
 | `update-memory` | `MEMORY.md` | `ARCHITECTURE.md` + `CONTEXT.md` | Run after architectural decisions or migrations |
-| `generate-scoped-instructions` | `.github/instructions/` (Copilot) + `.claude/rules/` (Claude Code) + `.cursor/rules/` (Cursor) + global files per tool | Works with minimal code | Run at any stage |
+| `generate-scoped-instructions` | `.github/instructions/` + `.github/agents/` (Copilot) + `.claude/rules/` (Claude Code) + `.cursor/rules/` + `.agents/skills/` (Cursor) + global files per tool | Works with minimal code | Run at any stage |
 | `generate-mcp-config` | `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` | Package manifest (`pubspec.yaml`, `package.json`) | Detects stack from dependencies |
 | `generate-agent-workflows` | `AGENTS.md`, `workflows/` | Levels 1–4 in place | Run last |
 

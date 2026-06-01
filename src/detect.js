@@ -17,7 +17,7 @@ function countFilesIn(dir) {
   return count;
 }
 
-const AGENT_DIRS = ['agents', '.cursor/commands', '.github/agents'];
+const AGENT_DIRS = ['agents', '.cursor/skills', '.github/agents'];
 
 function detect(cwd) {
   const agentsExist = AGENT_DIRS.some(d => existsSync(join(cwd, d)));

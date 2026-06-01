@@ -109,9 +109,8 @@ Read agents/diagnose-and-setup.md and execute it on this repository.
 ```
 
 **Cursor**
-```
-@.cursor/commands/diagnose-and-setup.md - execute this on the current codebase
-```
+
+Type `/diagnose-and-setup` in Agent chat.
 
 **GitHub Copilot (VS Code)**
 
@@ -124,7 +123,7 @@ The diagnostic produces a short, prioritized action plan tailored to your curren
 
 ### Step 3 - Follow the generated action plan
 
-Run the recommended agents in the same tool. For Claude Code and Cursor, swap the filename. For Copilot, select the agent from the picker. Review each output before committing - agents mark uncertain sections with `<!-- TODO: verify -->` for human review.
+Run the recommended agents in the same tool. For Claude Code, swap the filename. For Cursor, type `/agent-name` in Agent chat. For Copilot, select the agent from the picker. Review each output before committing - agents mark uncertain sections with `<!-- TODO: verify -->` for human review.
 
 ### Using an example as reference
 
@@ -204,8 +203,8 @@ Each AI tool has its own file format and location for each type of config. The a
 │  ├── Ignore file           ├── Ignore file           ├── Ignore file            │
 │  │   .copilotignore        │   .claudeignore         │   .cursorignore          │
 │  └── Agents                └── Agents                └── Agents                 │
-│      .github/agents/           agents/                   .cursor/commands/      │
-│      [name].agent.md           [name].md                 [name].md              │
+│      .github/agents/           agents/                   .cursor/skills/        │
+│      [name].md                 [name].md                 [name]/SKILL.md        │
 │                                                                                 │
 │  ¹ user-level — applies globally, not project-specifically                      │
 └─────────────────────────────────────────────────────────────────────────────────┘
