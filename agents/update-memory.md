@@ -1,6 +1,6 @@
 ---
 name: update-memory
-version: 0.1.0
+version: 0.3.0
 description: Audit current decisions, abandoned patterns, and anti-patterns in the codebase, and generate or update MEMORY.md
 ---
 

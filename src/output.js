@@ -7,7 +7,7 @@ const TOOL_COMMANDS = {
   },
   'cursor': {
     name: 'Cursor',
-    command: '@.cursor/commands/diagnose-and-setup.md — execute this on the current codebase',
+    command: 'Type /diagnose-and-setup in Agent chat.',
   },
   'copilot': {
     name: 'GitHub Copilot',

@@ -11,6 +11,38 @@ Bump rules:
 
 ---
 
+## [0.3.0] - 2026-06-02
+
+### Changed
+- Cursor agent destination updated from `.cursor/commands/` to `.cursor/skills/<name>/SKILL.md` (Cursor Agent Skills format, replaces deprecated slash commands)
+- Cursor invocation updated from `@.cursor/commands/<name>.md` to `/<name>` in Agent chat
+- GitHub Copilot agent files now use `.md` extension (not `.agent.md`) in `.github/agents/`
+- Detection signal for Cursor updated from `.cursor/commands` to `.cursor/skills`
+- Active constraints now live in `ARCHITECTURE.md` (not `MEMORY.md`); `MEMORY.md` references `ARCHITECTURE.md` for them instead of duplicating
+- `update-memory` agent, `CONTEXT_ENGINEERING.md`, `MATURITY_MODEL.md`, and both examples updated to reflect the corrected ARCHITECTURE/MEMORY boundary
+
+---
+
+## [0.2.0] - 2026-06-01
+
+### Added
+- Node.js example (`examples/nodejs/`) with `ARCHITECTURE.md`, `CONTEXT.md`, `MEMORY.md`, `AGENTS.md`, `copilot-instructions.md`, and workflow templates
+- Config file reference diagram in README showing every tool's file locations at a glance
+- MCP config mirroring: CLI detects existing MCP configs across all tools and mirrors servers instead of generating a generic stub
+
+### Changed
+- `generate-scoped-instructions` now generates scoped instruction files for all detected tools (Copilot `.github/instructions/`, Claude Code `.claude/rules/`, Cursor `.cursor/rules/`)
+- Install overwrite prompt reworded to avoid misleading behavior
+
+---
+
+## [0.1.1] - 2026-05-27
+
+### Fixed
+- Package entry point and `package.json` warnings
+
+---
+
 ## [0.1.0] - 2026-05-26
 
 ### Added
