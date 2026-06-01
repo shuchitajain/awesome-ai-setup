@@ -57,6 +57,8 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 
 ### [2024-11] Decided NOT to use Either for use case return values
 
+**Constraint documented in:** `ARCHITECTURE.md` > Error Handling — this entry records the reasoning.
+
 **Context:** Initially tried `Either<Failure, T>` from `fpdart` for use case return types (common functional programming pattern for error handling in Clean Architecture).
 
 **What happened:** The `Either` pattern required chaining `.fold()` calls at every layer boundary. This was significantly more verbose than alternatives and confused team members unfamiliar with functional programming. Test assertions on `Either` were awkward.
@@ -68,6 +70,8 @@ This file records architectural decisions, lessons learned, and patterns to avoi
 ---
 
 ### [2025-01] Standardized on HookConsumerWidget
+
+**Constraint documented in:** `ARCHITECTURE.md` > Widget Base Class — this entry records the reasoning.
 
 **Context:** Mixed usage of `StatelessWidget`, `StatefulWidget`, `ConsumerWidget`, `ConsumerStatefulWidget`, `HookWidget`, and `HookConsumerWidget` across the codebase. Inconsistency made it hard to add local state or watch providers consistently.
 

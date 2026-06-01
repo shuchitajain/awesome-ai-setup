@@ -128,6 +128,12 @@ AI assistants don't have persistent memory across conversations. Every new sessi
 - Business requirements (those belong in `CONTEXT.md`)
 - Architecture documentation (that belongs in `ARCHITECTURE.md`)
 
+**The silent failure mode:**
+
+`MEMORY.md` can become the only place a behavioral constraint lives. An agent reading `ARCHITECTURE.md` to implement a billing feature or refactor a widget will never read `MEMORY.md` unless explicitly instructed — and even when it is, `ARCHITECTURE.md` is treated as the authoritative source.
+
+The fix: active constraints (rules the AI must follow when generating code) belong in `ARCHITECTURE.md` at the relevant section. `MEMORY.md` records the reasoning — what was rejected, what broke, why the decision was made. `MEMORY.md` entries cross-reference `ARCHITECTURE.md`; `ARCHITECTURE.md` does not cross-reference `MEMORY.md`.
+
 **Maintenance:** `MEMORY.md` is only valuable if it's updated. Add an entry when you make a significant architectural decision, complete a migration, or fix a recurring mistake that came from AI suggestions. Stale memory is actively harmful.
 
 ---
