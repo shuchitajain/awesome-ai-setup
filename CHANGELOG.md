@@ -11,6 +11,19 @@ Bump rules:
 
 ---
 
+## [0.5.0] - 2026-06-02
+
+### Added
+- `AGENTS.md` (repo root) — canonical agent context file for AI tools working on this repository
+- `test/lint-agents.js` — automated test suite validating agent frontmatter, cross-references, example structure, and install constants
+- `.github/agents/review-repo.md` — Copilot agent for auditing repo integrity and semantic consistency
+
+### Changed
+- `generate-scoped-instructions` (→ 0.5.0): now AGENTS.md-aware — skips `.cursorrules` if `AGENTS.md` is present (Cursor reads it natively), conditionally skips `.github/copilot-instructions.md` for Copilot, and generates `CLAUDE.md` with an explicit `Read AGENTS.md` instruction for Claude Code
+- `generate-agent-workflows` (→ 0.2.0): `AGENTS.md` generation now produces a `### Project Instructions` section (replaces `### Purpose`) with global constraints for all agents; adds context preamble explaining AGENTS.md's cross-tool role
+
+---
+
 ## [0.4.0] - 2026-06-02
 
 ### Changed
