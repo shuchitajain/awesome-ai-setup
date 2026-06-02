@@ -11,6 +11,13 @@ Bump rules:
 
 ---
 
+## [0.4.0] - 2026-06-02
+
+### Changed
+- `generate-scoped-instructions` now appends a `## Project Context` block to generated global instruction files (`CLAUDE.md`, `copilot-instructions.md`, `.cursorrules`), referencing whichever of `ARCHITECTURE.md`, `CONTEXT.md`, `MEMORY.md`, and `AGENTS.md` exist at generation time — making those files auto-discoverable by the AI without manual setup
+
+---
+
 ## [0.3.0] - 2026-06-02
 
 ### Changed
