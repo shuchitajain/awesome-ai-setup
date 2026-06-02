@@ -1,6 +1,6 @@
 ---
 name: generate-agent-workflows
-version: 0.1.0
+version: 0.2.0
 description: Read the architecture, identify repeatable workflows, and generate project-specific AGENTS.md and workflow files
 ---
 
