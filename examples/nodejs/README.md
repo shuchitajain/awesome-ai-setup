@@ -25,11 +25,11 @@ The files here are example outputs from the `awesome-ai-setup` agents - they sho
 | `ARCHITECTURE.md` | Folder structure, layer conventions, error handling, response format, auth pattern |
 | `CONTEXT.md` | Domain model (ShopAPI entities), business rules, API conventions |
 | `MEMORY.md` | Key decisions (Express over NestJS, Prisma over TypeORM, Vitest over Jest, integer prices) and recurring AI anti-patterns |
-| `AGENTS.md` | Five agent definitions: API Designer, Service Layer Implementer, Repository Writer, Controller Writer, API Test Writer |
+| `AGENTS.md` | Canonical agent context: project-wide guidance + five agent definitions (API Designer, Service Layer Implementer, Repository Writer, Controller Writer, API Test Writer) |
 | `workflows/feature-development.md` | 7-step workflow: schema → repository → service → controller → routes → integration tests |
 | `workflows/bug-fixing.md` | Reproduce-first debugging workflow with layer tracing |
 | `workflows/refactoring.md` | Layer-by-layer refactoring with blast-radius analysis |
-| `.github/copilot-instructions.md` | Copilot instructions covering stack, layer rules, conventions, and what NOT to suggest |
+| `.github/copilot-instructions.md` | Optional Copilot overlay: stack, layer rules, conventions, and what NOT to suggest (AGENTS.md handles agent instructions) |
 
 ---
 

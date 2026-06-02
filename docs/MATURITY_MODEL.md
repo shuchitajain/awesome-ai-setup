@@ -26,7 +26,7 @@ Level 0 ──── Level 1 ──── Level 2 ──── Level 3 ───
 
 **The experience:** Useful for boilerplate and syntax. Actively harmful when it suggests patterns that violate your architecture or recreates things you've moved away from.
 
-**How to level up:** Add a top-level instructions file (`CLAUDE.md`, `copilot-instructions.md`, `.cursorrules`). Even 20 lines of focused conventions improves suggestions significantly.
+**How to level up:** Add a top-level instructions file. `AGENTS.md` is the cross-tool canonical option (natively read by Cursor and GitHub Copilot). Tool-specific alternatives: `CLAUDE.md`, `copilot-instructions.md`, `.cursorrules`. Even 20 lines of focused conventions improves suggestions significantly.
 
 ---
 
@@ -35,8 +35,9 @@ Level 0 ──── Level 1 ──── Level 2 ──── Level 3 ───
 **What you have:** A project-level instructions file that AI reads before generating suggestions.
 
 **Common files:**
+- `AGENTS.md` - cross-tool canonical agent context (natively read by Cursor and GitHub Copilot)
 - `CLAUDE.md` - for Claude Code
-- `.github/copilot-instructions.md` - for GitHub Copilot
+- `.github/copilot-instructions.md` - for GitHub Copilot (also handles code review)
 - `.cursorrules` - for Cursor
 - `.windsurfrules` - for Windsurf
 
