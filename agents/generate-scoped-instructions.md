@@ -1,6 +1,6 @@
 ---
 name: generate-scoped-instructions
-version: 0.3.0
+version: 0.4.0
 description: Detect per-file-type conventions across the codebase and generate scoped AI instruction files plus a global instructions file
 ---
 
@@ -202,6 +202,28 @@ The global file should cover:
 - Architectural rules (what layers exist and their import rules)
 - Critical "do not use" list (packages or patterns that are wrong for this project)
 - Code generation commands (if build_runner, codegen, etc. is used)
+
+**Also include a Project Context block** — but only for files that actually exist at the time of generation. Before writing the global file, check which of these files are present in the repo:
+
+- `ARCHITECTURE.md`
+- `CONTEXT.md`
+- `MEMORY.md`
+- `AGENTS.md`
+
+If at least one exists, append a `## Project Context` section listing only the files that are present, one bullet each:
+
+```markdown
+## Project Context
+
+- ARCHITECTURE.md — project structure, layers, and conventions
+- CONTEXT.md — domain model and business rules
+- MEMORY.md — past decisions; do not contradict them
+- AGENTS.md — available specialized agents and how to invoke them
+```
+
+Omit any bullet for a file that does not exist. Omit the section entirely if none of the four files exist.
+
+Do not reference `workflows/` here — `generate-agent-workflows` adds that reference when it runs.
 
 Keep it under 80 lines. Scoped files handle the details.
 
