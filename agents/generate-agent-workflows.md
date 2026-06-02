@@ -88,10 +88,12 @@ Based on the layer structure and workflows, identify the distinct agent roles.
 
 Create this file at the **project root** as `AGENTS.md`.
 
+`AGENTS.md` is the canonical agent-facing project context file. It is natively read by Cursor and GitHub Copilot as an agent instruction source, and is part of an open cross-tool convention. It serves two purposes: project-wide instructions for any AI tool working on this repo, and reusable agent definitions with invoke templates for common tasks.
+
 Generate the file with these sections:
 
-### Purpose
-2–3 sentences explaining what AGENTS.md is and how to use it.
+### Project Instructions
+2–3 sentences describing the project, its primary language/framework, and any global constraints all agents must always respect (e.g. always consult `ARCHITECTURE.md` before generating code, follow the existing layer structure, record architectural decisions in `MEMORY.md`).
 
 ### How to Invoke an Agent
 Brief instructions for how to invoke an agent with an AI tool:

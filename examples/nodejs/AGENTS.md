@@ -1,11 +1,11 @@
 ---
 example: nodejs
-version: 0.1.0
+version: 0.2.0
 ---
 
-# Agent Definitions
+# Agent Context
 
-This file defines the AI agents used in this project, their responsibilities, scope boundaries, and how to invoke them.
+This file is the canonical agent-facing context for this project. It serves as project-wide guidance for AI tools working on this codebase and as a home for reusable agent definitions with invoke templates. Cursor and GitHub Copilot read this file natively as an agent instruction source.
 
 ---
 

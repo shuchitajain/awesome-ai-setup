@@ -27,3 +27,8 @@ Thumbs.db
 
 # Test coverage
 coverage/
+
+# Misc
+decisions.md
+plan.md
+.github/agents/release.md

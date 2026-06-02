@@ -146,7 +146,7 @@ Current examples:
 | `generate-architecture`        | `ARCHITECTURE.md`                                   | Active codebase setup, after major refactors |
 | `generate-context`             | `CONTEXT.md`                                        | Active codebase setup, when domain evolves   |
 | `update-memory`                | `MEMORY.md`                                         | After architectural decisions, migrations    |
-| `generate-scoped-instructions` | Per-file-type rules + global instructions file (all detected tools) | Any stage - works with minimal code          |
+| `generate-scoped-instructions` | Per-file-type scoped rules + optional tool overlays | Any stage - works with minimal code          |
 | `generate-mcp-config`          | MCP config per detected tool                        | When adding tool connections (Level 3)       |
 | `generate-agent-workflows`     | `AGENTS.md`, `workflows/`                           | After Levels 1–4 are in place                |
 
@@ -161,7 +161,7 @@ Use this as a diagnostic, not a checklist.
 | Level | What You Have                                   | Next Step                                                                             |
 |-------|-------------------------------------------------|---------------------------------------------------------------------------------------|
 | **0** | AI autocomplete, no project context             | Run `diagnose-and-setup`                                                              |
-| **1** | Instructions file (`CLAUDE.md`, `.cursorrules`) | Add `ARCHITECTURE.md` + `CONTEXT.md` via `generate-architecture` + `generate-context` |
+| **1** | `AGENTS.md` or tool instructions file (`CLAUDE.md`, `.cursorrules`) | Add `ARCHITECTURE.md` + `CONTEXT.md` via `generate-architecture` + `generate-context` |
 | **2** | Architecture + domain context                   | Add MCP config via `generate-mcp-config`                                              |
 | **3** | Tool-connected (MCP)                            | Add `MEMORY.md` via `update-memory`                                                   |
 | **4** | Memory-aware                                    | Add agentic workflows via `generate-agent-workflows`                                  |
@@ -183,7 +183,7 @@ Each AI tool has its own file format and location for each type of config. The a
 │  ├── ARCHITECTURE.md       folder structure, layers, conventions                │
 │  ├── CONTEXT.md            domain model, business rules, terminology            │
 │  ├── MEMORY.md             decisions made, anti-patterns, AI mistake log        │
-│  ├── AGENTS.md             agent definitions + invoke templates                 │
+│  ├── AGENTS.md             canonical agent context + agent definitions          │
 │  └── workflows/            new-feature.md  bug-fix.md  refactor.md  ...         │
 │                                                                                 │
 │  COPILOT                   CLAUDE CODE               CURSOR                     │
@@ -209,6 +209,23 @@ Each AI tool has its own file format and location for each type of config. The a
 │  ¹ user-level — applies globally, not project-specifically                      │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## AGENTS.md Cross-Tool Support
+
+`AGENTS.md` is an open convention for cross-tool agent instructions. The following tools either natively read it from the project root or support it via configuration:
+
+| Tool | Support | How |
+|------|---------|-----|
+| Cursor | Native | Listed as a built-in rule type alongside `.cursor/rules` |
+| GitHub Copilot | Native | Nearest `AGENTS.md` in the directory tree is read as agent instructions |
+| Zed | Native | Recognized project rules filename |
+| Aider | Configured | Add `read: AGENTS.md` in `.aider.conf.yml` |
+| Gemini CLI | Configured | Add `{"context": {"fileName": "AGENTS.md"}}` in `.gemini/settings.json` |
+| Claude Code | Unconfirmed | Not yet explicit in first-party docs; use `CLAUDE.md` as the fallback |
+
+For tools with native support, `AGENTS.md` can serve as the canonical shared agent context without a separate global instructions file. Tool-specific files (`.github/copilot-instructions.md`, `.cursorrules`) remain useful for vendor-specific behavior, code review rules, or path-scoped conventions.
 
 ---
 

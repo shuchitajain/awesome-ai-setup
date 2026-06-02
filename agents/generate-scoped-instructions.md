@@ -185,19 +185,32 @@ Brief one-line description of what these conventions cover.
 
 ## Also Generate: Global Instructions Files
 
-For each AI tool detected as in use, generate its global instructions file if absent:
+`AGENTS.md` is natively supported by Cursor and GitHub Copilot as a canonical agent-facing project context file. Check whether `AGENTS.md` exists in the project root before generating tool-specific global files.
+
+**If `AGENTS.md` is already present:**
+- **Cursor:** Skip `.cursorrules`. Cursor reads `AGENTS.md` natively as a built-in rule type.
+- **GitHub Copilot:** Skip `.github/copilot-instructions.md` unless there is Copilot-specific content to add (e.g. code review behavior, path-scoped rules, or repository-wide policies distinct from agent instructions). Copilot reads the nearest `AGENTS.md` natively for agent instructions.
+- **Claude Code:** Still generate `CLAUDE.md` if absent. First-party documentation does not yet confirm Claude Code auto-loads `AGENTS.md`. If `AGENTS.md` is present, add the following as the **first line** of the generated `CLAUDE.md`:
+  ```
+  Read AGENTS.md at the start of every session for project context, architectural constraints, and agent definitions.
+  ```
+  This makes the read explicit and active — Claude Code will follow it.
+
+**General rule for any tool that does not natively read `AGENTS.md`:** If `AGENTS.md` is present and you are generating that tool's global instructions file, prepend the same explicit read instruction above. Do not silently omit a passive reference — it must be phrased as a direct instruction.
+
+**If `AGENTS.md` is absent:**
+
+Generate the appropriate global file for each detected tool:
 
 | Tool | File | Notes |
 |------|------|-------|
-| GitHub Copilot | `.github/copilot-instructions.md` | Auto-loaded by Copilot in VS Code |
+| GitHub Copilot | `.github/copilot-instructions.md` | Repository-wide instructions; also used by Copilot code review |
 | Claude Code | `CLAUDE.md` | Read at every session start |
-| Cursor | `.cursorrules` | Auto-loaded by Cursor |
+| Cursor | `.cursorrules` | Fallback when AGENTS.md is not present |
 
 If a file already exists, skip it — do not overwrite.
 
-All three files should contain the same content:
-
-The global file should cover:
+When generating a global file, it should cover:
 - Tech stack (libraries actually in use)
 - Architectural rules (what layers exist and their import rules)
 - Critical "do not use" list (packages or patterns that are wrong for this project)
@@ -218,7 +231,7 @@ If at least one exists, append a `## Project Context` section listing only the f
 - ARCHITECTURE.md — project structure, layers, and conventions
 - CONTEXT.md — domain model and business rules
 - MEMORY.md — past decisions; do not contradict them
-- AGENTS.md — available specialized agents and how to invoke them
+- AGENTS.md — canonical agent context: project guidance, agent definitions, and invoke templates
 ```
 
 Omit any bullet for a file that does not exist. Omit the section entirely if none of the four files exist.

@@ -52,7 +52,7 @@ There are five distinct types of context. Each one has a different job.
 
 **What:** Conventions, preferences, rules that should always apply. What to use and what to avoid.
 
-**Where:** `CLAUDE.md`, `copilot-instructions.md`, scoped instruction files
+**Where:** `AGENTS.md` (canonical shared source), `CLAUDE.md`, `copilot-instructions.md`, scoped instruction files
 
 **Job:** Set the baseline for every interaction. Equivalent to team standards written once, applied automatically.
 

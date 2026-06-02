@@ -71,18 +71,19 @@ If your project is Flutter + Riverpod + Clean Architecture with feature-first or
 | `workflows/feature-development.md` | What a layer-by-layer feature workflow looks like | `generate-agent-workflows.md` |
 | `workflows/bug-fixing.md` | How to structure a bug investigation workflow | `generate-agent-workflows.md` |
 | `workflows/refactoring.md` | How to approach refactoring with layer awareness | `generate-agent-workflows.md` |
-| `AGENTS.md` | What scoped AI agent definitions look like | `generate-agent-workflows.md` |
+| `AGENTS.md` | What canonical agent context looks like: project-wide guidance + scoped agent definitions | `generate-agent-workflows.md` |
 
 ---
 
-## Claude Code Setup
+## Multi-Tool Setup
 
-If you're using Claude Code, the `CLAUDE.md` at your project root is the primary context file. You can either:
+`AGENTS.md` at the project root is the canonical cross-tool agent context file, natively read by Cursor and GitHub Copilot for agent instructions. It works across any tool that follows the AGENTS.md convention.
 
-1. Use it as a standalone global instructions file (merge content from `copilot-instructions.md`)
-2. Use `@import` syntax to include content from the scoped instruction files
+For **Claude Code**, `CLAUDE.md` is the primary global context file. You can reference the scoped instruction files explicitly, or use `CLAUDE.md` as a standalone file that merges their key content.
 
-The scoped `.github/instructions/*.instructions.md` files are read natively by GitHub Copilot. For Claude Code, reference them explicitly or use the global `CLAUDE.md`.
+For **GitHub Copilot**, `.github/copilot-instructions.md` handles repository-wide instructions and code review behavior. `AGENTS.md` covers agent instructions. Both can coexist.
+
+The scoped `.github/instructions/*.instructions.md` files are read natively by GitHub Copilot and provide per-file-type conventions beyond what `AGENTS.md` covers.
 
 ---
 
