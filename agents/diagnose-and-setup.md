@@ -1,6 +1,6 @@
 ---
 name: diagnose-and-setup
-version: 0.3.0
+version: 0.4.0
 description: Assess the repository's current AI context maturity and produce a prioritized action plan pointing to the agents that should run next
 ---
 
@@ -19,7 +19,8 @@ Check whether each of these files exists. Read the ones that do.
 **Global instruction files** (read if present):
 - `CLAUDE.md` (root) — Claude Code
 - `.github/copilot-instructions.md` — GitHub Copilot
-- `.cursorrules` — Cursor
+- `.cursor/rules/global.mdc` — Cursor (current path)
+- `.cursorrules` — Cursor (legacy path — if found but `global.mdc` is absent, note as stale)
 
 **Architecture and context files** (read if present):
 - `ARCHITECTURE.md` (root)
@@ -169,7 +170,7 @@ You have [X]. You're missing [Y].
 
 ## Constraints
 
-**Assess each detected tool independently for its full set of config files.** Presence of config for one tool never satisfies a gap for another. Detect which tools are in use by checking: `agents/` or `.mcp.json` or `.claudeignore` → Claude Code; `.github/agents/` or `.github/copilot-instructions.md` or `.vscode/mcp.json` → Copilot; `.cursor/` or `.cursorrules` or `.cursor/rules/` → Cursor.
+**Assess each detected tool independently for its full set of config files.** Presence of config for one tool never satisfies a gap for another. Detect which tools are in use by checking: `agents/` or `.mcp.json` → Claude Code; `.github/agents/` or `.github/copilot-instructions.md` or `.vscode/mcp.json` → Copilot; `.cursor/` or `.cursorrules` or `.cursor/rules/` → Cursor.
 
 For each tool detected as in use, the complete set of expected files is:
 
@@ -177,7 +178,7 @@ For each tool detected as in use, the complete set of expected files is:
 |------|--------------------|--------------|-----------|
 | GitHub Copilot | `.github/copilot-instructions.md` | `.github/instructions/*.instructions.md` | `.vscode/mcp.json` |
 | Claude Code | `CLAUDE.md` | `.claude/rules/*.md` | `.mcp.json` |
-| Cursor | `.cursorrules` | `.cursor/rules/*.mdc` | `.cursor/mcp.json` |
+| Cursor | `.cursor/rules/global.mdc` | `.cursor/rules/*.mdc` | `.cursor/mcp.json` |
 
 Flag every missing file as a gap for that tool. If global instructions or scoped rules are missing, recommend `generate-scoped-instructions.md`. If MCP config is missing at project level, recommend `generate-mcp-config.md`.
 

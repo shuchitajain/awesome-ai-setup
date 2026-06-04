@@ -1,6 +1,6 @@
 ---
 name: generate-scoped-instructions
-version: 0.5.0
+version: 0.6.0
 description: Detect per-file-type conventions across the codebase and generate scoped AI instruction files plus a global instructions file
 ---
 
@@ -21,7 +21,7 @@ Gather the information needed to detect actual conventions.
 **Required reading:**
 
 1. **Dependency manifest** - what libraries are actually in use (state management, testing, UI framework, code generation)
-2. **Existing instruction files** - `CLAUDE.md`, `.github/copilot-instructions.md`, `.cursorrules` - don't duplicate what's there
+2. **Existing instruction files** - `CLAUDE.md`, `.github/copilot-instructions.md`, `.cursor/rules/global.mdc`, `.cursorrules` - don't duplicate what's there
 3. **Architecture file** - `ARCHITECTURE.md` if present - understand the layer structure before generating layer-specific instructions
 
 **File sampling - read 3–5 examples of each relevant type:**
@@ -86,7 +86,7 @@ Only create files for groupings where you found meaningful, consistent conventio
 For each file type grouping identified in Step 3, generate scoped instruction files for every AI tool detected as in use.
 
 **Detect which tools are active** by checking:
-- `agents/` or `.mcp.json` or `.claudeignore` present → Claude Code in use
+- `agents/` or `.mcp.json` present → Claude Code in use
 - `.github/agents/` or `.github/copilot-instructions.md` or `.vscode/mcp.json` present → Copilot in use
 - `.cursor/` or `.cursor/rules/` or `.cursorrules` present → Cursor in use
 
@@ -106,6 +106,7 @@ Do not generate for tools not detected as in use.
 applyTo: "[glob pattern matching the target files]"
 ---
 ```
+Use comma-separated globs for multiple patterns: `"**/*.ts, **/*.tsx"`.
 
 **Cursor frontmatter:**
 ```markdown
@@ -188,7 +189,7 @@ Brief one-line description of what these conventions cover.
 `AGENTS.md` is natively supported by Cursor and GitHub Copilot as a canonical agent-facing project context file. Check whether `AGENTS.md` exists in the project root before generating tool-specific global files.
 
 **If `AGENTS.md` is already present:**
-- **Cursor:** Skip `.cursorrules`. Cursor reads `AGENTS.md` natively as a built-in rule type.
+- **Cursor:** Skip generating a separate Cursor global instructions file. Cursor reads `AGENTS.md` natively as a built-in rule type alongside `.cursor/rules/`.
 - **GitHub Copilot:** Skip `.github/copilot-instructions.md` unless there is Copilot-specific content to add (e.g. code review behavior, path-scoped rules, or repository-wide policies distinct from agent instructions). Copilot reads the nearest `AGENTS.md` natively for agent instructions.
 - **Claude Code:** Still generate `CLAUDE.md` if absent. First-party documentation does not yet confirm Claude Code auto-loads `AGENTS.md`. If `AGENTS.md` is present, add the following as the **first line** of the generated `CLAUDE.md`:
   ```
@@ -206,7 +207,7 @@ Generate the appropriate global file for each detected tool:
 |------|------|-------|
 | GitHub Copilot | `.github/copilot-instructions.md` | Repository-wide instructions; also used by Copilot code review |
 | Claude Code | `CLAUDE.md` | Read at every session start |
-| Cursor | `.cursorrules` | Fallback when AGENTS.md is not present |
+| Cursor | `.cursor/rules/global.mdc` | Fallback when AGENTS.md is not present; use `alwaysApply: true` frontmatter |
 
 If a file already exists, skip it — do not overwrite.
 
@@ -262,7 +263,7 @@ Generate wrappers only for tools detected as in use (same detection logic as sco
 ---
 name: <name>
 description: <description from source agent frontmatter>
-tools: [codebase, editFiles, readFile]
+tools: [search/codebase, edit/editFiles, read/readFile]
 ---
 
 Read agents/<name>.md and execute it on this repository.
@@ -274,7 +275,7 @@ Each wrapper appears in the Copilot Chat mode dropdown by name. One file per age
 
 ### Cursor wrapper (Agent Skill)
 
-**Location:** `.agents/skills/<name>/SKILL.md`
+**Location:** `.cursor/skills/<name>/SKILL.md`
 
 The `name` frontmatter field must exactly match the containing folder name.
 
@@ -319,4 +320,4 @@ Group output by file type (e.g. all three screens files together), not by tool. 
 
 After all instruction files, list any gaps - conventions that should exist but are too inconsistent in the current codebase to document.
 
-After gaps, list any agent wrapper files to create (Copilot `.github/agents/` and Cursor `.agents/skills/`), grouped by tool.
+After gaps, list any agent wrapper files to create (Copilot `.github/agents/` and Cursor `.cursor/skills/`), grouped by tool.

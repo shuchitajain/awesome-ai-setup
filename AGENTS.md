@@ -8,7 +8,7 @@ Context for AI agents working on this repository.
 
 **awesome-ai-setup** is an npm CLI tool + a collection of executable AI agents that help developers set up AI-native development context for any codebase.
 
-Published as `npx awesome-ai-setup`. Current version: `0.4.0`.
+Published as `npx awesome-ai-setup`. Current version: `0.6.0`.
 
 The core philosophy: instead of shipping static template files for humans to adapt, this repo ships *agents* — markdown instruction files that tell an AI assistant to inspect a real codebase and generate accurate, project-specific documentation from what it finds. Static templates rot; agents can be re-run.
 
@@ -53,7 +53,7 @@ awesome-ai-setup/
 - **Runtime:** Node.js ≥ 16, ESM (`"type": "module"`)
 - **Dependencies:** `fs-extra` (file operations), `prompts` (interactive CLI prompts)
 - **No build step.** Source is plain JS, runs directly with Node.
-- **No test framework** is currently configured.
+- **Test suite:** `node --test test/lint-agents.js` (run via `npm test`). Checks agent frontmatter and file structure.
 
 ---
 
@@ -146,11 +146,17 @@ The CLI is non-destructive by default: if `agents/` already exists, it asks befo
 - Do not log trivial implementation details or temporary thoughts that did not become an actual decision.
 
 ### Testing a change locally
+
+Run the automated test suite:
+```bash
+npm test
+```
+
+For manual end-to-end testing:
 ```bash
 cd /some/scratch-project
 node /path/to/awesome-ai-setup/bin/cli.js
 ```
-There is no automated test suite. Validate by running the CLI against a scratch directory.
 
 ---
 

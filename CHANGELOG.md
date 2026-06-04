@@ -11,6 +11,18 @@ Bump rules:
 
 ---
 
+## [0.6.0] - 2026-06-04
+
+### Changed
+- `diagnose-and-setup` (→ 0.4.0): updated Cursor global instructions path to `.cursor/rules/global.mdc` (current); `.cursorrules` now flagged as legacy/stale if found without `global.mdc`; removed `.claudeignore` from Claude Code detection signal; updated tool config table to reflect `.cursor/rules/global.mdc` as Cursor's primary global file
+- `generate-agent-workflows` (→ 0.3.0): updated Cursor instruction file reference from `.cursorrules` to `.cursor/rules/global.mdc`; corrected tool detection signals to match `generate-scoped-instructions`; added `alwaysApply: false` to Cursor scoped rule frontmatter template; updated Copilot agent `tools` field format to `read/readFile, edit/editFiles, execute/runInTerminal`
+- `generate-scoped-instructions` (→ 0.6.0): added `.cursor/rules/global.mdc` to existing-file scan; removed `.claudeignore` from Claude Code detection signal; Cursor global file target updated from `.cursorrules` to `.cursor/rules/global.mdc` with `alwaysApply: true`; added comma-separated globs note for Copilot `applyTo` frontmatter; fixed Cursor agent skills location from `.agents/skills/` to `.cursor/skills/`; updated Copilot wrapper `tools` format to `search/codebase, edit/editFiles, read/readFile`
+- CLI: removed "ignore files" prompt — ignore file install is now always applied silently
+- `src/install.js`: `IGNORE_FILE` updated — only Cursor receives a `.cursorignore`; Claude Code and Copilot entries set to `null` (neither has a supported ignore file equivalent)
+- `src/detect.js`: `empty` maturity threshold changed from `=== 0` to `< 5` source files
+
+---
+
 ## [0.5.0] - 2026-06-02
 
 ### Added

@@ -28,7 +28,7 @@ function detect(cwd) {
 
   const sourceFileCount = srcDir ? countFilesIn(join(cwd, srcDir)) : 0;
   const maturity =
-    sourceFileCount === 0 ? 'empty' :
+    sourceFileCount < 5 ? 'empty' :
       sourceFileCount < 40 ? 'early' : 'active';
 
   return { agentsExist, maturity };
