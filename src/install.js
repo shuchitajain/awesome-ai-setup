@@ -18,10 +18,12 @@ const AGENTS_DEST = {
 };
 
 // Tool → ignore file path (relative to project root)
+// Only Cursor has an official ignore file. Claude Code uses .gitignore for context exclusions;
+// Copilot exclusions are managed via GitHub.com repository settings.
 const IGNORE_FILE = {
-  'claude-code': '.claudeignore',
+  'claude-code': null,
   'cursor': '.cursorignore',
-  'copilot': '.copilotignore',
+  'copilot': null,
 };
 
 // Tool → MCP config path (relative to project root)

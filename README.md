@@ -161,7 +161,7 @@ Use this as a diagnostic, not a checklist.
 | Level | What You Have                                   | Next Step                                                                             |
 |-------|-------------------------------------------------|---------------------------------------------------------------------------------------|
 | **0** | AI autocomplete, no project context             | Run `diagnose-and-setup`                                                              |
-| **1** | `AGENTS.md` or tool instructions file (`CLAUDE.md`, `.cursorrules`) | Add `ARCHITECTURE.md` + `CONTEXT.md` via `generate-architecture` + `generate-context` |
+| **1** | `AGENTS.md` or tool instructions file (`CLAUDE.md`, `.cursor/rules/*.mdc`) | Add `ARCHITECTURE.md` + `CONTEXT.md` via `generate-architecture` + `generate-context` |
 | **2** | Architecture + domain context                   | Add MCP config via `generate-mcp-config`                                              |
 | **3** | Tool-connected (MCP)                            | Add `MEMORY.md` via `update-memory`                                                   |
 | **4** | Memory-aware                                    | Add agentic workflows via `generate-agent-workflows`                                  |
@@ -188,8 +188,8 @@ Each AI tool has its own file format and location for each type of config. The a
 │                                                                                 │
 │  COPILOT                   CLAUDE CODE               CURSOR                     │
 │  ├── Global instructions   ├── Global instructions   ├── Global instructions    │
-│  │   .github/              │   CLAUDE.md             │   .cursorrules           │
-│  │   copilot-instructions  │                         │                          │
+│  │   .github/              │   CLAUDE.md             │   .cursor/rules/         │
+│  │   copilot-instructions  │                         │   global.mdc             │
 │  │   .md                   ├── Scoped rules          ├── Scoped rules           │
 │  ├── Scoped rules          │   .claude/rules/        │   .cursor/rules/         │
 │  │   .github/instructions/ │   [name].md             │   [name].mdc             │
@@ -201,7 +201,7 @@ Each AI tool has its own file format and location for each type of config. The a
 │  │   ~/.config/copilot/  ¹ │   ~/.claude.json ¹      │   ~/.cursor/mcp.json ¹   │
 │  │   intellij/mcp.json     │                         │                          │
 │  ├── Ignore file           ├── Ignore file           ├── Ignore file            │
-│  │   .copilotignore        │   .claudeignore         │   .cursorignore          │
+│  │   (GitHub repo settings)│   (use .gitignore)      │   .cursorignore          │
 │  └── Agents                └── Agents                └── Agents                 │
 │      .github/agents/           agents/                   .cursor/skills/        │
 │      [name].md                 [name].md                 [name]/SKILL.md        │
@@ -225,7 +225,7 @@ Each AI tool has its own file format and location for each type of config. The a
 | Gemini CLI | Configured | Add `{"context": {"fileName": "AGENTS.md"}}` in `.gemini/settings.json` |
 | Claude Code | Unconfirmed | Not yet explicit in first-party docs; use `CLAUDE.md` as the fallback |
 
-For tools with native support, `AGENTS.md` can serve as the canonical shared agent context without a separate global instructions file. Tool-specific files (`.github/copilot-instructions.md`, `.cursorrules`) remain useful for vendor-specific behavior, code review rules, or path-scoped conventions.
+For tools with native support, `AGENTS.md` can serve as the canonical shared agent context without a separate global instructions file. Tool-specific files (`.github/copilot-instructions.md`, `.cursor/rules/*.mdc`) remain useful for vendor-specific behavior, code review rules, or path-scoped conventions.
 
 ---
 

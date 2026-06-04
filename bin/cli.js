@@ -15,13 +15,6 @@ const EXAMPLES = [
   { title: 'Node.js REST API (Express + TypeScript + Prisma)', value: 'nodejs', tag: 'Node.js' },
 ];
 
-// Human-readable ignore file names per tool, for the prompt label
-const IGNORE_LABEL = {
-  'claude-code': '.claudeignore',
-  'cursor': '.cursorignore',
-  'copilot': '.copilotignore',
-};
-
 const MCP_LABEL = {
   'claude-code': '.mcp.json',
   'cursor': '.cursor/mcp.json',
@@ -78,16 +71,9 @@ async function main() {
   if (!tools) process.exit(0);
 
   // What else to set up — choices built dynamically from selected tools
-  const ignoreLabels = tools.map(t => IGNORE_LABEL[t]).filter(Boolean).join(', ');
   const mcpLabels = tools.map(t => MCP_LABEL[t]).filter(Boolean).join(', ');
 
   const extraChoices = [
-    {
-      title: `Ignore files  (${ignoreLabels})`,
-      value: 'ignore',
-      selected: true,
-      description: 'Exclude secrets, build artifacts, and generated files from AI context',
-    },
     {
       title: `MCP config stubs  (${mcpLabels})`,
       value: 'mcp',
@@ -122,7 +108,7 @@ async function main() {
   const result = await install(cwd, {
     tools,
     example,
-    ignoreFiles: extras.includes('ignore'),
+    ignoreFiles: true,
     mcpStubs: extras.includes('mcp'),
   });
 

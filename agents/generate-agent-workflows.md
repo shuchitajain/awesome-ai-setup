@@ -1,6 +1,6 @@
 ---
 name: generate-agent-workflows
-version: 0.2.0
+version: 0.3.0
 description: Read the architecture, identify repeatable workflows, and generate project-specific AGENTS.md and workflow files
 ---
 
@@ -174,7 +174,7 @@ For each primary workflow identified in Step 2, generate a workflow file.
 After generating `workflows/`, add a reference to it in whichever instruction files exist in this project:
 
 - **`CLAUDE.md`** - add: `"For step-by-step development procedures, follow the workflows in ./workflows/."`
-- **`.cursorrules`** - add: `"Execute multi-step tasks by following the relevant workflow in ./workflows/."`
+- **`.cursor/rules/global.mdc`** - if present, add to the body: `Execute multi-step tasks by following the relevant workflow in ./workflows/.`
 - **`.github/copilot-instructions.md`** - add a `## Development Workflows` section pointing to `./workflows/` and listing the available workflows by name.
 
 This is the unified approach: `workflows/` is the single source of truth, and each tool's instruction file references it. Do not copy workflow content into instruction files - just reference the path.
@@ -187,10 +187,10 @@ Only update instruction files that already exist. Do not create them.
 
 This step makes agents directly invokable without manually reading `AGENTS.md` or copy-pasting prompts.
 
-**Detect which tools are active** using the same signals as `generate-mcp-config`:
-- `CLAUDE.md` present → Claude Code
-- `.cursor/` present → Cursor
-- `.github/copilot-instructions.md` present → GitHub Copilot
+**Detect which tools are active** using the same signals as `generate-scoped-instructions`:
+- `agents/` or `.mcp.json` present → Claude Code
+- `.cursor/` or `.cursor/rules/` or `.cursorrules` present → Cursor
+- `.github/agents/` or `.github/copilot-instructions.md` or `.vscode/mcp.json` present → GitHub Copilot
 
 Generate the appropriate files for each detected tool only.
 
@@ -205,6 +205,7 @@ Format:
 ---
 description: [one-line description of when this agent activates]
 globs: [comma-separated glob patterns matching the files this agent's Scope covers]
+alwaysApply: false
 ---
 # [Agent Name]
 
@@ -243,7 +244,7 @@ Format:
 ---
 name: [agent-slug]
 description: [one sentence - specific enough to identify this agent in a picker list]
-tools: [read_file, create_file, run_in_terminal - include only what this agent actually needs]
+tools: [read/readFile, edit/editFiles, execute/runInTerminal - include only what this agent actually needs]
 ---
 
 [Paste the agent's full "Invoke with" prompt from AGENTS.md as the system prompt body]

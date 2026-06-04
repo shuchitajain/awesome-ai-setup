@@ -197,11 +197,18 @@ test('detect() classifies maturity: empty / early / active', async () => {
     assert.equal(detect(emptyDir).maturity, 'empty', 'no src dir should be "empty"');
     cleanup(emptyDir);
 
-    // early: src/ exists with a single file
+    // empty: src/ exists but fewer than 5 files
+    const fewFilesDir = makeTmp();
+    mkdirSync(join(fewFilesDir, 'src'));
+    for (let i = 0; i < 4; i++) writeFileSync(join(fewFilesDir, 'src', `f${i}.js`), '');
+    assert.equal(detect(fewFilesDir).maturity, 'empty', '4-file src/ should be "empty"');
+    cleanup(fewFilesDir);
+
+    // early: src/ exists with exactly 5 files
     const earlyDir = makeTmp();
     mkdirSync(join(earlyDir, 'src'));
-    writeFileSync(join(earlyDir, 'src', 'index.js'), '');
-    assert.equal(detect(earlyDir).maturity, 'early', '1-file src/ should be "early"');
+    for (let i = 0; i < 5; i++) writeFileSync(join(earlyDir, 'src', `f${i}.js`), '');
+    assert.equal(detect(earlyDir).maturity, 'early', '5-file src/ should be "early"');
     cleanup(earlyDir);
 
     // boundary: 39 files → early

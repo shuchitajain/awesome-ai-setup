@@ -66,7 +66,7 @@ This works for all three starting points:
 | `generate-architecture` | `ARCHITECTURE.md` | 40+ source files | Re-run after major refactors |
 | `generate-context` | `CONTEXT.md` | `ARCHITECTURE.md` recommended | Run after architecture is documented |
 | `update-memory` | `MEMORY.md` | `ARCHITECTURE.md` + `CONTEXT.md` | Run after architectural decisions or migrations |
-| `generate-scoped-instructions` | `.github/instructions/` + `.github/agents/` (Copilot) + `.claude/rules/` (Claude Code) + `.cursor/rules/` + `.agents/skills/` (Cursor) + optional global tool overlays | Works with minimal code | Run at any stage |
+| `generate-scoped-instructions` | `.github/instructions/` + `.github/agents/` (Copilot) + `.claude/rules/` (Claude Code) + `.cursor/rules/` (Cursor) + optional global tool overlays | Works with minimal code | Run at any stage |
 | `generate-mcp-config` | `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json` | Package manifest (`pubspec.yaml`, `package.json`) | Detects stack from dependencies |
 | `generate-agent-workflows` | `AGENTS.md`, `workflows/` | Levels 1–4 in place | Run last |
 
